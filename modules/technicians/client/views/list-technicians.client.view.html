@@ -1,0 +1,18 @@
+<section>
+  <div class="page-header">
+    <h1>Technicians</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="technician in vm.technicians" ui-sref="technicians.view({ technicianId: technician._id })" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="technician.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="technician.user" ng-bind="technician.user.displayName"></span>
+        <span ng-if="!technician.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="technician.title"></h4>
+      <p class="list-group-item-text" ng-bind="technician.content"></p>
+    </a>
+  </div>
+</section>

@@ -4,7 +4,7 @@ var defaultEnvConfig = require('./default');
 
 module.exports = {
   db: {
-    uri: process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/mean-dev',
+    uri: process.env.MONGOHQ_URL || process.env.MONGODB_URI || 'mongodb://' + (process.env.DB_1_PORT_27017_TCP_ADDR || 'localhost') + '/repairInventorySystem-dev',
     options: {},
     // Enable mongoose debug mode
     debug: process.env.MONGODB_DEBUG || false
@@ -25,8 +25,8 @@ module.exports = {
     title: defaultEnvConfig.app.title + ' - Development Environment'
   },
   facebook: {
-    clientID: process.env.FACEBOOK_ID || 'APP_ID',
-    clientSecret: process.env.FACEBOOK_SECRET || 'APP_SECRET',
+    clientID: process.env.FACEBOOK_ID || '1363951373622177',
+    clientSecret: process.env.FACEBOOK_SECRET || '43316fb779880c4d5f44d32d5b05f349',
     callbackURL: '/api/auth/facebook/callback'
   },
   twitter: {

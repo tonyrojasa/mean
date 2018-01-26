@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-
+/*
   angular
     .module('articles')
     .run(menuConfig);
@@ -21,5 +21,5 @@
       state: 'articles.list',
       roles: ['*']
     });
-  }
+  }*/
 }());

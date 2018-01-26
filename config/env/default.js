@@ -2,9 +2,9 @@
 
 module.exports = {
   app: {
-    title: 'MEAN.JS',
-    description: 'Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js',
-    keywords: 'mongodb, express, angularjs, node.js, mongoose, passport',
+    title: 'Sistema de administracion de reparacion de inventarios',
+    description: 'Herramienta de administracion de reparacion de inventarios',
+    keywords: 'reparacion, inventarios, games, consoles',
     googleAnalyticsTrackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID || 'GOOGLE_ANALYTICS_TRACKING_ID'
   },
   db: {
