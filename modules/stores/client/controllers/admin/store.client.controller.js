@@ -16,9 +16,15 @@
     vm.remove = remove;
     vm.save = save;
 
+    vm.locations = ['Alajuela','Cartago','Guanacaste','Heredia','Limón','Puntarenas','San José'];
+
+    vm.setLocation = function(location) {
+      vm.store.location = location;
+    };
+
     // Remove existing Store
     function remove() {
-      if ($window.confirm('Are you sure you want to delete?')) {
+      if ($window.confirm('Esta seguro que desea eliminar esta tienda?')) {
         vm.store.$remove(function () {
           $state.go('admin.stores.list');
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Store deleted successfully!' });
@@ -28,6 +34,7 @@
 
     // Save Store
     function save(isValid) {
+      debugger;
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.storeForm');
         return false;
@@ -40,7 +47,7 @@
 
       function successCallback(res) {
         $state.go('admin.stores.list'); // should we send the User to the list or the updated Store's view?
-        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Store saved successfully!' });
+        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Tienda guardada exitosamente!' });
       }
 
       function errorCallback(res) {

@@ -10,28 +10,69 @@ var mongoose = require('mongoose'),
   chalk = require('chalk');
 
 /**
- * Store Schema
+ * Item Schema
  */
-var StoreSchema = new Schema({
+var ItemSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
   },
-  name: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Name cannot be blank'
+  owner: {
+    name: {
+      type: String,
+      required: 'owner name cannot be blank'
+    },
+    id: {
+      type: String,
+      required: 'owner id cannot be blank'
+    }
   },
-  location: {
+  model: {
+    type: Schema.ObjectId,
+    ref: 'Model'
+  },
+  serialNumber: {
     type: String,
     trim: true,
-    required: 'Please provide at least one location'
+    required: 'serialNumber cannot be blank'
   },
-  content: {
+  description: {
     type: String,
     default: '',
     trim: true
+  },
+  registrationDate: {
+    type: Date,
+    default: Date.now
+  },
+  resolutions: {
+    resolutionDate: {
+      type: [Date]
+    },
+    observations: {
+      type: [String]
+    },
+    cost: {
+      type: [Number]
+    },
+    technician: {
+      type: [Schema.ObjectId],
+      ref: 'Technician'
+    },
+  },  
+  status: {
+    type: String,
+    default: 'Ingresado',
+    trim: true,    
+    required: 'status cannot be blank'
+  },
+  observations: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  warantyExpirationDate: {    
+    type: Date
   },
   user: {
     type: Schema.ObjectId,
@@ -39,16 +80,16 @@ var StoreSchema = new Schema({
   }
 });
 
-StoreSchema.statics.seed = seed;
+ItemSchema.statics.seed = seed;
 
-mongoose.model('Store', StoreSchema);
+mongoose.model('Item', ItemSchema);
 
 /**
-* Seeds the User collection with document (Store)
+* Seeds the User collection with document (Item)
 * and provided options.
 */
 function seed(doc, options) {
-  var Store = mongoose.model('Store');
+  var Item = mongoose.model('Item');
 
   return new Promise(function (resolve, reject) {
 
@@ -88,7 +129,7 @@ function seed(doc, options) {
 
     function skipDocument() {
       return new Promise(function (resolve, reject) {
-        Store
+        Item
           .findOne({
             title: doc.title
           })
@@ -105,7 +146,7 @@ function seed(doc, options) {
               return resolve(true);
             }
 
-            // Remove Store (overwrite)
+            // Remove Item (overwrite)
 
             existing.remove(function (err) {
               if (err) {
@@ -122,19 +163,19 @@ function seed(doc, options) {
       return new Promise(function (resolve, reject) {
         if (skip) {
           return resolve({
-            message: chalk.yellow('Database Seeding: Store\t' + doc.title + ' skipped')
+            message: chalk.yellow('Database Seeding: Item\t' + doc.title + ' skipped')
           });
         }
 
-        var store = new Store(doc);
+        var item = new Item(doc);
 
-        store.save(function (err) {
+        item.save(function (err) {
           if (err) {
             return reject(err);
           }
 
           return resolve({
-            message: 'Database Seeding: Store\t' + store.title + ' added'
+            message: 'Database Seeding: Item\t' + item.title + ' added'
           });
         });
       });

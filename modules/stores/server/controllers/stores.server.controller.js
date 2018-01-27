@@ -46,7 +46,8 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var store = req.store;
 
-  store.title = req.body.title;
+  store.name = req.body.name;
+  store.location = req.body.location;
   store.content = req.body.content;
 
   store.save(function (err) {

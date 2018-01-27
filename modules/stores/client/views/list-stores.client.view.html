@@ -11,7 +11,8 @@
         <span ng-if="store.user" ng-bind="store.user.displayName"></span>
         <span ng-if="!store.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" ng-bind="store.title"></h4>
+      <h4 class="list-group-item-heading" ng-bind="store.name"></h4>
+      <h3 class="list-group-item-heading" ng-bind="store.location"></h3>
       <p class="list-group-item-text" ng-bind="store.content"></p>
     </a>
   </div>

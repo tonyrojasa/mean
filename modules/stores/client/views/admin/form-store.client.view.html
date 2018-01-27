@@ -1,20 +1,46 @@
 <section>
   <div class="page-header">
     <h1>{{vm.store._id ? 'Editar Tienda' : 'Nueva Tienda'}}</h1>
-  </div>
-  <div class="pull-right">
-    <a ng-show="vm.store._id" class="btn btn-primary" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
-  </div>
+  </div>  
+    <div class="row pull-right">
+      <a ng-show="vm.store._id" class="btn btn-primary" ng-click="vm.remove()">
+        <i class="glyphicon glyphicon-trash"></i> Eliminar 
+      </a>
+    </div>
+    <div class="row pull-left">
+       <a class="btn btn-secondary" data-ui-sref="admin.stores.list">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+        Regresar
+      </a>
+    </div>
+  <br /><br />
   <div class="col-md-12">
     <form name="vm.form.storeForm" class="form-horizontal" ng-submit="vm.save(vm.form.storeForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
-          <label class="control-label" for="title">Nombre</label>
-          <input name="title" type="text" ng-model="vm.store.title" id="title" class="form-control" placeholder="Title" required autofocus>
-          <div ng-messages="vm.form.storeForm.title.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Store title is required.</p>
+          <label class="control-label" for="storeName">Nombre *</label>
+          <input name="storeName" type="text" ng-model="vm.store.name" id="storeName" class="form-control" placeholder="Nombre" required autofocus>
+          <div ng-messages="vm.form.storeForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Nombre es requerido.</p>
+          </div>
+        </div> 
+        <div class="form-group" show-errors>
+          <label class="control-label" for="storeLocation">Provincia *</label>
+          <input name="storeLocation" type="hidden" ng-model="vm.store.location" id="storeLocation" class="form-control" placeholder="Por concepto de" required>
+          <div class="dropdown" id="storeLocationDropdown" uib-dropdown>
+            <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button">
+              <span ng-if="!vm.store.location">-- Seleccione uno --</span>
+              {{vm.store.location}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="location in vm.locations">
+                <a ng-click="vm.setLocation(location)">{{location}}</a>
+              </li>
+            </ul>
+          </div> 
+          <div ng-messages="vm.form.storeForm.storeLocation.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Provincia es requerido.</p>
           </div>
         </div>
         <div class="form-group">
@@ -22,7 +48,7 @@
           <textarea name="content" data-ng-model="vm.store.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.store._id ? 'Update' : 'Create'}}</button>
+          <button type="submit" class="btn btn-default">{{vm.store._id ? 'Actualizar' : 'Crear'}}</button>
         </div>
       </fieldset>
     </form>

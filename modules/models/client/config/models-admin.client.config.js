@@ -10,7 +10,7 @@
 
   function menuConfig(Menus) {
     Menus.addSubMenuItem('topbar', 'admin', {
-      title: 'Manage Models',
+      title: 'Administrar Modelos',
       state: 'admin.models.list'
     });
   }

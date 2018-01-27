@@ -1,0 +1,115 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.item._id ? 'Editar Dispositivo' : 'Nuevo Dispositivo'}}</h1>
+  </div>
+  <div class="pull-right">
+    <a ng-show="vm.item._id" class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+  <div class="col-md-12">
+    <form name="vm.form.itemForm" class="form-horizontal" ng-submit="vm.save(vm.form.itemForm.$valid)" novalidate>
+      <fieldset>
+        <legend>Datos del dueño</legend>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerName">Nombre *</label>
+          <input name="ownerName" type="text" ng-model="vm.item.owner.name" id="ownerName" class="form-control" placeholder="Nombre" required autofocus>
+          <div ng-messages="vm.form.itemForm.ownerName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Nombre es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerId">Cédula *</label>
+          <input name="ownerId" type="text" ng-model="vm.item.owner.id" id="ownerId" class="form-control" placeholder="Cédula" required>
+          <div ng-messages="vm.form.itemForm.ownerId.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Cédula es requerido.</p>
+          </div>
+        </div>
+      </fieldset>
+      <br />
+      <fieldset>
+        <legend>Datos del dispositivo</legend>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="registrationDate">Fecha de ingreso *</label>
+          <br />
+          <input name="registrationDate" type="hidden" ng-model="vm.item.registrationDate" id="registrationDate" class="form-control" required>
+          <datetimepicker 
+            ng-model="vm.item.registrationDate" 
+            hidden-time="true" 
+            date-format="dd-MMM-yyyy" 
+            current-text="Hoy"
+            clear-text="Limpiar"
+            close-text="Cerrar"></datetimepicker>          
+          <div ng-messages="vm.form.itemForm.registrationDate.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Fecha de ingreso es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerName">Marca *</label>
+          <input name="ownerName" type="text" ng-model="vm.item.owner.name" id="ownerName" class="form-control" placeholder="Marca" required>
+          <div ng-messages="vm.form.itemForm.ownerName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Marca es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerId">Modelo *</label>
+          <input name="ownerId" type="text" ng-model="vm.item.owner.id" id="ownerId" class="form-control" placeholder="Modelo" required>
+          <div ng-messages="vm.form.itemForm.ownerId.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Modelo es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="serialNumber">Número de serie *</label>
+          <input name="serialNumber" type="text" ng-model="vm.item.serialNumber" id="serialNumber" class="form-control" placeholder="Número de serie" required>
+          <div ng-messages="vm.form.itemForm.serialNumber.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Número de serie es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="itemStatus">Estado *</label>
+          <input name="itemStatus" type="hidden" ng-model="vm.item.status" id="itemStatus" class="form-control" placeholder="Por concepto de" required>
+          <div class="dropdown" id="storeLocationDropdown" uib-dropdown>
+            <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button">
+              <span ng-if="!vm.item.status">-- Seleccione uno --</span>
+              {{vm.item.status}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="status in vm.statuses">
+                <a ng-click="vm.setStatus(status)">{{status}}</a>
+              </li>
+            </ul>
+          </div> 
+          <div ng-messages="vm.form.storeForm.itemStatus.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Estado es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="itemObservations">Observaciones</label>
+           <textarea name="itemObservations" data-ng-model="vm.item.observations" id="itemObservations" class="form-control" cols="30" rows="10" placeholder="Observaciones"></textarea>
+        </div>
+      </fieldset>
+      <br />
+      <fieldset>
+        <legend>Datos del Taller</legend>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerName">Taller *</label>
+          <input name="ownerName" type="text" ng-model="vm.item.owner.name" id="ownerName" class="form-control" placeholder="Nombre" required>
+          <div ng-messages="vm.form.itemForm.ownerName.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Nombre del taller es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerId">Técnico *</label>
+          <input name="ownerId" type="text" ng-model="vm.item.owner.id" id="ownerId" class="form-control" placeholder="Cédula" required>
+          <div ng-messages="vm.form.itemForm.ownerId.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Técnico es requerido.</p>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default">{{vm.item._id ? 'Actualizar' : 'Crear'}}</button>
+      </div>
+    </form>
+  </div>
+</section>

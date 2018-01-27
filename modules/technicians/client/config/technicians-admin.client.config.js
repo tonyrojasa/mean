@@ -10,7 +10,7 @@
 
   function menuConfig(Menus) {
     Menus.addSubMenuItem('topbar', 'admin', {
-      title: 'Manage Technicians',
+      title: 'Administrar Técnicos',
       state: 'admin.technicians.list'
     });
   }

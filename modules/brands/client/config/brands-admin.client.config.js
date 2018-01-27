@@ -10,7 +10,7 @@
 
   function menuConfig(Menus) {
     Menus.addSubMenuItem('topbar', 'admin', {
-      title: 'Manage Brands',
+      title: 'Administrar Marcas',
       state: 'admin.brands.list'
     });
   }
