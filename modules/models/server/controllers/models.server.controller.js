@@ -46,8 +46,9 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var model = req.model;
 
-  model.title = req.body.title;
-  model.content = req.body.content;
+  model.name = req.body.name;
+  model.brand = req.body.brand;
+  model.description = req.body.description;
 
   model.save(function (err) {
     if (err) {
@@ -81,7 +82,10 @@ exports.delete = function (req, res) {
  * List of Models
  */
 exports.list = function (req, res) {
-  Model.find().sort('-created').populate('user', 'displayName').exec(function (err, models) {
+  Model.find().sort('-created')
+  .populate('user', 'displayName')
+  .populate('brand', 'name')
+  .exec(function (err, models) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
@@ -103,7 +107,9 @@ exports.modelByID = function (req, res, next, id) {
     });
   }
 
-  Model.findById(id).populate('user', 'displayName').exec(function (err, model) {
+  Model.findById(id).populate('user', 'displayName')
+  .populate('brand', 'name')
+  .exec(function (err, model) {
     if (err) {
       return next(err);
     } else if (!model) {

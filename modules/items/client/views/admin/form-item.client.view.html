@@ -51,13 +51,28 @@
             <p class="help-block error-text" ng-message="required">Marca es requerido.</p>
           </div>
         </div>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="ownerId">Modelo *</label>
-          <input name="ownerId" type="text" ng-model="vm.item.owner.id" id="ownerId" class="form-control" placeholder="Modelo" required>
-          <div ng-messages="vm.form.itemForm.ownerId.$error" role="alert">
+        <div class="form-group" show-errors>        
+          <label class="control-label" for="models">Modelo *</label>  
+          <input name="models" type="hidden" ng-model="vm.item.model" id="models" class="form-control" required>
+          <div class="input-group select2-bootstrap-append">
+            <ui-select ng-model="vm.item.model" >
+              <ui-select-match  placeholder="Seleccione la marca...">
+                    <span>{{$select.selected.name}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (vm.models | filter: $select.search) track by item._id">
+                    <div ng-bind-html="item.title | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select> 
+            <span class="input-group-btn">
+              <button type="button" ng-click="vm.item.model = undefined" class="btn btn-default">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </span>  
+          </div> 
+          <div ng-messages="vm.form.itemForm.model.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Modelo es requerido.</p>
           </div>
-        </div>
+        </div> 
         <div class="form-group" show-errors>
           <label class="control-label" for="serialNumber">Número de serie *</label>
           <input name="serialNumber" type="text" ng-model="vm.item.serialNumber" id="serialNumber" class="form-control" placeholder="Número de serie" required>

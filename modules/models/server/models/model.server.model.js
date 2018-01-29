@@ -17,13 +17,18 @@ var ModelSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  title: {
+  name: {
     type: String,
     default: '',
     trim: true,
-    required: 'Title cannot be blank'
+    required: 'name cannot be blank'
   },
-  content: {
+  brand: {
+    type: Schema.ObjectId,
+    ref: 'Brand',
+    required: 'brand cannot be blank'
+  },
+  description: {
     type: String,
     default: '',
     trim: true

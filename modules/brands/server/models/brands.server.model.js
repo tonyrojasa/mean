@@ -17,13 +17,13 @@ var BrandSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  title: {
+  name: {
     type: String,
     default: '',
     trim: true,
-    required: 'Title cannot be blank'
+    required: 'name cannot be blank'
   },
-  content: {
+  description: {
     type: String,
     default: '',
     trim: true

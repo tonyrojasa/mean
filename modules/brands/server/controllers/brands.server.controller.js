@@ -46,8 +46,8 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var brand = req.brand;
 
-  brand.title = req.body.title;
-  brand.content = req.body.content;
+  brand.name = req.body.name;
+  brand.description = req.body.description;
 
   brand.save(function (err) {
     if (err) {

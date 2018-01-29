@@ -5,9 +5,11 @@
     .module('items.admin')
     .controller('ItemsAdminController', ItemsAdminController);
 
-  ItemsAdminController.$inject = ['$scope', '$state', '$window', 'itemResolve', 'Authentication', 'Notification'];
+  ItemsAdminController.$inject = ['$scope', '$state', '$window', 'itemResolve', 'Authentication', 'Notification',
+    'ModelsService'];
 
-  function ItemsAdminController($scope, $state, $window, item, Authentication, Notification) {
+  function ItemsAdminController($scope, $state, $window, item, Authentication, Notification,
+    ModelsService) {
     var vm = this;
 
     vm.item = item;
@@ -16,22 +18,24 @@
     vm.remove = remove;
     vm.save = save;
 
-    vm.statuses = [
-    'Ingresado',
-    'Taller - Enviado',
-    'Taller - En reparación',
-    'Taller - Reparado',    
-    'Taller - No reparado',
-    'Entregado a dueño',
-    'Desechado'];
+    vm.models = ModelsService.query();
 
-    vm.setStatus = function(status) {
+    vm.statuses = [
+      'Ingresado',
+      'Taller - Enviado',
+      'Taller - En reparación',
+      'Taller - Reparado',
+      'Taller - No reparado',
+      'Entregado a dueño',
+      'Desechado'];
+
+    vm.setStatus = function (status) {
       vm.item.status = status;
     };
 
-    if(!vm.item._id) {
+    if (!vm.item._id) {
       vm.item.status = 'Ingresado';
-      vm.item.registrationDate = new Date()
+      vm.item.registrationDate = new Date();
     }
 
     // Remove existing Item

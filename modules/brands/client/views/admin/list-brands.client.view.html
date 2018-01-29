@@ -1,9 +1,9 @@
 ﻿<section>
   <div class="page-header">
     <h1>
-      Brands
+      Marcas
       <a class="btn btn-primary pull-right" data-ui-sref="admin.brands.create">
-        <i class="glyphicon glyphicon-plus"></i>
+        <i class="glyphicon glyphicon-plus"></i> Agregar
       </a>
     </h1>
   </div>
@@ -16,11 +16,11 @@
         <span ng-if="brand.user" ng-bind="brand.user.displayName"></span>
         <span ng-if="!brand.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" data-ng-bind="brand.title"></h4>
-      <p class="list-group-item-text" data-ng-bind="brand.content"></p>
+      <h4 class="list-group-item-heading" data-ng-bind="brand.name"></h4>
+      <p class="list-group-item-text" data-ng-bind="brand.description"></p>
     </a>
   </div>
-  <div class="alert alert-warning text-center" data-ng-if="vm.brands.$resolved && !brands.length">
-    No brands yet, why don't you <a data-ui-sref="admin.brands.create">create one</a>?
+  <div class="alert alert-warning text-center" data-ng-if="vm.brands.$resolved && !vm.brands.length">
+    No hay marcas, Porqué no <a data-ui-sref="admin.brands.create">creas una</a>?
   </div>
 </section>

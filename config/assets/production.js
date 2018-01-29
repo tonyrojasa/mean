@@ -11,6 +11,7 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap.min.css',
         'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
         'public/lib/angular-ui-bootstrap-datetimepicker/datetimepicker.css',
+        'public/lib/angular-ui-select/dist/select.css',
         // endbower
       ],
       js: [
@@ -26,6 +27,8 @@ module.exports = {
         'public/lib/ng-file-upload/ng-file-upload.min.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
         'public/lib/angular-ui-bootstrap-datetimepicker/datetimepicker.js',
+        'public/lib/angular-ui-select/dist/select.js',
+        'public/lib/angular-sanitize/angular-sanitize.js',
         // endbower
       ]
     },

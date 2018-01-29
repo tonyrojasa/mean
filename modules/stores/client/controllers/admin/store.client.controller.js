@@ -16,9 +16,9 @@
     vm.remove = remove;
     vm.save = save;
 
-    vm.locations = ['Alajuela','Cartago','Guanacaste','Heredia','Limón','Puntarenas','San José'];
+    vm.locations = ['Alajuela', 'Cartago', 'Guanacaste', 'Heredia', 'Limón', 'Puntarenas', 'San José'];
 
-    vm.setLocation = function(location) {
+    vm.setLocation = function (location) {
       vm.store.location = location;
     };
 
@@ -34,7 +34,6 @@
 
     // Save Store
     function save(isValid) {
-      debugger;
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.storeForm');
         return false;

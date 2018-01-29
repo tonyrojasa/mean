@@ -8,11 +8,16 @@ var mongoose = require('mongoose'),
   path = require('path'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
+var autoIncrement = require('mongoose-sequence')(mongoose);
 
 /**
  * Item Schema
  */
 var ItemSchema = new Schema({
+  itemNumber: {
+    type: Number,
+    required: 'Please fill itemNumber'
+  },
   created: {
     type: Date,
     default: Date.now
@@ -58,12 +63,12 @@ var ItemSchema = new Schema({
     technician: {
       type: [Schema.ObjectId],
       ref: 'Technician'
-    },
-  },  
+    }
+  },
   status: {
     type: String,
     default: 'Ingresado',
-    trim: true,    
+    trim: true,
     required: 'status cannot be blank'
   },
   observations: {
@@ -71,7 +76,7 @@ var ItemSchema = new Schema({
     default: '',
     trim: true
   },
-  warantyExpirationDate: {    
+  warantyExpirationDate: {
     type: Date
   },
   user: {
@@ -79,6 +84,8 @@ var ItemSchema = new Schema({
     ref: 'User'
   }
 });
+
+ItemSchema.plugin(autoIncrement, { inc_field: 'itemNumber' });
 
 ItemSchema.statics.seed = seed;
 
