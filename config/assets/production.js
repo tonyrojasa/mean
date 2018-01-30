@@ -12,6 +12,7 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap-theme.min.css',
         'public/lib/angular-ui-bootstrap-datetimepicker/datetimepicker.css',
         'public/lib/angular-ui-select/dist/select.css',
+        'public/lib/angular-bootstrap-colorpicker/css/colorpicker.css',
         // endbower
       ],
       js: [
@@ -29,6 +30,8 @@ module.exports = {
         'public/lib/angular-ui-bootstrap-datetimepicker/datetimepicker.js',
         'public/lib/angular-ui-select/dist/select.js',
         'public/lib/angular-sanitize/angular-sanitize.js',
+        'public/lib/ngMask/dist/ngMask.min.js',
+        'public/lib/angular-bootstrap-colorpicker/css/colorpicker.css',
         // endbower
       ]
     },

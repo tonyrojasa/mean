@@ -12,14 +12,14 @@
       title: 'Técnicos',
       state: 'technicians',
       type: 'dropdown',
-      roles: ['*']
+      roles: ['user']
     });
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'technicians', {
       title: 'Lista de Técnicos',
       state: 'technicians.list',
-      roles: ['*']
+      roles: ['user']
     });
   }
 }());

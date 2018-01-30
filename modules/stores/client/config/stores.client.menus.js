@@ -12,14 +12,14 @@
       title: 'Tiendas',
       state: 'stores',
       type: 'dropdown',
-      roles: ['*']
+      roles: ['user']
     });
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'stores', {
       title: 'Lista de Tiendas',
       state: 'stores.list',
-      roles: ['*']
+      roles: ['user']
     });
   }
 }());

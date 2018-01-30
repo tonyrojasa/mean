@@ -25,11 +25,26 @@ var ItemSchema = new Schema({
   owner: {
     name: {
       type: String,
+      trim: true,
       required: 'owner name cannot be blank'
     },
     id: {
       type: String,
+      trim: true,
       required: 'owner id cannot be blank'
+    },
+    mobilePhone: {
+      type: String,
+      trim: true,
+      required: 'mobliePhone id cannot be blank'
+    },
+    otherPhone: {
+      type: String,
+      trim: true
+    },
+    email: {
+      type: String,
+      trim: true
     }
   },
   model: {
@@ -46,6 +61,9 @@ var ItemSchema = new Schema({
     default: '',
     trim: true
   },
+  color: {
+    type: String
+  },
   registrationDate: {
     type: Date,
     default: Date.now
@@ -53,6 +71,9 @@ var ItemSchema = new Schema({
   resolutions: {
     resolutionDate: {
       type: [Date]
+    },
+    condition: {
+      type: [String]
     },
     observations: {
       type: [String]
@@ -76,8 +97,16 @@ var ItemSchema = new Schema({
     default: '',
     trim: true
   },
-  warantyExpirationDate: {
-    type: Date
+  waranty: {
+    enabled: {
+      type: Boolean
+    },
+    expirationDate: {
+      type: Date
+    },
+  },
+  revisionCost: {
+    type: Number
   },
   user: {
     type: Schema.ObjectId,

@@ -12,14 +12,14 @@
       title: 'Modelos',
       state: 'models',
       type: 'dropdown',
-      roles: ['*']
+      roles: ['user']
     });
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'models', {
       title: 'List de Modelos',
       state: 'models.list',
-      roles: ['*']
+      roles: ['user']
     });
   }
 }());

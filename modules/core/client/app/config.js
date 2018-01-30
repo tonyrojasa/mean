@@ -7,7 +7,7 @@
     applicationEnvironment: window.env,
     applicationModuleName: applicationModuleName,
     applicationModuleVendorDependencies: ['ngResource', 'ngAnimate', 'ngMessages', 'ui.router',
-      'ui.bootstrap', 'ngFileUpload', 'ui-notification', 'ui.select', 'ngSanitize'],
+      'ui.bootstrap', 'ngFileUpload', 'ui-notification', 'ui.select', 'ngSanitize', 'ngMask', 'colorpicker.module'],
     registerModule: registerModule
   };
 

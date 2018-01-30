@@ -1,7 +1,7 @@
 ﻿<section>
   <div class="page-header">
     <h1>
-      Items
+      Artículos
       <a class="btn btn-primary pull-right" data-ui-sref="admin.items.create">
         <i class="glyphicon glyphicon-plus"></i>
       </a>
@@ -20,7 +20,7 @@
       <p class="list-group-item-text" data-ng-bind="item.content"></p>
     </a>
   </div>
-  <div class="alert alert-warning text-center" data-ng-if="vm.items.$resolved && !items.length">
-    No items yet, why don't you <a data-ui-sref="admin.items.create">create one</a>?
+  <div class="alert alert-warning text-center" data-ng-if="vm.items.$resolved && !vm.items.length">
+    No hay artículos, Porque no <a data-ui-sref="admin.items.create">creas uno</a>?
   </div>
 </section>

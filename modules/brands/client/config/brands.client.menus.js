@@ -12,14 +12,14 @@
       title: 'Marcas',
       state: 'brands',
       type: 'dropdown',
-      roles: ['*']
+      roles: ['user']
     });
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'brands', {
       title: 'Lista de Marcas',
       state: 'brands.list',
-      roles: ['*']
+      roles: ['user']
     });
   }
 }());

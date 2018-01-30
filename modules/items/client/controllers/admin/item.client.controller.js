@@ -33,6 +33,14 @@
       vm.item.status = status;
     };
 
+    vm.setModel = function (brand) {
+      vm.item.model = vm.item.model && vm.item.model.brand._id === brand._id ? vm.item.model : undefined;
+    };
+
+    vm.setBrand = function (brand) {
+      vm.item.brand = brand;
+    };
+
     if (!vm.item._id) {
       vm.item.status = 'Ingresado';
       vm.item.registrationDate = new Date();

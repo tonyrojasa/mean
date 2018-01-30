@@ -25,6 +25,17 @@
             <p class="help-block error-text" ng-message="required">Cédula es requerido.</p>
           </div>
         </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerMobilePhone">Celular *</label>
+          <input name="ownerMobilePhone" mask="9999-9999" mask-restrict="reject" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.mobilePhone" id="ownerMobilePhone" class="form-control" required />
+          <div ng-messages="vm.form.itemForm.ownerMobilePhone.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Celular es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="ownerOtherPhone">Otro Teléfono</label>
+          <input name="ownerOtherPhone" mask="9999-9999" mask-restrict="reject" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.otherPhone" id="ownerOtherPhone" class="form-control" />
+        </div>
       </fieldset>
       <br />
       <fieldset>
@@ -44,23 +55,38 @@
             <p class="help-block error-text" ng-message="required">Fecha de ingreso es requerido.</p>
           </div>
         </div>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="ownerName">Marca *</label>
-          <input name="ownerName" type="text" ng-model="vm.item.owner.name" id="ownerName" class="form-control" placeholder="Marca" required>
-          <div ng-messages="vm.form.itemForm.ownerName.$error" role="alert">
+        <div class="form-group" show-errors>        
+          <label class="control-label" for="brands">Marca *</label>  
+          <input name="brands" type="hidden" ng-model="vm.item.brand" id="brands" class="form-control" required>
+          <div class="input-group select2-bootstrap-append">
+            <ui-select ng-model="vm.item.brand" on-select="vm.setModel($select.selected.brand)">
+              <ui-select-match  placeholder="Seleccione la marca...">
+                    <span>{{$select.selected.brand.name}}</span>
+                </ui-select-match>
+                <ui-select-choices repeat="item in (vm.models | filter: $select.search) track by item._id">
+                    <div ng-bind-html="item.brand.name | highlight: $select.search"></div>
+                </ui-select-choices>
+            </ui-select> 
+            <span class="input-group-btn">
+              <button type="button" ng-click="vm.item.brand = undefined" class="btn btn-default">
+                <span class="glyphicon glyphicon-trash"></span>
+              </button>
+            </span>  
+          </div> 
+          <div ng-messages="vm.form.itemForm.model.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Marca es requerido.</p>
           </div>
-        </div>
+        </div> 
         <div class="form-group" show-errors>        
           <label class="control-label" for="models">Modelo *</label>  
           <input name="models" type="hidden" ng-model="vm.item.model" id="models" class="form-control" required>
           <div class="input-group select2-bootstrap-append">
-            <ui-select ng-model="vm.item.model" >
+            <ui-select ng-model="vm.item.model" on-select="vm.setBrand($select.selected)">
               <ui-select-match  placeholder="Seleccione la marca...">
                     <span>{{$select.selected.name}}</span>
                 </ui-select-match>
                 <ui-select-choices repeat="item in (vm.models | filter: $select.search) track by item._id">
-                    <div ng-bind-html="item.title | highlight: $select.search"></div>
+                    <div ng-bind-html="item.name | highlight: $select.search"></div>
                 </ui-select-choices>
             </ui-select> 
             <span class="input-group-btn">
@@ -79,9 +105,13 @@
           <div ng-messages="vm.form.itemForm.serialNumber.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Número de serie es requerido.</p>
           </div>
+        </div>        
+        <div class="form-group" show-errors>
+          <label class="control-label" for="color">Color</label>
+          <input name="color" colorpicker colorpicker-with-input="false" colorpicker-close-on-select type="text" class="img-rounded" ng-model="vm.item.color" style="background-color: {{vm.item.color}};color: {{vm.item.color}};height: 30px;"  ng-disabled="readonly" readonly="true" />
         </div>
         <div class="form-group" show-errors>
-          <label class="control-label" for="itemStatus">Estado *</label>
+          <label class="control-label" for="itemStatus">Estado de revisión *</label>
           <input name="itemStatus" type="hidden" ng-model="vm.item.status" id="itemStatus" class="form-control" placeholder="Por concepto de" required>
           <div class="dropdown" id="storeLocationDropdown" uib-dropdown>
             <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button">
@@ -100,7 +130,7 @@
           </div>
         </div>
         <div class="form-group" show-errors>
-          <label class="control-label" for="itemObservations">Observaciones</label>
+          <label class="control-label" for="itemObservations">Observaciones (incluir daños o marcas físicas)</label>
            <textarea name="itemObservations" data-ng-model="vm.item.observations" id="itemObservations" class="form-control" cols="30" rows="10" placeholder="Observaciones"></textarea>
         </div>
       </fieldset>
