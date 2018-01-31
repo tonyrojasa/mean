@@ -1,9 +1,9 @@
 ﻿<section>
   <div class="page-header">
     <h1>
-      Technicians
+      Técnicos
       <a class="btn btn-primary pull-right" data-ui-sref="admin.technicians.create">
-        <i class="glyphicon glyphicon-plus"></i>
+        <i class="glyphicon glyphicon-plus"></i> Agregar
       </a>
     </h1>
   </div>
@@ -16,11 +16,12 @@
         <span ng-if="technician.user" ng-bind="technician.user.displayName"></span>
         <span ng-if="!technician.user">Deleted User</span>
       </small>
-      <h4 class="list-group-item-heading" data-ng-bind="technician.title"></h4>
-      <p class="list-group-item-text" data-ng-bind="technician.content"></p>
+      <h4 class="list-group-item-heading" data-ng-bind="technician.name"></h4>
+      <p class="list-group-item-text" data-ng-bind="technician.workshop.name"></p>
+      <p class="list-group-item-text" data-ng-bind="technician.description"></p>
     </a>
   </div>
-  <div class="alert alert-warning text-center" data-ng-if="vm.technicians.$resolved && !technicians.length">
-    No technicians yet, why don't you <a data-ui-sref="admin.technicians.create">create one</a>?
+  <div class="alert alert-warning text-center" data-ng-if="vm.technicians.$resolved && !vm.technicians.length">
+    No hay técnicos, Porqué no <a data-ui-sref="admin.technicians.create">creas uno</a>?
   </div>
 </section>

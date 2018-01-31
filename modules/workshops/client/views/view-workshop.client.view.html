@@ -1,0 +1,16 @@
+<section>
+  <div class="page-header">
+    <h1 ng-bind="vm.workshop.name"></h1>
+  </div>
+  <small>
+    <em class="text-muted">
+      Posted on
+      <span ng-bind="vm.workshop.created | date:'mediumDate'"></span>
+      by
+      <span ng-if="vm.workshop.user" ng-bind="vm.workshop.user.displayName"></span>
+      <span ng-if="!vm.workshop.user">Deleted User</span>
+    </em>
+  </small>
+  <p class="lead" ng-bind="vm.workshop.location"></p>
+  <p class="lead" ng-bind="vm.workshop.content"></p>
+</section>

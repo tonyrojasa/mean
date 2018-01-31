@@ -46,8 +46,12 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var technician = req.technician;
 
-  technician.title = req.body.title;
-  technician.content = req.body.content;
+  technician.name = req.body.name;
+  technician.workshop = req.body.workshop;
+  technician.mobilePhone = req.body.mobilePhone;
+  technician.otherPhone = req.body.otherPhone;
+  technician.email = req.body.email;
+  technician.description = req.body.description;
 
   technician.save(function (err) {
     if (err) {
@@ -81,15 +85,17 @@ exports.delete = function (req, res) {
  * List of Technicians
  */
 exports.list = function (req, res) {
-  Technician.find().sort('-created').populate('user', 'displayName').exec(function (err, technicians) {
-    if (err) {
-      return res.status(422).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(technicians);
-    }
-  });
+  Technician.find().sort('-created').populate('user', 'displayName')
+    .populate('workshop', 'name')
+    .exec(function (err, technicians) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(technicians);
+      }
+    });
 };
 
 /**
@@ -103,15 +109,17 @@ exports.technicianByID = function (req, res, next, id) {
     });
   }
 
-  Technician.findById(id).populate('user', 'displayName').exec(function (err, technician) {
-    if (err) {
-      return next(err);
-    } else if (!technician) {
-      return res.status(404).send({
-        message: 'No technician with that identifier has been found'
-      });
-    }
-    req.technician = technician;
-    next();
-  });
+  Technician.findById(id).populate('user', 'displayName')
+    .populate('workshop', 'name')
+    .exec(function (err, technician) {
+      if (err) {
+        return next(err);
+      } else if (!technician) {
+        return res.status(404).send({
+          message: 'No technician with that identifier has been found'
+        });
+      }
+      req.technician = technician;
+      next();
+    });
 };

@@ -5,9 +5,11 @@
     .module('technicians.admin')
     .controller('TechniciansAdminController', TechniciansAdminController);
 
-  TechniciansAdminController.$inject = ['$scope', '$state', '$window', 'technicianResolve', 'Authentication', 'Notification'];
+  TechniciansAdminController.$inject = ['$scope', '$state', '$window', 'technicianResolve',
+    'Authentication', 'Notification', 'WorkshopsService'];
 
-  function TechniciansAdminController($scope, $state, $window, technician, Authentication, Notification) {
+  function TechniciansAdminController($scope, $state, $window, technician,
+    Authentication, Notification, WorkshopsService) {
     var vm = this;
 
     vm.technician = technician;
@@ -15,6 +17,8 @@
     vm.form = {};
     vm.remove = remove;
     vm.save = save;
+
+    vm.workshops = WorkshopsService.query();
 
     // Remove existing Technician
     function remove() {

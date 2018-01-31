@@ -1,0 +1,56 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.workshop._id ? 'Editar Taller' : 'Nuevo Taller'}}</h1>
+  </div>  
+  <div class="row pull-right">
+    <a ng-show="vm.workshop._id" class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i> Eliminar 
+    </a>
+  </div>
+  <div class="row pull-left">
+     <a class="btn btn-secondary" data-ui-sref="admin.workshops.list">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar
+    </a>
+  </div>
+  <br /><br />
+  <div class="col-md-12">
+    <form name="vm.form.workshopForm" class="form-horizontal" ng-submit="vm.save(vm.form.workshopForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="workshopName">Nombre *</label>
+          <input name="workshopName" type="text" ng-model="vm.workshop.name" id="workshopName" class="form-control" placeholder="Nombre" required autofocus>
+          <div ng-messages="vm.form.workshopForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Nombre es requerido.</p>
+          </div>
+        </div> 
+        <div class="form-group" show-errors>
+          <label class="control-label" for="workshopLocation">Provincia *</label>
+          <input name="workshopLocation" type="hidden" ng-model="vm.workshop.location" id="workshopLocation" class="form-control" placeholder="Por concepto de" required>
+          <div class="dropdown" id="workshopLocationDropdown" uib-dropdown>
+            <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button">
+              <span ng-if="!vm.workshop.location">-- Seleccione uno --</span>
+              {{vm.workshop.location}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li ng-repeat="location in vm.locations">
+                <a ng-click="vm.setLocation(location)">{{location}}</a>
+              </li>
+            </ul>
+          </div> 
+          <div ng-messages="vm.form.workshopForm.workshopLocation.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Provincia es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="content">Descripción</label>
+          <textarea name="content" data-ng-model="vm.workshop.content" id="content" class="form-control" cols="30" rows="10" placeholder="Content"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.workshop._id ? 'Actualizar' : 'Crear'}}</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

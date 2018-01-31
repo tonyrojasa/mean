@@ -7,6 +7,13 @@
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
+  <div class="row pull-left">
+     <a class="btn btn-secondary" data-ui-sref="admin.items.list">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar
+    </a>
+  </div>
+  <br /><br />
   <div class="col-md-12">
     <form name="vm.form.itemForm" class="form-horizontal" ng-submit="vm.save(vm.form.itemForm.$valid)" novalidate>
       <fieldset>
@@ -27,15 +34,22 @@
         </div>
         <div class="form-group" show-errors>
           <label class="control-label" for="ownerMobilePhone">Celular *</label>
-          <input name="ownerMobilePhone" mask="9999-9999" mask-restrict="reject" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.mobilePhone" id="ownerMobilePhone" class="form-control" required />
+          <input name="ownerMobilePhone" mask="9999-9999" mask-restrict="reject" placeholder="Celular" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.mobilePhone" id="ownerMobilePhone" class="form-control" required />
           <div ng-messages="vm.form.itemForm.ownerMobilePhone.$error" role="alert">
             <p class="help-block error-text" ng-message="required">Celular es requerido.</p>
           </div>
         </div>
         <div class="form-group" show-errors>
           <label class="control-label" for="ownerOtherPhone">Otro Teléfono</label>
-          <input name="ownerOtherPhone" mask="9999-9999" mask-restrict="reject" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.otherPhone" id="ownerOtherPhone" class="form-control" />
+          <input name="ownerOtherPhone" mask="9999-9999" mask-restrict="reject" placeholder="Otro Teléfono" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.otherPhone" id="ownerOtherPhone" class="form-control" />
         </div>
+        <div class="form-group" show-errors>
+            <label class="control-label" for="ownerEmail">Email</label>
+            <input name="ownerEmail" type="email" ng-model="vm.item.owner.email" id="ownerEmail" autocomplete="off" class="form-control" placeholder="Email">
+          <div ng-messages="vm.form.itemForm.ownerEmail.$error" role="alert">
+            <p class="help-block error-text" ng-message="email">Email es incorrecto.</p>
+          </div>
+          </div>
       </fieldset>
       <br />
       <fieldset>

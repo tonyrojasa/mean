@@ -10,36 +10,24 @@ var mongoose = require('mongoose'),
   chalk = require('chalk');
 
 /**
- * Technician Schema
+ * Workshop Schema
  */
-var TechnicianSchema = new Schema({
+var WorkshopSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
   },
   name: {
     type: String,
-    default: '',
     trim: true,
-    required: 'name cannot be blank'
+    required: 'Name cannot be blank'
   },
-  workshop: {
-    type: Schema.ObjectId,
-    ref: 'Workshop'
-  },
-  mobilePhone: {
+  location: {
     type: String,
-    trim: true
+    trim: true,
+    required: 'Please provide at least one location'
   },
-  otherPhone: {
-    type: String,
-    trim: true
-  },
-  email: {
-    type: String,
-    trim: true
-  },
-  description: {
+  content: {
     type: String,
     default: '',
     trim: true
@@ -50,16 +38,16 @@ var TechnicianSchema = new Schema({
   }
 });
 
-TechnicianSchema.statics.seed = seed;
+WorkshopSchema.statics.seed = seed;
 
-mongoose.model('Technician', TechnicianSchema);
+mongoose.model('Workshop', WorkshopSchema);
 
 /**
-* Seeds the User collection with document (Technician)
+* Seeds the User collection with document (Workshop)
 * and provided options.
 */
 function seed(doc, options) {
-  var Technician = mongoose.model('Technician');
+  var Workshop = mongoose.model('Workshop');
 
   return new Promise(function (resolve, reject) {
 
@@ -99,7 +87,7 @@ function seed(doc, options) {
 
     function skipDocument() {
       return new Promise(function (resolve, reject) {
-        Technician
+        Workshop
           .findOne({
             title: doc.title
           })
@@ -116,7 +104,7 @@ function seed(doc, options) {
               return resolve(true);
             }
 
-            // Remove Technician (overwrite)
+            // Remove Workshop (overwrite)
 
             existing.remove(function (err) {
               if (err) {
@@ -133,19 +121,19 @@ function seed(doc, options) {
       return new Promise(function (resolve, reject) {
         if (skip) {
           return resolve({
-            message: chalk.yellow('Database Seeding: Technician\t' + doc.title + ' skipped')
+            message: chalk.yellow('Database Seeding: Workshop\t' + doc.title + ' skipped')
           });
         }
 
-        var technician = new Technician(doc);
+        var workshop = new Workshop(doc);
 
-        technician.save(function (err) {
+        workshop.save(function (err) {
           if (err) {
             return reject(err);
           }
 
           return resolve({
-            message: 'Database Seeding: Technician\t' + technician.title + ' added'
+            message: 'Database Seeding: Workshop\t' + workshop.title + ' added'
           });
         });
       });
