@@ -1,0 +1,18 @@
+<section>
+  <div class="page-header">
+    <h1>Colores</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="color in vm.colors" ui-sref="colors.view({ colorId: color._id })" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="color.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="color.user" ng-bind="color.user.displayName"></span>
+        <span ng-if="!color.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="color.name"></h4>
+      <p class="list-group-item-text" style="background-color: {{color.code}};color: {{color.code}};" data-ng-bind="color.code"></p>
+    </a>
+  </div>
+</section>

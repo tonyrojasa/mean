@@ -6,10 +6,10 @@
     .controller('ItemsAdminController', ItemsAdminController);
 
   ItemsAdminController.$inject = ['$scope', '$state', '$window', 'itemResolve', 'Authentication', 'Notification',
-    'ModelsService'];
+    'ModelsService', 'ColorsService'];
 
   function ItemsAdminController($scope, $state, $window, item, Authentication, Notification,
-    ModelsService) {
+    ModelsService, ColorsService) {
     var vm = this;
 
     vm.item = item;
@@ -19,6 +19,7 @@
     vm.save = save;
 
     vm.models = ModelsService.query();
+    vm.colors = ColorsService.query();
 
     vm.statuses = [
       'Ingresado',
@@ -33,17 +34,11 @@
       vm.item.status = status;
     };
 
-    vm.setModel = function (brand) {
-      vm.item.model = vm.item.model && vm.item.model.brand._id === brand._id ? vm.item.model : undefined;
-    };
-
-    vm.setBrand = function (brand) {
-      vm.item.brand = brand;
-    };
-
     if (!vm.item._id) {
       vm.item.status = 'Ingresado';
       vm.item.registrationDate = new Date();
+    } else {
+      vm.brand = vm.item.model.brand;
     }
 
     // Remove existing Item

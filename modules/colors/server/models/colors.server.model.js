@@ -8,106 +8,25 @@ var mongoose = require('mongoose'),
   path = require('path'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
-var autoIncrement = require('mongoose-sequence')(mongoose);
 
 /**
- * Item Schema
+ * Color Schema
  */
-var ItemSchema = new Schema({
-  itemNumber: {
-    type: Number
-  },
+var ColorSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
   },
-  owner: {
-    name: {
-      type: String,
-      trim: true,
-      required: 'owner name cannot be blank'
-    },
-    id: {
-      type: String,
-      trim: true,
-      required: 'owner id cannot be blank'
-    },
-    mobilePhone: {
-      type: String,
-      trim: true,
-      required: 'mobliePhone id cannot be blank'
-    },
-    otherPhone: {
-      type: String,
-      trim: true
-    },
-    email: {
-      type: String,
-      trim: true
-    }
-  },
-  model: {
-    type: Schema.ObjectId,
-    ref: 'Model'
-  },
-  serialNumber: {
-    type: String,
-    trim: true,
-    required: 'serialNumber cannot be blank'
-  },
-  description: {
+  name: {
     type: String,
     default: '',
-    trim: true
-  },
-  color: {
-    type: String,
-    ref: 'Color',
-    required: 'color cannot be blank'
-  },
-  registrationDate: {
-    type: Date,
-    default: Date.now
-  },
-  resolutions: [{
-    resolutionDate: {
-      type: Date
-    },
-    condition: {
-      type: String
-    },
-    observations: {
-      type: String
-    },
-    cost: {
-      type: Number
-    },
-    technician: {
-      type: Schema.ObjectId,
-      ref: 'Technician'
-    }
-  }],
-  status: {
-    type: String,
-    default: 'Ingresado',
     trim: true,
-    required: 'status cannot be blank'
+    required: 'name cannot be blank'
   },
-  observations: {
+  code: {
     type: String,
-    default: '',
-    trim: true
-  },
-  waranty: {
-    enabled: {
-      type: Boolean
-    },
-    expirationDate: {
-      type: Date
-    },
-  },
-  revisionCost: {
-    type: Number
+    trim: true,
+    required: 'name cannot be blank'
   },
   user: {
     type: Schema.ObjectId,
@@ -115,18 +34,16 @@ var ItemSchema = new Schema({
   }
 });
 
-ItemSchema.plugin(autoIncrement, { inc_field: 'itemNumber' });
+ColorSchema.statics.seed = seed;
 
-ItemSchema.statics.seed = seed;
-
-mongoose.model('Item', ItemSchema);
+mongoose.model('Color', ColorSchema);
 
 /**
-* Seeds the User collection with document (Item)
+* Seeds the User collection with document (Color)
 * and provided options.
 */
 function seed(doc, options) {
-  var Item = mongoose.model('Item');
+  var Color = mongoose.model('Color');
 
   return new Promise(function (resolve, reject) {
 
@@ -166,7 +83,7 @@ function seed(doc, options) {
 
     function skipDocument() {
       return new Promise(function (resolve, reject) {
-        Item
+        Color
           .findOne({
             title: doc.title
           })
@@ -183,7 +100,7 @@ function seed(doc, options) {
               return resolve(true);
             }
 
-            // Remove Item (overwrite)
+            // Remove Color (overwrite)
 
             existing.remove(function (err) {
               if (err) {
@@ -200,19 +117,19 @@ function seed(doc, options) {
       return new Promise(function (resolve, reject) {
         if (skip) {
           return resolve({
-            message: chalk.yellow('Database Seeding: Item\t' + doc.title + ' skipped')
+            message: chalk.yellow('Database Seeding: Color\t' + doc.title + ' skipped')
           });
         }
 
-        var item = new Item(doc);
+        var color = new Color(doc);
 
-        item.save(function (err) {
+        color.save(function (err) {
           if (err) {
             return reject(err);
           }
 
           return resolve({
-            message: 'Database Seeding: Item\t' + item.title + ' added'
+            message: 'Database Seeding: Color\t' + color.title + ' added'
           });
         });
       });

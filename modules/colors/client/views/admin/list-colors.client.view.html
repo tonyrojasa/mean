@@ -1,0 +1,26 @@
+﻿<section>
+  <div class="page-header">
+    <h1>
+        Colores
+      <a class="btn btn-primary pull-right" data-ui-sref="admin.colors.create">
+        <i class="glyphicon glyphicon-plus"></i> Agregar
+      </a>
+    </h1>
+  </div>
+  <div class="list-group">
+    <a data-ng-repeat="color in vm.colors" data-ui-sref="admin.colors.edit({colorId: color._id})" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span data-ng-bind="color.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="color.user" ng-bind="color.user.displayName"></span>
+        <span ng-if="!color.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" data-ng-bind="color.name"></h4>
+      <p class="list-group-item-text" style="background-color: {{color.code}};color: {{color.code}};" data-ng-bind="color.code"></p>
+    </a>
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="vm.colors.$resolved && !vm.colors.length">
+    No hay colores, Porqué no <a data-ui-sref="admin.colors.create">creas uno</a>?
+  </div>
+</section>

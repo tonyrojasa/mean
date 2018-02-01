@@ -46,8 +46,18 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var item = req.item;
 
-  item.title = req.body.title;
-  item.content = req.body.content;
+  item.owner = req.body.owner;
+  item.model = req.body.model;
+  item.serialNumber = req.body.serialNumber;
+  item.description = req.body.description;
+  item.color = req.body.color;
+  item.color = req.body.color;
+  item.registrationDate = req.body.registrationDate;
+  item.resolutions = req.body.resolutions;
+  item.status = req.body.status;
+  item.observations = req.body.observations;
+  item.waranty = req.body.waranty;
+  item.revisionCost = req.body.revisionCost;
 
   item.save(function (err) {
     if (err) {
@@ -81,15 +91,23 @@ exports.delete = function (req, res) {
  * List of Items
  */
 exports.list = function (req, res) {
-  Item.find().sort('-created').populate('user', 'displayName').exec(function (err, items) {
-    if (err) {
-      return res.status(422).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(items);
-    }
-  });
+  Item.find().sort('-created').populate('user', 'displayName')
+    .populate('model', 'name')
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'brand'
+      }
+    })
+    .exec(function (err, items) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(items);
+      }
+    });
 };
 
 /**
@@ -103,15 +121,23 @@ exports.itemByID = function (req, res, next, id) {
     });
   }
 
-  Item.findById(id).populate('user', 'displayName').exec(function (err, item) {
-    if (err) {
-      return next(err);
-    } else if (!item) {
-      return res.status(404).send({
-        message: 'No item with that identifier has been found'
-      });
-    }
-    req.item = item;
-    next();
-  });
+  Item.findById(id).populate('user', 'displayName')
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'brand'
+      }
+    })
+    .populate('color')
+    .exec(function (err, item) {
+      if (err) {
+        return next(err);
+      } else if (!item) {
+        return res.status(404).send({
+          message: 'No item with that identifier has been found'
+        });
+      }
+      req.item = item;
+      next();
+    });
 };
