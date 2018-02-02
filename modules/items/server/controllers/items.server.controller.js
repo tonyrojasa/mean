@@ -92,13 +92,14 @@ exports.delete = function (req, res) {
  */
 exports.list = function (req, res) {
   Item.find().sort('-created').populate('user', 'displayName')
-    .populate('model', 'name')
     .populate({
       path: 'model',
       populate: {
         path: 'brand'
       }
     })
+    .populate('resolutions.technician')
+    .populate('color')
     .exec(function (err, items) {
       if (err) {
         return res.status(422).send({
@@ -128,6 +129,7 @@ exports.itemByID = function (req, res, next, id) {
         path: 'brand'
       }
     })
+    .populate('resolutions.technician')
     .populate('color')
     .exec(function (err, item) {
       if (err) {

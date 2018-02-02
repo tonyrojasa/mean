@@ -1,74 +1,66 @@
 <div>        
-    <fieldset class="form-group fieldset" ng-if="resolutions.length">
-        <legend ng-if="!report">Resoluciones</legend>
-        <table ng-class="report || showHeaders ? 'table table-condensed fontSize11px' : 'table table-condensed'">
-        <thead ng-if="!report || showHeaders">
-        <tr>
-            <th>#</th>
-            <th>Técnico <span ng-if="!showHeaders">*</span></th>
-            <th>Condición <span ng-if="!showHeaders">*</span></th>
-            <th>Costo <span ng-if="!showHeaders">*</span></th>
-            <th>Observaciones <span ng-if="!showHeaders">*</span></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="resolution in resolutions track by $index">
-            <td>{{$index+1}}</td>    
-            <td>  
-                <div class="form-inline input-group" show-errors ng-if="!readonly">
-                    <div class="form-group" show-errors>        
-                        <label class="control-label" for="resolutionsTechnicianName_{{$index}}">Técnico *</label>  
-                        <input name="resolutionsTechnicianName_{{$index}}" type="hidden" ng-model="resolution.technician" id="resolutionsTechnicianName_{{$index}}" class="form-control" required>
-                        <div class="input-group select2-bootstrap-append">
-                            <ui-select ng-model="resolution.technician">
-                            <ui-select-match  placeholder="Seleccione el técnico...">
-                                    <span>{{$select.selected.name}}</span>
-                                </ui-select-match>
-                                <ui-select-choices repeat="item in (technicians | filter: $select.search) track by item._id">
-                                    <div ng-bind-html="[item.workshop.name +' - '+ item.name] | highlight: $select.search"></div>
-                                </ui-select-choices>
-                            </ui-select> 
-                            <span class="input-group-btn">
-                            <button type="button" ng-click="resolution.technician = undefined" class="btn btn-default">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                            </span>  
-                        </div> 
-                    </div> 
-                </div>
-                <div ng-if="readonly">
-                    {{resolution.technician.name}}
-                </div>
-            </td>
-            <td>
-                <div class="form-inline input-group" show-errors ng-if="!readonly">
-                    <input name="resolutionsCondition_{{$index}}" type="text" ng-model="resolution.condition" id="resolutionsCondition_{{$index}}" autocomplete="off" class="form-control" placeholder="Dirección persona de contacto" ng-disabled="readonly" required /> 
-                </div>
-                <div ng-if="readonly">
-                        {{resolution.condition}}
-                </div>
-            </td>
-            <td>
-                <div class="form-inline input-group" show-errors ng-if="!readonly">
-                    <input name="resolutionsCost_{{$index}}" type="text" ng-model="resolution.cost" id="resolutionsCost_{{$index}}" autocomplete="off" class="form-control" placeholder="Dirección persona de contacto" ng-disabled="readonly" required /> 
-                </div>
-                <div ng-if="readonly">
-                        {{resolution.cost}}
-                </div>
-            </td>
-            <td>
-            <a class="form-group btn btn-default" ng-click="removeResolution($index)" ng-if="!readonly">
-                <i class="glyphicon glyphicon-trash"></i> 
-                Eliminar           
-            </a>    
-            </td>
-        </tr>
-        </tbody>
-        </table>
-    </fieldset> 
-    <a class="form-group btn btn-secondary" ng-click="addResolution()" ng-if="!readonly">
-        <i class="glyphicon glyphicon-plus"></i>
-        Agregar Técnico - Resolucion
-    </a>  
+    <fieldset class="form-group fieldset">
+        <div ng-if="resolutions.length">
+            <legend ng-if="!report">Resoluciones</legend>
+            <table ng-class="report || showHeaders ? 'table table-condensed fontSize11px' : 'table table-condensed'">
+            <thead ng-if="!report || showHeaders">
+            <tr>
+                <th>#</th>
+                <th>Técnico <span ng-if="!showHeaders">*</span></th>
+                <th>Condición <span ng-if="!showHeaders">*</span></th>
+                <th>Costo ₡ <span ng-if="!showHeaders">*</span></th>
+                <th>Observaciones <span ng-if="!showHeaders">*</span></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="resolution in resolutions track by $index">
+                <td>{{$index+1}}</td>    
+                <td>  
+                    <div class="form-group" ng-if="!readonly">
+                        <dropdowncontrol model="resolution.technician" collection="technicians" required="true" labelvalue="Técnico" fieldname="resolutionsTechnicianName_{{$index}}" form="form" simple="false" model-field-options="['workshop.name','name']" show-headers="false"></dropdowncontrol>     
+                    </div>
+                    <div ng-if="readonly">
+                        {{resolution.technician.name}}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" ng-if="!readonly">
+                        <dropdowncontrol model="resolution.condition" collection="conditions" required="true" labelvalue="Condición" fieldname="resolutionsCondition_{{$index}}" form="form" simple="true" show-headers="false"></dropdowncontrol>     
+                    </div>
+                    <div ng-if="readonly">
+                            {{resolution.condition}}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" show-errors ng-if="!readonly">
+                        <input name="resolutionsCost_{{$index}}" type="number" ng-model="resolution.cost" id="resolutionsCost_{{$index}}" autocomplete="off" class="form-control" placeholder="Costo técnico" ng-disabled="readonly" required /> 
+                    </div>
+                    <div ng-if="readonly">
+                            {{resolution.cost}}
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group" show-errors ng-if="!readonly">
+                    <textarea name="resolutionsObservations_{{$index}}" ng-model="resolution.observations" id="resolutionsObservations_{{$index}}" autocomplete="off" class="form-control" placeholder="Observaciones" ng-disabled="readonly" required /> 
+                    </div>
+                    <div ng-if="readonly">
+                            {{resolution.observations}}
+                    </div>
+                </td>
+                <td>
+                <a class="form-group btn btn-default" ng-click="removeResolution($index)" ng-if="!readonly">
+                    <i class="glyphicon glyphicon-trash"></i> 
+                    Eliminar           
+                </a>    
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>        
+        <a class="form-group btn btn-secondary" ng-click="addResolution()" ng-if="!readonly">
+            <i class="glyphicon glyphicon-plus"></i>
+            Agregar Técnico - Resolucion
+        </a>  
+    </fieldset>   
 </div>

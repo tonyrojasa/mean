@@ -80,7 +80,8 @@ var ItemSchema = new Schema({
       type: String
     },
     cost: {
-      type: Number
+      type: Number,
+      default: 0
     },
     technician: {
       type: Schema.ObjectId,

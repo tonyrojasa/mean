@@ -3,8 +3,11 @@
     <h1>{{vm.item._id ? 'Editar Dispositivo' : 'Nuevo Dispositivo'}}</h1>
   </div>
   <div class="pull-right">
-    <a ng-show="vm.item._id" class="btn btn-primary" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash"></i>
+    <a ng-show="vm.item._id" class="btn btn-primary" ng-click="vm.save(vm.form.itemForm.$valid)">
+      <i class="glyphicon glyphicon-save"></i> Actualizar
+    </a>
+    <a ng-show="vm.item._id" class="btn btn-danger" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i> Eliminar
     </a>
   </div>
   <div class="row pull-left">
@@ -13,7 +16,9 @@
       Regresar
     </a>
   </div>
-  <br /><br />
+  <br />
+  <h2>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h2>
+  <br /><br />  
   <form name="vm.form.itemForm" ng-submit="vm.save(vm.form.itemForm.$valid)" novalidate>
     <fieldset>
       <legend>Datos del dueño</legend>
@@ -68,85 +73,33 @@
           <p class="help-block error-text" ng-message="required">Fecha de ingreso es requerido.</p>
         </div>
       </div>
-      <div class="form-group" show-errors>        
-        <label class="control-label" for="models">Modelo *</label>  
-        <input name="models" type="hidden" ng-model="vm.item.model" id="models" class="form-control" required>
-        <div class="input-group select2-bootstrap-append">
-          <ui-select ng-model="vm.item.model">
-            <ui-select-match  placeholder="Seleccione la marca...">
-                  <span>{{$select.selected.brand.name}} - {{$select.selected.name}}</span>
-              </ui-select-match>
-              <ui-select-choices repeat="item in (vm.models | filter: $select.search) track by item._id">
-                  <div ng-bind-html="[item.brand.name +' - '+ item.name] | highlight: $select.search"></div>
-              </ui-select-choices>
-          </ui-select> 
-          <span class="input-group-btn">
-            <button type="button" ng-click="vm.item.model = undefined" class="btn btn-default">
-              <span class="glyphicon glyphicon-trash"></span>
-            </button>
-          </span>  
-        </div> 
-        <div ng-messages="vm.form.itemForm.model.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Modelo es requerido.</p>
-        </div>
-      </div> 
+      <div class="form-group">
+        <label class="control-label" for="revisionCost">Costo de revisión ₡</label>
+        <input name="revisionCost" type="text" ng-model="vm.item.cost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
+      </div>
+      <dropdowncontrol model="vm.item.model" collection="vm.models" required="true" labelvalue="Modelo" fieldname="models" show-labels="true" form="vm.form.itemForm" simple="false" model-field-options="['brand.name','name']"></dropdowncontrol>
       <div class="form-group" show-errors>
         <label class="control-label" for="serialNumber">Número de serie *</label>
         <input name="serialNumber" type="text" ng-model="vm.item.serialNumber" id="serialNumber" class="form-control" placeholder="Número de serie" required>
         <div ng-messages="vm.form.itemForm.serialNumber.$error" role="alert">
           <p class="help-block error-text" ng-message="required">Número de serie es requerido.</p>
         </div>
-      </div>               
-      <div class="form-group" show-errors>  
-        <label class="control-label" for="colors">Color *</label> 
-        <span style="background-color: {{vm.item.color.code}};color: {{vm.item.color.code}};" value="{{vm.item.color.code}}">{{vm.item.color.code}}</span>
-          <input name="colors" type="hidden" ng-model="vm.item.color" id="colors" class="form-control" required>
-          <div class="input-group select2-bootstrap-append">
-            <ui-select ng-model="vm.item.color" on-select="vm.setModel($select.selected)">
-              <ui-select-match  placeholder="Seleccione el color...">
-                    <span>{{$select.selected.name}} </span>
-                </ui-select-match>
-                <ui-select-choices repeat="item in (vm.colors | filter: $select.search) track by item._id">
-                    <div ng-bind-html="item.name | highlight: $select.search"></div>
-                </ui-select-choices>
-            </ui-select> 
-            <span class="input-group-btn">
-              <button type="button" ng-click="vm.item.color = undefined" class="btn btn-default">
-                <span class="glyphicon glyphicon-trash"></span>
-              </button>
-            </span>              
-          </div> 
-          <div ng-messages="vm.form.itemForm.model.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Color es requerido.</p>
-          </div>
-      </div>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="itemStatus">Estado de revisión *</label>
-        <input name="itemStatus" type="hidden" ng-model="vm.item.status" id="itemStatus" class="form-control" placeholder="Por concepto de" required>
-        <div class="dropdown" id="storeLocationDropdown" uib-dropdown>
-          <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button">
-            <span ng-if="!vm.item.status">-- Seleccione uno --</span>
-            {{vm.item.status}}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="status in vm.statuses">
-              <a ng-click="vm.setStatus(status)">{{status}}</a>
-            </li>
-          </ul>
-        </div> 
-        <div ng-messages="vm.form.storeForm.itemStatus.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Estado es requerido.</p>
-        </div>
-      </div>
+      </div>    
+      <dropdowncontrol model="vm.item.color" collection="vm.colors" required="true" labelvalue="Color" fieldname="colors" show-labels="true" form="vm.form.itemForm" simple="false"></dropdowncontrol>     
+      <span style="background-color: {{vm.item.color.code}};color: {{vm.item.color.code}};" value="{{vm.item.color.code}}">{{vm.item.color.code}}</span> 
+      <dropdowncontrol model="vm.item.status" collection="vm.statuses" required="true" labelvalue="Estado de revisión" fieldname="itemStatus" show-labels="true" select="vm.setStatus" form="vm.form.itemForm" simple="true"></dropdowncontrol>
       <div class="form-group" show-errors>
         <label class="control-label" for="itemObservations">Observaciones (incluir daños o marcas físicas)</label>
           <textarea name="itemObservations" data-ng-model="vm.item.observations" id="itemObservations" class="form-control" cols="30" rows="10" placeholder="Observaciones"></textarea>
       </div>
-    </fieldset>    
-    <repairs resolutions="vm.item.resolutions" form="vm.form.storeForm"></repairs>
+    </fieldset>  
+    <br />  
+    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm"></repairs>
+    <br />
+    <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
+    <br /><br />
     <div class="form-group">
-      <button type="submit" class="btn btn-default">{{vm.item._id ? 'Actualizar' : 'Crear'}}</button>
+      <button type="submit" class="btn btn-primary btn-lg">{{vm.item._id ? 'Actualizar' : 'Crear'}}</button>
     </div>
   </form>
 </section>

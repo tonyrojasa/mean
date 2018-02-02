@@ -33,6 +33,14 @@
             technician: ''
           });
         };
+        scope.conditions = [
+          'En reparación',
+          'Reparado',
+          'No se puede reparar',
+          'Pendiente de repuestos',
+          'No hay repuestos',
+          'Otro'
+        ];
 
         scope.removeResolution = function (index) {
           scope.resolutions.splice(index, 1);

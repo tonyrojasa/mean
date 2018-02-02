@@ -34,9 +34,21 @@
       vm.item.status = status;
     };
 
+    vm.getTotalCost = function () {
+      vm.item.cost = vm.item.cost ? vm.item.cost : '';
+      var resolutionsCost = 0;
+      if (vm.item.resolutions) {
+        for (var i = 0; i < vm.item.resolutions.length; i++) {
+          resolutionsCost += vm.item.resolutions[i].cost;
+        }
+      }
+      return +vm.item.cost + resolutionsCost;
+    };
+
     if (!vm.item._id) {
       vm.item.status = 'Ingresado';
       vm.item.registrationDate = new Date();
+      vm.item.cost = 5000;
     } else {
       vm.brand = vm.item.model.brand;
     }
