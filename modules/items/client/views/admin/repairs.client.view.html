@@ -10,12 +10,13 @@
                 <th>Condición <span ng-if="!showHeaders">*</span></th>
                 <th>Costo ₡ <span ng-if="!showHeaders">*</span></th>
                 <th>Observaciones <span ng-if="!showHeaders">*</span></th>
+                <th>Fecha<span ng-if="!showHeaders">*</span></th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="resolution in resolutions track by $index">
-                <td>{{$index+1}}</td>    
+                <td>{{$index+1}}</td>   
                 <td>  
                     <div class="form-group" ng-if="!readonly">
                         <dropdowncontrol model="resolution.technician" collection="technicians" required="true" labelvalue="Técnico" fieldname="resolutionsTechnicianName_{{$index}}" form="form" simple="false" model-field-options="['workshop.name','name']" show-headers="false"></dropdowncontrol>     
@@ -48,6 +49,21 @@
                             {{resolution.observations}}
                     </div>
                 </td>
+                <td>  
+                    <div class="form-group" show-errors ng-if="!readonly">
+                        <input name="resolutionnDate" type="hidden" ng-model="resolution.date" id="resolutionnDate" class="form-control" required>
+                        <datetimepicker 
+                            ng-model="resolution.date" 
+                            hidden-time="true" 
+                            date-format="dd-MMM-yyyy" 
+                            current-text="Hoy"
+                            clear-text="Limpiar"
+                            close-text="Cerrar"></datetimepicker>          
+                        <div ng-if="showHeaders" ng-messages="form.$error" role="alert">
+                            <p class="help-block error-text" ng-message="required">Campo requerido.</p>
+                        </div>
+                    </div>
+                </td> 
                 <td>
                 <a class="form-group btn btn-default" ng-click="removeResolution($index)" ng-if="!readonly">
                     <i class="glyphicon glyphicon-trash"></i> 

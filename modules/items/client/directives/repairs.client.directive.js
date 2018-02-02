@@ -24,13 +24,15 @@
         scope.addResolution = function () {
           if (!scope.resolutions) {
             scope.resolutions = [];
+            newDate
           }
           scope.resolutions.push({
             resolutionDate: '',
             condition: '',
             observations: '',
             cost: '',
-            technician: ''
+            technician: '',
+            date: new Date()
           });
         };
         scope.conditions = [

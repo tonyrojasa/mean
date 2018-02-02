@@ -70,7 +70,7 @@ var ItemSchema = new Schema({
     default: Date.now
   },
   resolutions: [{
-    resolutionDate: {
+    date: {
       type: Date
     },
     condition: {
