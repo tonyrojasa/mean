@@ -8,15 +8,14 @@
                 </div>
                 <br /><br />
                 <div class="form-group" ng-if="!readonly">
-                    <dropdowncontrol model="resolution.technician" collection="technicians" required="true" labelvalue="Técnico" fieldname="resolutionsTechnicianName_{{$index}}" form="form" simple="false" model-field-options="['workshop.name','name']" show-labels="true"></dropdowncontrol>     
+                    <dropdowncontrol model="resolution.technician" collection="technicians" required="true" labelvalue="Técnico" fieldname="resolutionsTechnicianName_{{$index}}" form="form" simple="false" model-field-options="['workshop.name','name']" show-labels="showLabels"></dropdowncontrol>     
                 </div>
                 <div ng-if="readonly">
                     {{resolution.technician.name}}
                 </div>
 
                 <div class="form-group" ng-if="!readonly">
-                    <label class="control-label" ng-if="showLabels" for="resolutionsCondition_{{$index}}">Condición *</label>
-                    <dropdowncontrol model="resolution.condition" collection="conditions" required="true" labelvalue="Condición" fieldname="resolutionsCondition_{{$index}}" form="form" simple="true" show-labels="false"></dropdowncontrol>     
+                    <dropdowncontrol model="resolution.condition" collection="conditions" required="true" labelvalue="Condición" fieldname="resolutionsCondition_{{$index}}" form="form" simple="true" show-labels="showLabels"></dropdowncontrol>     
                 </div>
                 <div ng-if="readonly">
                         {{resolution.condition}}
@@ -25,6 +24,9 @@
                 <div class="form-group" show-errors ng-if="!readonly">
                     <label class="control-label" ng-if="showLabels" for="resolutionsCost_{{$index}}">Costo ₡ *</label>
                     <input name="resolutionsCost_{{$index}}" type="number" ng-model="resolution.cost" id="resolutionsCost_{{$index}}" autocomplete="off" class="form-control" placeholder="Costo técnico" ng-disabled="readonly" required /> 
+                    <div ng-if="showLabels" ng-messages="form.$error" role="alert">
+                        <p class="help-block error-text" ng-message="required">Costo es requerido.</p>
+                    </div>
                 </div>
                 <div ng-if="readonly">
                         {{resolution.cost}}
@@ -33,6 +35,9 @@
                 <div class="form-group" show-errors ng-if="!readonly">
                     <label class="control-label" ng-if="showLabels" for="resolutionsObservations_{{$index}}">Observaciones *</label>
                     <textarea name="resolutionsObservations_{{$index}}" ng-model="resolution.observations" id="resolutionsObservations_{{$index}}" autocomplete="off" class="form-control" placeholder="Observaciones" ng-disabled="readonly" required /> 
+                    <div ng-if="showLabels" ng-messages="form.$error" role="alert">
+                        <p class="help-block error-text" ng-message="required">Observaciones es requerido.</p>
+                    </div>
                 </div>
                 <div ng-if="readonly">
                         {{resolution.observations}}
@@ -49,7 +54,7 @@
                         clear-text="Limpiar"
                         close-text="Cerrar"></datetimepicker>          
                     <div ng-if="showLabels" ng-messages="form.$error" role="alert">
-                        <p class="help-block error-text" ng-message="required">Campo requerido.</p>
+                        <p class="help-block error-text" ng-message="required">Fecha requerido.</p>
                     </div>
                 </div>
                 <div class="pull-right">
