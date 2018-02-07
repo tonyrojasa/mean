@@ -105,7 +105,7 @@ var ItemSchema = new Schema({
     },
     expirationDate: {
       type: Date
-    },
+    }
   },
   revisionCost: {
     type: Number

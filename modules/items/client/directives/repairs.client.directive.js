@@ -24,7 +24,6 @@
         scope.addResolution = function () {
           if (!scope.resolutions) {
             scope.resolutions = [];
-            newDate
           }
           scope.resolutions.push({
             resolutionDate: '',
@@ -51,4 +50,4 @@
       }
     };
   }
-})();
+}());

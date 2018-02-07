@@ -44,7 +44,7 @@
                 modelFieldOptions += item[scope.modelFieldOptions[i]];
               }
               if (i < scope.modelFieldOptions.length - 1) {
-                modelFieldOptions += " - ";
+                modelFieldOptions += ' - ';
               }
             }
             return modelFieldOptions;
