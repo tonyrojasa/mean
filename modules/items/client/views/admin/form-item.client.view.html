@@ -1,13 +1,13 @@
-<section>
+<section class="container">
   <div class="page-header">
     <h1>{{vm.item._id ? 'Editar Dispositivo' : 'Nuevo Dispositivo'}}</h1>
   </div>
   <div class="pull-right">
-    <a ng-show="vm.item._id" class="btn btn-primary" ng-click="vm.save(vm.form.itemForm.$valid)">
+    <a ng-show="vm.item._id" class="btn btn-md btn-primary" ng-click="vm.save(vm.form.itemForm.$valid)">
       <i class="glyphicon glyphicon-save"></i> Actualizar
     </a>
-    <a ng-show="vm.item._id" class="btn btn-danger" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash"></i> Eliminar
+    <a ng-show="vm.item._id" class="btn btn-xs btn-danger" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash btn-xs"></i> Eliminar
     </a>
   </div>
   <div class="row pull-left">
@@ -94,7 +94,7 @@
       </div>
     </fieldset>  
     <br />  
-    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm"></repairs>
+    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" show-labels="true"></repairs>
     <br />
     <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
     <br /><br />

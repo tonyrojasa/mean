@@ -16,7 +16,7 @@
         resolutions: '=',
         form: '=',
         readonly: '@',
-        showHeaders: '='
+        showLabels: '='
       },
       link: function postLink(scope, element, attrs) {
         scope.technicians = TechniciansService.query();

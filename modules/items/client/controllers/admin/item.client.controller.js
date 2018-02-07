@@ -39,7 +39,7 @@
       var resolutionsCost = 0;
       if (vm.item.resolutions) {
         for (var i = 0; i < vm.item.resolutions.length; i++) {
-          resolutionsCost += vm.item.resolutions[i].cost;
+          resolutionsCost += vm.item.resolutions[i].cost ? +vm.item.resolutions[i].cost : 0;
         }
       }
       return +vm.item.cost + resolutionsCost;
