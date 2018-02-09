@@ -16,7 +16,8 @@
         resolutions: '=',
         form: '=',
         readonly: '@',
-        showLabels: '='
+        showLabels: '=',
+        isTechnician: '='
       },
       link: function postLink(scope, element, attrs) {
         scope.technicians = TechniciansService.query();
@@ -25,16 +26,19 @@
           if (!scope.resolutions) {
             scope.resolutions = [];
           }
+
           scope.resolutions.push({
             resolutionDate: '',
             condition: '',
             observations: '',
             cost: '',
             technician: '',
-            date: new Date()
+            creationDate: new Date(),
+            date: scope.isTechnician ? new Date() : ''
           });
         };
         scope.conditions = [
+          'Ingresado (en revisión)',
           'En reparación',
           'Reparado',
           'No se puede reparar',

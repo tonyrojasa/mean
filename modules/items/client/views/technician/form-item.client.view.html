@@ -75,7 +75,7 @@
       </div>
       <div class="form-group">
         <label class="control-label" for="revisionCost">Costo de revisión ₡</label>
-        <input name="revisionCost" type="number" ng-model="vm.item.revisionCost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
+        <input name="revisionCost" type="text" ng-model="vm.item.cost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
       </div>
       <dropdowncontrol model="vm.item.model" collection="vm.models" required="true" labelvalue="Modelo" fieldname="models" show-labels="true" form="vm.form.itemForm" simple="false" model-field-options="['brand.name','name']"></dropdowncontrol>
       <div class="form-group" show-errors>

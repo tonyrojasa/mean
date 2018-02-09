@@ -1,29 +1,93 @@
 ﻿<section>
   <div class="page-header">
     <h1>
-      Artículos
+      Artículos <span ng-if="!vm.searchItemStatus">- Casos Abiertos</span><span ng-if="vm.searchItemStatus">- Casos Cerrados</span>
       <a class="btn btn-primary pull-right" data-ui-sref="admin.items.create">
         <i class="glyphicon glyphicon-plus"></i> Agregar
       </a>
     </h1>
   </div>
-  <div class="list-group">
-    <a data-ng-repeat="item in vm.items" data-ui-sref="admin.items.edit({itemId: item._id})" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span data-ng-bind="item.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="item.user" ng-bind="item.user.displayName"></span>
-        <span ng-if="!item.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" data-ng-bind="'#' +item.itemNumber"></h4>
-      <p class="list-group-item-text" data-ng-bind="item.owner.name"></p>
-      <p class="list-group-item-text" data-ng-bind="item.owner.mobilePhone"></p>
-      <p class="list-group-item-text" data-ng-bind="item.model.name"></p>
-      <p class="list-group-item-text" data-ng-bind="item.model.brand.name"></p>
+  <div class="row pull-left">
+    <a class="btn btn-secondary" data-ui-sref="home">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar a Inicio
     </a>
   </div>
-  <div class="alert alert-warning text-center" data-ng-if="vm.items.$resolved && !vm.items.length">
+  <br />
+  <div data-ng-if="vm.items.length">
+    <button class="btn btn-warning pull-right" ng-disabled="!vm.tableParams.hasFilter()" ng-click="vm.tableParams.filter({})">Borrar Filtros de Búsqueda</button>
+      <div id="exportable">        
+        <table ng-table="vm.tableParams" class="table table-hover table-condensed editable-table" show-filter="true" ng-table-columns-binding="vm.cols" export-csv='csv' ng-form="vm.tableForm" disable-filter="vm.isAdding" demo-tracked-table="vm.tableTracker" >
+          <tbody>
+            <tr ng-repeat="item in $data" ng-form="rowForm" demo-tracked-table-row="item">
+              <td class="col-md-1" title="'#'" filter="{ 'itemNumber': 'number'}" sortable="'itemNumber'" ng-if="true">
+                <a data-ui-sref="admin.items.edit({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
+              </td>
+              <td  class="col-md-1" title="'Fecha registro'" filter="{ 'registrationDate': 'date'}" sortable="'registrationDate'" ng-if="true">
+                  {{item.registrationDate | date:'dd-MMM-yyyy'}}
+              </td>
+              <td  class="col-md-1" title="'Dueño'" filter="{ 'owner.name': 'text'}" sortable="'owner.name'" ng-if="true">
+                  {{item.owner.name}}
+              </td>
+              <td  class="col-md-1" title="'Marca'" filter="{ 'model.brand.name': 'text'}" sortable="'model.brand.name'" ng-if="true">
+                  {{item.model.brand.name}}
+              </td>
+              <td  class="col-md-1" title="'Modelo'" filter="{ 'model.name': 'text'}" sortable="'model.name'" ng-if="true">
+                  {{item.model.name}}
+              </td>
+              <td  class="col-md-1" title="'Color'" filter="{ 'color.name': 'text'}" sortable="'color.name'" ng-if="true">
+                  {{item.color.name}} <span style="background-color: {{item.color.code}};color: {{item.color.code}};">{{item.color.name}}</span>
+              </td>
+              <td  class="col-md-1" title="'# serie'" filter="{ 'serialNumber': 'text'}" sortable="'serialNumber'" ng-if="true">
+                  {{item.serialNumber}}
+              </td>
+              <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'text'}" sortable="'status'" ng-if="true">
+                  {{item.status}}
+              </td> 
+              <td  class="col-md-1" title="'Garantía'" sortable="'waranty.enabled'" ng-if="true">
+                  {{item.waranty.enabled ? 'Si' : 'No' }}
+              </td>
+              <td  class="col-md-1" title="'# Resoluciones'" sortable="'resolutions.length'" ng-if="true">
+                  {{item.resolutions.length}}
+              </td> 
+              <td  class="col-md-1" title="'Fecha última resolución'" sortable="'vm.getItemLatResolutionDate(item)'" ng-if="true">
+                  {{vm.getItemLatResolutionDate(item) | date:'dd-MMM-yyyy'}}
+              </td> 
+              <td  class="col-md-1" title="'Costo ₡'" sortable="'vm.getItemTotalCost(item)'" ng-if="true">
+                  {{vm.getItemTotalCost(item) | currency : '₡'}}
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>          
+              <td ng-if="vm.cols[0].show()"></td>  
+              <td ng-if="vm.cols[1].show()"></td>     
+              <td ng-if="vm.cols[2].show()"></td>     
+              <td ng-if="vm.cols[3].show()"></td>     
+              <td ng-if="vm.cols[4].show()"></td>     
+              <td ng-if="vm.cols[5].show()"></td>     
+              <td ng-if="vm.cols[6].show()"></td>     
+              <td ng-if="vm.cols[7].show()"></td>    
+              <td ng-if="vm.cols[8].show()"></td>    
+              <td ng-if="vm.cols[9].show()"></td>          
+              <td ng-if="true" class="text-center">            
+                <span><b>Total Artículos:</b> {{($data).length}}</span>
+              </td>
+              <td>
+                <div class="text-right">
+                <a class="btn" title="Export Table" ng-click='csv.generate()' ng-href="{{ csv.link() }}"
+                  download="Artículos.csv">
+                  <i class="glyphicon glyphicon-new-window"></i> &#160;Exportar
+                </a>  
+                </div>
+              </td>
+            </tr>
+          </tfoot> 
+        </table>
+      </div>   
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="vm.items.$resolved && !vm.items.length && vm.searchItemStatus !== 'cerrado'">
     No hay artículos, Porque no <a data-ui-sref="admin.items.create">creas uno</a>?
   </div>
 </section>

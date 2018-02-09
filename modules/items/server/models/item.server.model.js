@@ -70,6 +70,9 @@ var ItemSchema = new Schema({
     default: Date.now
   },
   resolutions: [{
+    creationDate: {
+      type: Date
+    },
     date: {
       type: Date
     },

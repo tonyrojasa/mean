@@ -7,6 +7,20 @@
                     <div class="pull-left"><h4># {{$index+1}}</h4></div>                    
                 </div>
                 <br /><br />
+                <div class="form-group" show-errors ng-if="!readonly">
+                    <label class="control-label" ng-if="showLabels" for="creationDate">Fecha de ingreso *</label>
+                    <input name="creationDate" type="hidden" ng-model="resolution.creationDate" id="creationDate" class="form-control" required>
+                    <datetimepicker 
+                        ng-model="resolution.creationDate" 
+                        hidden-time="true" 
+                        date-format="dd-MMM-yyyy" 
+                        current-text="Hoy"
+                        clear-text="Limpiar"
+                        close-text="Cerrar"></datetimepicker>          
+                    <div ng-if="showLabels" ng-messages="form.$error" role="alert">
+                        <p class="help-block error-text" ng-message="required">Fecha de ingreso es requerido.</p>
+                    </div>
+                </div>
                 <div class="form-group" ng-if="!readonly">
                     <dropdowncontrol model="resolution.technician" collection="technicians" required="true" labelvalue="Técnico" fieldname="resolutionsTechnicianName_{{$index}}" form="form" simple="false" model-field-options="['workshop.name','name']" show-labels="showLabels"></dropdowncontrol>     
                 </div>
@@ -22,8 +36,8 @@
                 </div>
 
                 <div class="form-group" show-errors ng-if="!readonly">
-                    <label class="control-label" ng-if="showLabels" for="resolutionsCost_{{$index}}">Costo ₡ *</label>
-                    <input name="resolutionsCost_{{$index}}" type="number" ng-model="resolution.cost" id="resolutionsCost_{{$index}}" autocomplete="off" class="form-control" placeholder="Costo técnico" ng-disabled="readonly" required /> 
+                    <label class="control-label" ng-if="showLabels" for="resolutionsCost_{{$index}}">Costo ₡ <span ng-show="isTechnician">*</span></label>
+                    <input name="resolutionsCost_{{$index}}" type="number" ng-model="resolution.cost" id="resolutionsCost_{{$index}}" autocomplete="off" class="form-control" placeholder="Costo técnico" ng-disabled="readonly" ng-required="isTechnician" /> 
                     <div ng-if="showLabels" ng-messages="form.$error" role="alert">
                         <p class="help-block error-text" ng-message="required">Costo es requerido.</p>
                     </div>
@@ -33,8 +47,8 @@
                 </div>
 
                 <div class="form-group" show-errors ng-if="!readonly">
-                    <label class="control-label" ng-if="showLabels" for="resolutionsObservations_{{$index}}">Observaciones *</label>
-                    <textarea name="resolutionsObservations_{{$index}}" ng-model="resolution.observations" id="resolutionsObservations_{{$index}}" autocomplete="off" class="form-control" placeholder="Observaciones" ng-disabled="readonly" required /> 
+                    <label class="control-label" ng-if="showLabels" for="resolutionsObservations_{{$index}}">Observaciones <span ng-show="isTechnician">*</span></label>
+                    <textarea name="resolutionsObservations_{{$index}}" ng-model="resolution.observations" id="resolutionsObservations_{{$index}}" autocomplete="off" class="form-control" placeholder="Observaciones" ng-disabled="readonly" ng-required="isTechnician" /> 
                     <div ng-if="showLabels" ng-messages="form.$error" role="alert">
                         <p class="help-block error-text" ng-message="required">Observaciones es requerido.</p>
                     </div>
@@ -44,8 +58,8 @@
                 </div>
                 
                 <div class="form-group" show-errors ng-if="!readonly">
-                    <label class="control-label" ng-if="showLabels" for="resolutionnDate">Fecha *</label>
-                    <input name="resolutionnDate" type="hidden" ng-model="resolution.date" id="resolutionnDate" class="form-control" required>
+                    <label class="control-label" ng-if="showLabels" for="resolutionnDate">Fecha de resolución <span ng-show="isTechnician">*</span></label>
+                    <input name="resolutionnDate" type="hidden" ng-model="resolution.date" id="resolutionnDate" class="form-control" ng-required="isTechnician">
                     <datetimepicker 
                         ng-model="resolution.date" 
                         hidden-time="true" 
@@ -54,7 +68,7 @@
                         clear-text="Limpiar"
                         close-text="Cerrar"></datetimepicker>          
                     <div ng-if="showLabels" ng-messages="form.$error" role="alert">
-                        <p class="help-block error-text" ng-message="required">Fecha requerido.</p>
+                        <p class="help-block error-text" ng-message="required">Fecha de resolución requerido.</p>
                     </div>
                 </div>
                 <div class="pull-right">

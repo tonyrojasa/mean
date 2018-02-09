@@ -7,6 +7,7 @@ var path = require('path'),
   mongoose = require('mongoose'),
   Item = mongoose.model('Item'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+var _ = require('lodash');
 
 /**
  * Create an item
@@ -51,7 +52,6 @@ exports.update = function (req, res) {
   item.serialNumber = req.body.serialNumber;
   item.description = req.body.description;
   item.color = req.body.color;
-  item.color = req.body.color;
   item.registrationDate = req.body.registrationDate;
   item.resolutions = req.body.resolutions;
   item.status = req.body.status;
@@ -91,7 +91,58 @@ exports.delete = function (req, res) {
  * List of Items
  */
 exports.list = function (req, res) {
-  Item.find().sort('-created').populate('user', 'displayName')
+  var query = _.forEach(req.query, function (value, key) {
+    var queryParam = {
+      $regex: new RegExp('^' + value + '$', 'i'),
+      $options: 'i'
+    };
+    req.query[key] = _.zipObject([key], [queryParam]);
+  });
+
+  if (!_.isEmpty(query)) {
+    query = {
+      $and: _.toArray(query)
+    };
+  }
+
+  Item.find(query).find({ 'status': { $ne: "cerrado" } }).sort('-created').populate('user', 'displayName')
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'brand'
+      }
+    })
+    .populate('resolutions.technician')
+    .populate('color')
+    .exec(function (err, items) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(items);
+      }
+    });
+};
+
+/**
+ * List of Open Items
+ */
+exports.listAllOpen = function (req, res) {
+  var query = _.forEach(req.query, function (value, key) {
+    var queryParam = {
+      $regex: new RegExp('^' + value + '$', 'i'),
+      $options: 'i'
+    };
+    req.query[key] = _.zipObject([key], [queryParam]);
+  });
+
+  if (!_.isEmpty(query)) {
+    query = {
+      $and: _.toArray(query)
+    };
+  }
+  Item.find(query).find({ 'status': { $ne: "cerrado" } }).sort('-created').populate('user', 'displayName')
     .populate({
       path: 'model',
       populate: {

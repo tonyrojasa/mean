@@ -11,26 +11,58 @@
         Sistema de Administración de Inventarios en Reparación        
       </p>
       <h6 class="text-muted">
-        BETA v0.1
+        BETA v0.2
       </h6> 
     </div>
-    <div class="row">
+    
+    <!-- User Admin menu -->
+    <div class="row" ng-if="vm.authentication.isAdminUser()">
+      <h5 class="text-muted">Artículos (dispositivos):</h5>
       <p>
-        <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list">Dispositivos</a> 
-        <a class="btn btn-primary btn-md" data-ui-sref="admin.items.repairs.list">Reparaciones</a>       
+        <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list">Casos Abiertos</a> 
+        <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list.close({status: 'cerrado'})">Casos Cerrados</a> 
+      </p>
+      <p>
+          <a class="btn btn-default btn-md" data-ui-sref="technician.items.list">Resoluciones</a>       
+          <a class="btn btn-default btn-md" data-ui-sref="admin.notifications.list">Notificaciones</a> 
+        </p>
+    </div>
+    <div class="row" ng-if="vm.authentication.isAdminUser()">
+      <p> 
+        <a class="btn btn-secondary" data-ui-sref="admin.brands.list">Marcas</a>
+        <a class="btn btn-secondary" data-ui-sref="admin.models.list">Modelos</a>
+        <a class="btn btn-secondary" data-ui-sref="admin.colors.list">Colores</a>
+        <a class="btn btn-secondary" data-ui-sref="admin.workshops.list">Talleres</a>
+        <a class="btn btn-secondary" data-ui-sref="admin.technicians.list">Técnicos</a>
       </p>
     </div>
-    <div class="row">
+    
+    <!-- Technician menu -->
+    <div class="row" ng-if="vm.authentication.isTechnicianUser()">
       <p>
-        <a class="btn btn-default" data-ui-sref="items.list">Ver Dispositivos</a>
-        <a class="btn btn-default" data-ui-sref="admin.items.repairs.create">Nueva Reparación</a>  
-        <a class="btn btn-default" data-ui-sref="brands.list">Ver Marcas</a>
-        <a class="btn btn-default" data-ui-sref="models.list">Ver Modelos</a>
+        <a class="btn btn-primary btn-md" data-ui-sref="technician.items.list">Resoluciones</a>      
       </p>
+    </div>
+
+    <!-- No admin menu -->
+    <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
+      <p>
+        <a class="btn btn-primary btn-md" data-ui-sref="items.list">Dispositivos</a>      
+        <a class="btn btn-primary btn-md" data-ui-sref="notifications.list">Notificaciones</a> 
+      </p>
+    </div>   
+    <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
+      <p> 
+          <a class="btn btn-secondary" data-ui-sref="brands.list">Marcas</a>
+          <a class="btn btn-secondary" data-ui-sref="models.list">Modelos</a>
+          <a class="btn btn-secondary" data-ui-sref="colors.list">Colores</a>
+          <a class="btn btn-secondary" data-ui-sref="workshops.list">Talleres</a>
+          <a class="btn btn-secondary" data-ui-sref="technicians.list">Técnicos</a>
+        </p>
     </div>
   </div>
   <div>
   <p class="text-center text-muted">
-    Copyright 2018
+    Copyright © 2018
   </p>
 </section>

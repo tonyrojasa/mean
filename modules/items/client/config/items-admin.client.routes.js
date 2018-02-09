@@ -23,6 +23,15 @@
           roles: ['admin']
         }
       })
+      .state('admin.items.list.close', {
+        url: '/?status',
+        templateUrl: '/modules/items/client/views/admin/list-items.client.view.html',
+        controller: 'ItemsAdminListController',
+        controllerAs: 'vm',
+        data: {
+          roles: ['admin']
+        }
+      })
       .state('admin.items.create', {
         url: '/create',
         templateUrl: '/modules/items/client/views/admin/form-item.client.view.html',

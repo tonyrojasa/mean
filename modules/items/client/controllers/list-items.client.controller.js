@@ -11,5 +11,9 @@
     var vm = this;
 
     vm.items = ItemsService.query();
+
+    vm.getResolutionItems = function (status) {
+      vm.resolutionItems = ItemsService.query();
+    };
   }
 }());

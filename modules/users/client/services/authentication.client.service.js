@@ -14,6 +14,18 @@
       user: $window.user
     };
 
+    auth.isAdminUser = function () {
+      return (auth.user.roles.indexOf('admin') > -1);
+    };
+
+    auth.isGuestUser = function () {
+      return (auth.user.roles.indexOf('guest') > -1);
+    };
+
+    auth.isTechnicianUser = function () {
+      return (auth.user.roles.indexOf('technician') > -1);
+    };
+
     return auth;
   }
 }());

@@ -2,13 +2,13 @@
   'use strict';
 
   angular
-    .module('items.admin')
-    .controller('ItemsAdminController', ItemsAdminController);
+    .module('items.technician')
+    .controller('ItemsTechnicianController', ItemsTechnicianController);
 
-  ItemsAdminController.$inject = ['$scope', '$state', '$window', 'itemResolve', 'Authentication', 'Notification',
+  ItemsTechnicianController.$inject = ['$scope', '$state', '$window', 'itemResolve', 'Authentication', 'Notification',
     'ModelsService', 'ColorsService'];
 
-  function ItemsAdminController($scope, $state, $window, item, Authentication, Notification,
+  function ItemsTechnicianController($scope, $state, $window, item, Authentication, Notification,
     ModelsService, ColorsService) {
     var vm = this;
 
@@ -35,20 +35,20 @@
     };
 
     vm.getTotalCost = function () {
-      vm.item.revisionCost = vm.item.revisionCost ? vm.item.revisionCost : '';
+      vm.item.cost = vm.item.cost ? vm.item.cost : '';
       var resolutionsCost = 0;
       if (vm.item.resolutions) {
         for (var i = 0; i < vm.item.resolutions.length; i++) {
           resolutionsCost += vm.item.resolutions[i].cost ? +vm.item.resolutions[i].cost : 0;
         }
       }
-      return +vm.item.revisionCost + resolutionsCost;
+      return +vm.item.cost + resolutionsCost;
     };
 
     if (!vm.item._id) {
       vm.item.status = 'Ingresado';
       vm.item.registrationDate = new Date();
-      vm.item.revisionCost = 5000;
+      vm.item.cost = 5000;
     } else {
       vm.brand = vm.item.model.brand;
     }
@@ -58,7 +58,7 @@
       if ($window.confirm('Seguro que desea borrar este artículo?')) {
         vm.item.$remove(function () {
           $state.go('admin.items.list');
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i>  Artículo borrado correctamente!!' });
+          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Artículo borrado correctamente!' });
         });
       }
     }

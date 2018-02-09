@@ -19,7 +19,10 @@
     "angular-ui-select": "^0.19.8",
     "angular-sanitize": "~1.5.7",
     "ngMask": "angular-mask#^3.1.1",
-    "angular-bootstrap-colorpicker": "^3.0.32"
+    "angular-bootstrap-colorpicker": "^3.0.32",
+    "ng-table": "^1.0.0",
+    "ng-table-to-csv": "^0.3.3",
+    "lodash": "^4.17.5"
   },
   "overrides": {
     "bootstrap": {

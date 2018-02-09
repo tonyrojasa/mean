@@ -20,6 +20,15 @@
         controller: 'ItemsListController',
         controllerAs: 'vm'
       })
+      .state('items.close.list', {
+        url: '',
+        templateUrl: '/modules/items/client/views/list-items.client.view.html',
+        controller: 'ItemsListController',
+        controllerAs: 'vm',
+        resolve: {
+          statusResolve: 'cerrado'
+        }
+      })
       .state('items.view', {
         url: '/:itemId',
         templateUrl: '/modules/items/client/views/view-item.client.view.html',
