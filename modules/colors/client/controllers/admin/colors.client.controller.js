@@ -19,9 +19,13 @@
     // Remove existing Color
     function remove() {
       if ($window.confirm('Are you sure you want to delete?')) {
-        vm.color.$remove(function () {
+        vm.color.$remove(function (result) {
           $state.go('admin.colors.list');
           Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Color deleted successfully!' });
+        }, function (error) {
+          if (error && error.data && error.data.message === 'document is used') {
+            Notification.error({ message: 'Este registro se esta utilizando en otro modulo.', title: '<i class="glyphicon glyphicon-remove"></i> No se puede borrar!' });
+          }
         });
       }
     }

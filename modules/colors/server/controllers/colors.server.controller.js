@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Color = mongoose.model('Color'),
+  Item = mongoose.model('Item'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -65,14 +66,29 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var color = req.color;
+  var idUser = req.user;
 
-  color.remove(function (err) {
+  Item.aggregate([
+    { '$match': { 'color': color._id } }
+  ], function (err, items) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
+    } else if (items.length > 0) {
+      return res.status(422).send({
+        message: 'document is used'
+      });
     } else {
-      res.json(color);
+      color.delete(idUser, function (err) {
+        if (err) {
+          return res.status(422).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(color);
+        }
+      });
     }
   });
 };

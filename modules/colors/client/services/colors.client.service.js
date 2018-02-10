@@ -11,10 +11,10 @@
     var Color = $resource('/api/colors/:colorId', {
       colorId: '@_id'
     }, {
-      update: {
-        method: 'PUT'
-      }
-    });
+        update: {
+          method: 'PUT'
+        }
+      });
 
     angular.extend(Color.prototype, {
       createOrUpdate: function () {

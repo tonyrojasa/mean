@@ -14,17 +14,12 @@
     if (vm.searchItemStatus) {
       query = {
         status: vm.searchItemStatus
-      }
+      };
     }
 
     vm.items = vm.searchItemStatus ? ItemsService.query(query) : OpenItemsService.query(query);
 
-    vm.tableParams = new NgTableParams({
-      page: 1,
-      count: 10
-    }, {
-        dataset: vm.items
-      });
+    vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { dataset: vm.items });
 
     vm.getItemTotalCost = function (item) {
       item.revisionCost = item.revisionCost ? item.revisionCost : '';

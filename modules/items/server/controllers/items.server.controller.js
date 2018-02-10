@@ -105,7 +105,7 @@ exports.list = function (req, res) {
     };
   }
 
-  Item.find(query).find({ 'status': { $ne: "cerrado" } }).sort('-created').populate('user', 'displayName')
+  Item.find(query).sort('-created').populate('user', 'displayName')
     .populate({
       path: 'model',
       populate: {
@@ -142,7 +142,7 @@ exports.listAllOpen = function (req, res) {
       $and: _.toArray(query)
     };
   }
-  Item.find(query).find({ 'status': { $ne: "cerrado" } }).sort('-created').populate('user', 'displayName')
+  Item.find(query).where({ 'status': { $ne: 'Cerrado' } }).sort('-created').populate('user', 'displayName')
     .populate({
       path: 'model',
       populate: {

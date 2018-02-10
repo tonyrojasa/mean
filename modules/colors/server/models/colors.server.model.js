@@ -8,7 +8,7 @@ var mongoose = require('mongoose'),
   path = require('path'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
-
+var mongoose_delete = require('mongoose-delete');
 /**
  * Color Schema
  */
@@ -33,6 +33,14 @@ var ColorSchema = new Schema({
     ref: 'User'
   }
 });
+
+ColorSchema.plugin(mongoose_delete, {
+  deletedAt: true,
+  deletedBy: true
+});
+ColorSchema.plugin(mongoose_delete, { indexFields: 'all' });
+// Override all methods 
+ColorSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 ColorSchema.statics.seed = seed;
 
