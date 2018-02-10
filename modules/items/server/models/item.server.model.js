@@ -21,6 +21,10 @@ var ItemSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  store: {
+    type: Schema.ObjectId,
+    ref: 'Store'
+  },
   owner: {
     name: {
       type: String,

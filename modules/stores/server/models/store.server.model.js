@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
   path = require('path'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
+var mongoose_delete = require('mongoose-delete');
 
 /**
  * Store Schema
@@ -38,6 +39,14 @@ var StoreSchema = new Schema({
     ref: 'User'
   }
 });
+
+StoreSchema.plugin(mongoose_delete, {
+  deletedAt: true,
+  deletedBy: true
+});
+StoreSchema.plugin(mongoose_delete, { indexFields: 'all' });
+// Override all methods 
+StoreSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 StoreSchema.statics.seed = seed;
 

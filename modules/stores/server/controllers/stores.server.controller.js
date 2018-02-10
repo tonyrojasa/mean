@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Store = mongoose.model('Store'),
+  Item = mongoose.model('Item'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -67,15 +68,31 @@ exports.update = function (req, res) {
 exports.delete = function (req, res) {
   var store = req.store;
 
-  store.remove(function (err) {
+  Item.aggregate([
+    { '$match': { 'store': store._id } }
+  ], function (err, items) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
+    } else if (items.length > 0) {
+      return res.status(422).send({
+        message: 'document is used'
+      });
     } else {
-      res.json(store);
+      store.delete(function (err) {
+        if (err) {
+          return res.status(422).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(store);
+        }
+      });
     }
   });
+
+
 };
 
 /**

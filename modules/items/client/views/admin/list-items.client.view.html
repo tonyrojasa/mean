@@ -22,6 +22,9 @@
             <tr ng-repeat="item in $data" ng-form="rowForm" demo-tracked-table-row="item">
               <td class="col-md-1" title="'#'" filter="{ 'itemNumber': 'number'}" sortable="'itemNumber'" ng-if="true">
                 <a data-ui-sref="admin.items.edit({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
+              </td>              
+              <td  class="col-md-1" title="'Tienda'" filter="{ 'store.name': 'select'}" sortable="'store.name'" filter-data="vm.storesFilterArray" ng-if="true">
+                  {{item.store.name}}
               </td>
               <td  class="col-md-1" title="'Fecha registro'" filter="{ 'registrationDate': 'date'}" sortable="'registrationDate'" ng-if="true">
                   {{item.registrationDate | date:'dd-MMM-yyyy'}}
@@ -29,19 +32,16 @@
               <td  class="col-md-1" title="'Dueño'" filter="{ 'owner.name': 'text'}" sortable="'owner.name'" ng-if="true">
                   {{item.owner.name}}
               </td>
-              <td  class="col-md-1" title="'Marca'" filter="{ 'model.brand.name': 'text'}" sortable="'model.brand.name'" ng-if="true">
-                  {{item.model.brand.name}}
+              <td  class="col-md-1" title="'Marca - Modelo'" filter="{ 'model.brand.name': 'text', 'model.name': 'text'}" sortable="'model.name'" ng-if="true">
+                {{item.model.brand.name}} - {{item.model.name}}
               </td>
-              <td  class="col-md-1" title="'Modelo'" filter="{ 'model.name': 'text'}" sortable="'model.name'" ng-if="true">
-                  {{item.model.name}}
-              </td>
-              <td  class="col-md-1" title="'Color'" filter="{ 'color.name': 'text'}" sortable="'color.name'" ng-if="true">
+              <td  class="col-md-1" title="'Color'" filter="{ 'color.name': 'select'}" filter-data="vm.colorsFilterArray"  sortable="'color.name'" ng-if="true">
                   {{item.color.name}} <span style="background-color: {{item.color.code}};color: {{item.color.code}};">{{item.color.name}}</span>
               </td>
               <td  class="col-md-1" title="'# serie'" filter="{ 'serialNumber': 'text'}" sortable="'serialNumber'" ng-if="true">
                   {{item.serialNumber}}
               </td>
-              <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'text'}" sortable="'status'" ng-if="true">
+              <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
                   {{item.status}}
               </td> 
               <td  class="col-md-1" title="'Garantía'" sortable="'waranty.enabled'" ng-if="true">

@@ -58,6 +58,7 @@ exports.update = function (req, res) {
   item.observations = req.body.observations;
   item.waranty = req.body.waranty;
   item.revisionCost = req.body.revisionCost;
+  item.store = req.body.store;
 
   item.save(function (err) {
     if (err) {
@@ -112,6 +113,7 @@ exports.list = function (req, res) {
         path: 'brand'
       }
     })
+    .populate('store', 'name')
     .populate('resolutions.technician')
     .populate('color')
     .exec(function (err, items) {
@@ -149,6 +151,7 @@ exports.listAllOpen = function (req, res) {
         path: 'brand'
       }
     })
+    .populate('store', 'name')
     .populate('resolutions.technician')
     .populate('color')
     .exec(function (err, items) {
@@ -180,6 +183,7 @@ exports.itemByID = function (req, res, next, id) {
         path: 'brand'
       }
     })
+    .populate('store', 'name')
     .populate('resolutions.technician')
     .populate('color')
     .exec(function (err, item) {

@@ -6,10 +6,10 @@
     .controller('ItemsAdminController', ItemsAdminController);
 
   ItemsAdminController.$inject = ['$scope', '$state', '$window', 'itemResolve', 'Authentication', 'Notification',
-    'ModelsService', 'ColorsService'];
+    'ModelsService', 'ColorsService', 'StoresService'];
 
   function ItemsAdminController($scope, $state, $window, item, Authentication, Notification,
-    ModelsService, ColorsService) {
+    ModelsService, ColorsService, StoresService) {
     var vm = this;
 
     vm.item = item;
@@ -20,6 +20,7 @@
 
     vm.models = ModelsService.query();
     vm.colors = ColorsService.query();
+    vm.stores = StoresService.query();
 
     vm.statuses = [
       'Ingresado',
