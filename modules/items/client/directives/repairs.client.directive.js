@@ -21,11 +21,21 @@
       },
       link: function postLink(scope, element, attrs) {
         scope.technicians = TechniciansService.query();
+        if (scope.resolutions && scope.resolutions.length) {
+          _.each(scope.resolutions, function (resolution, index) {
+            resolution.date = resolution.date ? new Date(resolution.date) : new Date();
+            resolution.creationDate = resolution.creationDate ? new Date(resolution.creationDate) : new Date();
+          });
+        }
 
         scope.addResolution = function () {
           if (!scope.resolutions) {
             scope.resolutions = [];
           }
+
+          _.each(scope.resolutions, function (resolution) {
+            resolution.open = false;
+          });
 
           scope.resolutions.push({
             resolutionDate: '',
@@ -34,7 +44,8 @@
             cost: '',
             technician: '',
             creationDate: new Date(),
-            date: scope.isTechnician ? new Date() : ''
+            date: scope.isTechnician ? new Date() : '',
+            open: true
           });
         };
         scope.conditions = [
@@ -48,7 +59,9 @@
         ];
 
         scope.removeResolution = function (index) {
-          scope.resolutions.splice(index, 1);
+          if (confirm('Seguro que desea eliminar la resolución #' + (index + 1) + '? Perdera todos los cambios')) {
+            scope.resolutions.splice(index, 1);
+          }
         };
 
       }

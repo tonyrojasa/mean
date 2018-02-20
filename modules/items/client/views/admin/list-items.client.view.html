@@ -1,18 +1,16 @@
 ﻿<section>
   <div class="page-header">
     <h1>
-      Artículos <span ng-if="!vm.searchItemStatus">- Casos Abiertos</span><span ng-if="vm.searchItemStatus">- Casos Cerrados</span>
-      <a class="btn btn-primary pull-right" data-ui-sref="admin.items.create">
-        <i class="glyphicon glyphicon-plus"></i> Agregar
-      </a>
+      Artículos <span ng-if="!vm.searchItemStatus">- Casos Abiertos</span><span ng-if="vm.searchItemStatus">- Casos Cerrados</span>     
     </h1>
-  </div>
-  <div class="row pull-left">
     <a class="btn btn-secondary" data-ui-sref="home">
       <i class="glyphicon glyphicon-arrow-left"></i>
       Regresar a Inicio
     </a>
   </div>
+  <a class="btn btn-primary" data-ui-sref="admin.items.create" ng-if="!vm.searchItemStatus">
+    <i class="glyphicon glyphicon-plus"></i> Agregar
+  </a>
   <br />
   <div data-ng-if="vm.items.length">
     <button class="btn btn-warning pull-right" ng-disabled="!vm.tableParams.hasFilter()" ng-click="vm.tableParams.filter({})">Borrar Filtros de Búsqueda</button>
@@ -47,14 +45,14 @@
               <td  class="col-md-1" title="'Garantía'" sortable="'waranty.enabled'" ng-if="true">
                   {{item.waranty.enabled ? 'Si' : 'No' }}
               </td>
-              <td  class="col-md-1" title="'# Resoluciones'" sortable="'resolutions.length'" ng-if="true">
+              <td  class="col-md-1" title="'Cantidad de Resoluciones'" sortable="'resolutions.length'" ng-if="true">
                   {{item.resolutions.length}}
               </td> 
               <td  class="col-md-1" title="'Fecha última resolución'" sortable="'vm.getItemLatResolutionDate(item)'" ng-if="true">
                   {{vm.getItemLatResolutionDate(item) | date:'dd-MMM-yyyy'}}
               </td> 
               <td  class="col-md-1" title="'Costo ₡'" sortable="'vm.getItemTotalCost(item)'" ng-if="true">
-                  {{vm.getItemTotalCost(item) | currency : '₡'}}
+                  {{vm.getItemTotalCost(item) | currency : ''}}
               </td>
               <td></td>
             </tr>

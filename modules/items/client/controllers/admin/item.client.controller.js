@@ -22,6 +22,8 @@
     vm.colors = ColorsService.query();
     vm.stores = StoresService.query();
 
+    vm.item.registrationDate = vm.item.registrationDate ? new Date(vm.item.registrationDate) : new Date();
+
     vm.statuses = [
       'Ingresado',
       'Taller - Enviado',
@@ -65,19 +67,32 @@
     }
 
     // Save Item
-    function save(isValid) {
+    function save(isValid, saveDataAndClose) {
       if (!isValid) {
         $scope.$broadcast('show-errors-check-validity', 'vm.form.itemForm');
+        Notification.error({ message: 'Complete todos los campos requeridos', title: '<i class="glyphicon glyphicon-remove"> Error en el formulario</i>' });
         return false;
       }
 
-      // Create a new item, or update the current instance
+      vm.saveDataAndClose = saveDataAndClose;
       vm.item.createOrUpdate()
         .then(successCallback)
         .catch(errorCallback);
 
       function successCallback(res) {
-        $state.go('admin.items.list'); // should we send the User to the list or the updated Item's view?
+        if (!vm.saveDataAndClose) {
+          if ($state.current.name === 'admin.items.create') {
+            $state.go('admin.items.edit', {
+              itemId: res._id
+            });
+          } else {
+            $state.reload();
+          }
+        } else {
+          $state.go('items.view', {
+            itemId: res._id
+          });
+        }
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Artículo guardado correctamente!' });
       }
 

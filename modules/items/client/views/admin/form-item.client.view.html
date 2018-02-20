@@ -1,15 +1,12 @@
 <section class="container">
   <div class="page-header">
-    <h1>{{vm.item._id ? 'Editar Dispositivo' : 'Nuevo Dispositivo'}}</h1>
-  </div>
-  <div class="pull-right">
-    <a ng-show="vm.item._id" class="btn btn-md btn-primary" ng-click="vm.save(vm.form.itemForm.$valid)">
-      <i class="glyphicon glyphicon-save"></i> Actualizar
-    </a>
-    <a ng-show="vm.item._id" class="btn btn-xs btn-danger" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash btn-xs"></i> Eliminar
-    </a>
-  </div>
+    <h1>{{vm.item._id ? 'Editar Dispositivo' : 'Nuevo Dispositivo'}}
+    <div class="pull-right">
+      <a ng-show="vm.item._id" class="btn btn-xs btn-danger" ng-click="vm.remove()">
+        <i class="glyphicon glyphicon-trash btn-xs"></i> Eliminar
+      </a>
+    </div></h1>
+  </div>  
   <div class="row pull-left">
      <a class="btn btn-secondary" data-ui-sref="admin.items.list">
       <i class="glyphicon glyphicon-arrow-left"></i>
@@ -18,8 +15,13 @@
   </div>
   <br />
   <h2>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h2>
-  <br /><br />  
-  <form name="vm.form.itemForm" ng-submit="vm.save(vm.form.itemForm.$valid)" novalidate>
+  <div class="row pull-right">
+    <button ng-click="vm.save(vm.form.itemForm.$valid, false)" class="btn btn-primary"> <i class="glyphicon glyphicon-floppy-disk"></i> {{'Guardar'}}</button>
+    <button ng-click="vm.save(vm.form.itemForm.$valid, true)" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> {{vm.item._id ? 'Guardar y Cerrar' : 'Crear y Cerrar'}}</button>
+  </div>          
+  <br /><br />
+  <h4 class="bg-warning">Los campos marcados con asterisco (*) son requeridos.</h4> 
+  <form name="vm.form.itemForm" ng-submit="vm.save(vm.form.itemForm.$valid, false)" novalidate>
     <fieldset>
       <dropdowncontrol model="vm.item.store" collection="vm.stores" required="true" labelvalue="Tienda" fieldname="stores" show-labels="true" form="vm.form.itemForm" simple="false" ></dropdowncontrol>
       <legend>Datos del dueño</legend>
@@ -98,9 +100,9 @@
     <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" show-labels="true"></repairs>
     <br />
     <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
-    <br /><br />
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary btn-lg">{{vm.item._id ? 'Actualizar' : 'Crear'}}</button>
-    </div>
-  </form>
+  </form>    
+  <div class="row pull-right">
+    <button ng-click="vm.save(vm.form.itemForm.$valid, false)" class="btn btn-primary"> <i class="glyphicon glyphicon-floppy-disk"></i> {{'Guardar'}}</button>
+    <button ng-click="vm.save(vm.form.itemForm.$valid, true)" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> {{vm.item._id ? 'Guardar y Cerrar' : 'Crear y Cerrar'}}</button>
+  </div>   
 </section>

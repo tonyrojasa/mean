@@ -11,10 +11,10 @@
     var Item = $resource('/api/items/:itemId', {
       itemId: '@_id'
     }, {
-      update: {
-        method: 'PUT'
-      }
-    });
+        update: {
+          method: 'PUT'
+        }
+      });
 
     angular.extend(Item.prototype, {
       createOrUpdate: function () {
