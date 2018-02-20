@@ -44,7 +44,7 @@
 
                     <div class="form-group" show-errors ng-if="!readonly">
                         <label class="control-label" ng-if="showLabels" for="resolutionsCost_{{$index}}">Costo ₡ <span ng-show="isTechnician">*</span></label>
-                        <input name="resolutionsCost_{{$index}}" type="number" ng-model="resolution.cost" id="resolutionsCost_{{$index}}" autocomplete="off" class="form-control" placeholder="Costo técnico" ng-disabled="readonly" ng-required="isTechnician" /> 
+                        <input name="resolutionsCost_{{$index}}" type="number" onwheel="return false;" ng-model="resolution.cost" id="resolutionsCost_{{$index}}" autocomplete="off" class="form-control" placeholder="Costo técnico" ng-disabled="readonly" ng-required="isTechnician" /> 
                         <div ng-if="showLabels" ng-messages="form.$error" role="alert">
                             <p class="help-block error-text" ng-message="required">Costo es requerido.</p>
                         </div>

@@ -42,8 +42,8 @@
               <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
                   {{item.status}}
               </td> 
-              <td  class="col-md-1" title="'Garantía'" sortable="'waranty.enabled'" ng-if="true">
-                  {{item.waranty.enabled ? 'Si' : 'No' }}
+              <td  class="col-md-1" title="'Garantía / Vencimeinto'" sortable="'waranty.enabled'" ng-if="true">
+                  {{item.waranty.enabled ? 'Si' : 'No' }} <p ng-if="item.waranty.expirationDate">{{item.waranty.expirationDate | date:'dd-MMM-yyyy'}}</p>
               </td>
               <td  class="col-md-1" title="'Cantidad de Resoluciones'" sortable="'resolutions.length'" ng-if="true">
                   {{item.resolutions.length}}

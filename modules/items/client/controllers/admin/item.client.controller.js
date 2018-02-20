@@ -54,6 +54,10 @@
       vm.item.revisionCost = 5000;
     } else {
       vm.brand = vm.item.model.brand;
+
+      if (vm.item.waranty) {
+        vm.item.waranty.expirationDate = vm.item.waranty.expirationDate ? new Date(vm.item.waranty.expirationDate) : '';
+      }
     }
 
     // Remove existing Item
@@ -97,7 +101,8 @@
       }
 
       function errorCallback(res) {
-        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Error al guardar artículo!' });
+        var errorMessage = res.data.message === 'SerialNumber already exists' ? 'Este artículo ya existe, verifique el # de serie!' : res.data.message;
+        Notification.error({ message: errorMessage, title: '<i class="glyphicon glyphicon-remove"></i> Error al guardar artículo!' });
       }
     }
   }

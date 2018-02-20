@@ -56,6 +56,7 @@ var ItemSchema = new Schema({
   },
   serialNumber: {
     type: String,
+    index: true,
     trim: true,
     required: 'serialNumber cannot be blank'
   },
@@ -108,7 +109,8 @@ var ItemSchema = new Schema({
   },
   waranty: {
     enabled: {
-      type: Boolean
+      type: Boolean,
+      default: false
     },
     expirationDate: {
       type: Date

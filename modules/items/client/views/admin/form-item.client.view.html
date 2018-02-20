@@ -22,7 +22,7 @@
   <br /><br />
   <h4 class="bg-warning">Los campos marcados con asterisco (*) son requeridos.</h4> 
   <form name="vm.form.itemForm" ng-submit="vm.save(vm.form.itemForm.$valid, false)" novalidate>
-    <fieldset>
+    <fieldset class="fieldset">
       <dropdowncontrol model="vm.item.store" collection="vm.stores" required="true" labelvalue="Tienda" fieldname="stores" show-labels="true" form="vm.form.itemForm" simple="false" ></dropdowncontrol>
       <legend>Datos del dueño</legend>
       <div class="form-group" show-errors>
@@ -59,8 +59,22 @@
         </div>
     </fieldset>
     <br />
-    <fieldset>
+    <fieldset class="fieldset">
       <legend>Datos del dispositivo</legend>
+      
+      <div class="form-group" show-errors>
+        <label class="control-label" for="serialNumber">Número de serie *</label>
+        <input name="serialNumber" type="text" ng-model="vm.item.serialNumber" id="serialNumber" class="form-control" placeholder="Número de serie" required>
+        <div ng-messages="vm.form.itemForm.serialNumber.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Número de serie es requerido.</p>
+        </div>
+      </div> 
+
+      <dropdowncontrol model="vm.item.model" collection="vm.models" required="true" labelvalue="Modelo" fieldname="models" show-labels="true" form="vm.form.itemForm" simple="false" model-field-options="['brand.name','name']"></dropdowncontrol>
+
+      <dropdowncontrol model="vm.item.color" collection="vm.colors" required="true" labelvalue="Color" fieldname="colors" show-labels="true" form="vm.form.itemForm" simple="false"></dropdowncontrol>     
+      <span style="background-color: {{vm.item.color.code}};color: {{vm.item.color.code}};" value="{{vm.item.color.code}}">{{vm.item.color.code}}</span> 
+
       <div class="form-group" show-errors>
         <label class="control-label" for="registrationDate">Fecha de ingreso *</label>
         <br />
@@ -75,21 +89,32 @@
         <div ng-messages="vm.form.itemForm.registrationDate.$error" role="alert">
           <p class="help-block error-text" ng-message="required">Fecha de ingreso es requerido.</p>
         </div>
-      </div>
+      </div>      
+      <fieldset class="fieldset">
+        <legend class="legend">Datos de garantía</legend>
+        <div class="col-md-12">   
+          <div class="col-md-12 form-group-sm">
+            <label class="checkbox"><input type="checkbox" ng-model="vm.item.waranty.enabled">Posee garantía</label>
+          </div>
+        </div>
+        <div class="form-group" ng-if="vm.item.waranty.enabled" show-errors>
+          <label class="control-label" for="warantyExpirationDate">Fecha de vencimiento garantía:</label>
+          <br />
+          <datetimepicker 
+            ng-model="vm.item.waranty.expirationDate" 
+            hidden-time="true" 
+            date-format="dd-MMM-yyyy" 
+            current-text="Hoy"
+            clear-text="Limpiar"
+            close-text="Cerrar"></datetimepicker>       
+        </div> 
+      </fieldset>
+
       <div class="form-group">
         <label class="control-label" for="revisionCost">Costo de revisión ₡</label>
-        <input name="revisionCost" type="number" ng-model="vm.item.revisionCost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
+        <input name="revisionCost" type="number" onwheel="return false;" ng-model="vm.item.revisionCost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
       </div>
-      <dropdowncontrol model="vm.item.model" collection="vm.models" required="true" labelvalue="Modelo" fieldname="models" show-labels="true" form="vm.form.itemForm" simple="false" model-field-options="['brand.name','name']"></dropdowncontrol>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="serialNumber">Número de serie *</label>
-        <input name="serialNumber" type="text" ng-model="vm.item.serialNumber" id="serialNumber" class="form-control" placeholder="Número de serie" required>
-        <div ng-messages="vm.form.itemForm.serialNumber.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Número de serie es requerido.</p>
-        </div>
-      </div>    
-      <dropdowncontrol model="vm.item.color" collection="vm.colors" required="true" labelvalue="Color" fieldname="colors" show-labels="true" form="vm.form.itemForm" simple="false"></dropdowncontrol>     
-      <span style="background-color: {{vm.item.color.code}};color: {{vm.item.color.code}};" value="{{vm.item.color.code}}">{{vm.item.color.code}}</span> 
+
       <dropdowncontrol model="vm.item.status" collection="vm.statuses" required="true" labelvalue="Estado de revisión" fieldname="itemStatus" show-labels="true" select="vm.setStatus" form="vm.form.itemForm" simple="true"></dropdowncontrol>
       <div class="form-group" show-errors>
         <label class="control-label" for="itemObservations">Observaciones (incluir daños o marcas físicas)</label>
