@@ -89,7 +89,13 @@
         <div ng-messages="vm.form.itemForm.registrationDate.$error" role="alert">
           <p class="help-block error-text" ng-message="required">Fecha de ingreso es requerido.</p>
         </div>
-      </div>      
+      </div>     
+
+      <div class="form-group">
+        <label class="control-label" for="revisionCost">Costo de revisión ₡</label>
+        <input name="revisionCost" type="number" onwheel="return false;" ng-model="vm.item.revisionCost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
+      </div>
+
       <fieldset class="fieldset">
         <legend class="legend">Datos de garantía</legend>
         <div class="col-md-12">   
@@ -110,11 +116,6 @@
         </div> 
       </fieldset>
 
-      <div class="form-group">
-        <label class="control-label" for="revisionCost">Costo de revisión ₡</label>
-        <input name="revisionCost" type="number" onwheel="return false;" ng-model="vm.item.revisionCost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
-      </div>
-
       <dropdowncontrol model="vm.item.status" collection="vm.statuses" required="true" labelvalue="Estado de revisión" fieldname="itemStatus" show-labels="true" select="vm.setStatus" form="vm.form.itemForm" simple="true"></dropdowncontrol>
       <div class="form-group" show-errors>
         <label class="control-label" for="itemObservations">Observaciones (incluir daños o marcas físicas)</label>
@@ -122,7 +123,7 @@
       </div>
     </fieldset>  
     <br />  
-    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" show-labels="true"></repairs>
+    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" show-labels="true" status="vm.item.status"></repairs>
     <br />
     <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
   </form>    

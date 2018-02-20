@@ -14,6 +14,7 @@
       replace: true,
       scope: {
         resolutions: '=',
+        status: '=',
         form: '=',
         readonly: '@',
         showLabels: '=',
@@ -49,14 +50,17 @@
           });
         };
         scope.conditions = [
-          'Ingresado (en revisión)',
-          'En reparación',
-          'Reparado',
-          'No se puede reparar',
-          'Pendiente de repuestos',
-          'No hay repuestos',
-          'Otro'
+          'Taller - En reparación',
+          'Taller - Reparado',
+          'Taller - No se puede reparar',
+          'Taller - Pendiente de repuestos',
+          'Taller - No hay repuestos'
         ];
+
+        scope.onSelectCondition = function (condition, index) {
+          if (index === scope.resolutions.length - 1 && condition)
+            scope.status = condition;
+        };
 
         scope.removeResolution = function (index) {
           if (confirm('Seguro que desea eliminar la resolución #' + (index + 1) + '? Perdera todos los cambios')) {

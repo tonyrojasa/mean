@@ -17,7 +17,7 @@
       <div id="exportable">        
         <table ng-table="vm.tableParams" class="table table-hover table-condensed editable-table" show-filter="true" ng-table-columns-binding="vm.cols" export-csv='csv' ng-form="vm.tableForm" disable-filter="vm.isAdding" demo-tracked-table="vm.tableTracker" >
           <tbody>
-            <tr ng-repeat="item in $data" ng-form="rowForm" demo-tracked-table-row="item">
+            <tr ng-repeat="item in $data"ng-class="vm.getStatusClass(item)" ng-form="rowForm" demo-tracked-table-row="item">
               <td class="col-md-1" title="'#'" filter="{ 'itemNumber': 'number'}" sortable="'itemNumber'" ng-if="true">
                 <a data-ui-sref="admin.items.edit({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
               </td>              

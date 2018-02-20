@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="form-group" ng-if="!readonly">
-                        <dropdowncontrol model="resolution.condition" collection="conditions" required="true" labelvalue="Condición" fieldname="resolutionsCondition_{{$index}}" form="form" simple="true" show-labels="showLabels"></dropdowncontrol>     
+                        <dropdowncontrol model="resolution.condition" select="onSelectCondition(resolution.condition,$index)" collection="conditions" required="true" labelvalue="Condición" fieldname="resolutionsCondition_{{$index}}" form="form" simple="true" show-labels="showLabels"></dropdowncontrol>     
                     </div>
                     <div ng-if="readonly">
                             {{resolution.condition}}

@@ -29,7 +29,9 @@
       'Taller - Enviado',
       'Taller - En reparación',
       'Taller - Reparado',
-      'Taller - No reparado',
+      'Taller - No se puede reparar',
+      'Taller - Pendiente de repuestos',
+      'Taller - No hay repuestos',
       'Entregado a dueño',
       'Desechado'];
 

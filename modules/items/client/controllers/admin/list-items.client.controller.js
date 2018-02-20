@@ -67,5 +67,34 @@
       }
       return itemLatResolutionDate;
     };
+
+    vm.getStatusClass = function (item) {
+      switch (item.status) {
+        case 'Ingresado':
+          return 'active';
+          break;
+        case 'Taller - Reparado':
+          return 'success';
+          break;
+        case 'Taller - No se puede reparar':
+          return 'danger';
+          break;
+        case 'Taller - No hay repuestos':
+          return 'danger';
+          break;
+        case 'Pendiente de repuestos':
+          return 'warning';
+          break;
+        case 'Notificado':
+          return 'info';
+          break;
+        case 'Entregado a dueño':
+          return 'info';
+          break;
+        case 'Desechado':
+          return 'danger';
+          break;
+      }
+    };
   }
 }());
