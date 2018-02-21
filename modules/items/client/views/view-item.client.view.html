@@ -1,7 +1,9 @@
 <section class="container">
   <div class="page-header text-center">
     <h1># {{vm.item.itemNumber}} - {{vm.item.model.brand.name}} / {{vm.item.model.name}}</h1>
-    <h2>{{vm.item.status}}</h2>
+    <h3>{{vm.item.store.name}}</h3>
+    <h4 ng-class="vm.getStatusClass(vm.item.status)">{{vm.item.status}}</h4>
+    <h4>TOTAL:  {{vm.getTotalCost()  | currency: '₡'}}</h4>
     <div class="pull-right" ng-if="vm.authentication.isAdminUser()">
       <a class="btn btn-primary" data-ui-sref="admin.items.edit({ itemId: vm.item._id})">
         <i class="glyphicon glyphicon-edit"></i> Editar
@@ -26,7 +28,7 @@
   <div class="row">      
     <h3 class="row text-center">Datos del dueño</h3>
     <div class="col-md-8 col-md-offset-2">     
-      <table class="table table-condensed">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th>Nombre</th>
@@ -45,13 +47,13 @@
                 {{vm.item.owner.id}}
             </td>
             <td>  
-                {{vm.item.mobilePhone}}
+                {{vm.item.owner.mobilePhone}}
             </td>
             <td>  
-                {{vm.item.otherPhone}}
+                {{vm.item.owner.otherPhone}}
             </td>
             <td>  
-                {{vm.item.email}}
+                {{vm.item.owner.email}}
             </td>
           </tr>   
         </tbody> 
@@ -63,7 +65,7 @@
   <div class="row">      
     <h3 class="row text-center">Datos del dispositivo</h3>
     <div class="col-md-12">     
-      <table class="table table-condensed">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th># serie</th>
@@ -87,8 +89,10 @@
             <td>  
                 {{vm.item.model.name}}
             </td>
-            <td>  
+            <td >  
                 {{vm.item.color.name}}
+                <span style="background-color: {{vm.item.color.code}};color: {{vm.item.color.code}};" value="{{vm.item.color.code}}">{{vm.item.color.code}}</span> 
+
             </td>
             <td>  
                 {{vm.item.registrationDate | date:'dd-MMM-yyyy'}}
@@ -112,7 +116,7 @@
   <div class="row">      
     <h3 class="row text-center">Resoluciones</h3>
     <div class="col-md-12">     
-      <table class="table table-condensed">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th>#</th>

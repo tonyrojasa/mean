@@ -30,8 +30,8 @@
   <br /><br />
   <h4 class="bg-warning">Los campos marcados con asterisco (*) son requeridos.</h4> 
   <form name="vm.form.itemForm" ng-submit="vm.save(vm.form.itemForm.$valid, false)" novalidate>
+    <dropdowncontrol model="vm.item.store" collection="vm.stores" required="true" labelvalue="Tienda" fieldname="stores" show-labels="true" form="vm.form.itemForm" simple="false" ></dropdowncontrol>
     <fieldset class="fieldset">
-      <dropdowncontrol model="vm.item.store" collection="vm.stores" required="true" labelvalue="Tienda" fieldname="stores" show-labels="true" form="vm.form.itemForm" simple="false" ></dropdowncontrol>
       <legend>Datos del dueño</legend>
       <div class="form-group" show-errors>
         <label class="control-label" for="ownerName">Nombre *</label>

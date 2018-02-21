@@ -28,5 +28,34 @@
       return +vm.item.revisionCost + vm.getItemResolutionsTotal();
     };
 
+    vm.getStatusClass = function (status) {
+      switch (status) {
+        case 'Ingresado':
+          return 'bg-active';
+          break;
+        case 'Taller - Reparado':
+          return 'bg-success';
+          break;
+        case 'Taller - No se puede reparar':
+          return 'bg-danger';
+          break;
+        case 'Taller - No hay repuestos':
+          return 'bg-danger';
+          break;
+        case 'Pendiente de repuestos':
+          return 'bg-warning';
+          break;
+        case 'Notificado':
+          return 'bg-info';
+          break;
+        case 'Entregado a dueño':
+          return 'bg-info';
+          break;
+        case 'Desechado':
+          return 'bg-danger';
+          break;
+      }
+    };
+
   }
 }());
