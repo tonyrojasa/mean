@@ -1,20 +1,28 @@
 <section class="container">
   <div class="page-header">
-    <h1>{{vm.item._id ? 'Editar Dispositivo' : 'Nuevo Dispositivo'}}
+    <h1>{{vm.item._id ? 'Editar Dispositivo # '+ vm.item.itemNumber  + ' '+vm.item.model.brand.name + ' / ' + vm.item.model.name: 'Nuevo Dispositivo'}}
     <div class="pull-right">
       <a ng-show="vm.item._id" class="btn btn-xs btn-danger" ng-click="vm.remove()">
         <i class="glyphicon glyphicon-trash btn-xs"></i> Eliminar
       </a>
-    </div></h1>
+    </div></h1>    
+  <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3>
   </div>  
-  <div class="row pull-left">
-     <a class="btn btn-secondary" data-ui-sref="admin.items.list">
-      <i class="glyphicon glyphicon-arrow-left"></i>
+  <div class="pull-left" ng-if="vm.item._id">
+    <a class="btn btn-secondary"
+    data-ui-sref="items.view({ itemId: vm.item._id})">
+    <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar
+    </a>
+  </div>    
+  <div class="pull-left" ng-if="!vm.item._id">
+    <a class="btn btn-secondary"
+      data-ui-sref="admin.items.list()">
+    <i class="glyphicon glyphicon-arrow-left"></i>
       Regresar
     </a>
   </div>
   <br />
-  <h2>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h2>
   <div class="row pull-right">
     <button ng-click="vm.save(vm.form.itemForm.$valid, false)" class="btn btn-primary"> <i class="glyphicon glyphicon-floppy-disk"></i> {{'Guardar'}}</button>
     <button ng-click="vm.save(vm.form.itemForm.$valid, true)" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> {{vm.item._id ? 'Guardar y Cerrar' : 'Crear y Cerrar'}}</button>

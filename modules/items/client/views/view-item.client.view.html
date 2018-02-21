@@ -1,15 +1,164 @@
-<section>
-  <div class="page-header">
-    <h1 ng-bind="vm.item.title"></h1>
+<section class="container">
+  <div class="page-header text-center">
+    <h1># {{vm.item.itemNumber}} - {{vm.item.model.brand.name}} / {{vm.item.model.name}}</h1>
+    <h2>{{vm.item.status}}</h2>
+    <div class="pull-right" ng-if="vm.authentication.isAdminUser()">
+      <a class="btn btn-primary" data-ui-sref="admin.items.edit({ itemId: vm.item._id})">
+        <i class="glyphicon glyphicon-edit"></i> Editar
+      </a>
+    </div>
+    <br /><br />
+    <div class="pull-left" ng-if="vm.authentication.isAdminUser()">
+      <a class="btn btn-secondary" data-ui-sref="admin.items.list">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+        Regresar
+      </a>
+    </div>
+    <div class="pull-left" ng-if="!vm.authentication.isAdminUser()">
+      <a class="btn btn-secondary" data-ui-sref="items.list">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+        Regresar
+      </a>
+    </div>
+    <br />
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.item.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.item.user" ng-bind="vm.item.user.displayName"></span>
-      <span ng-if="!vm.item.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.item.content"></p>
+  
+  <div class="row">      
+    <h3 class="row text-center">Datos del dueño</h3>
+    <div class="col-md-8 col-md-offset-2">     
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Celular</th>
+            <th>Otro teléfono </th>
+            <th>email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>  
+                {{vm.item.owner.name}}
+            </td>
+            <td>  
+                {{vm.item.owner.id}}
+            </td>
+            <td>  
+                {{vm.item.mobilePhone}}
+            </td>
+            <td>  
+                {{vm.item.otherPhone}}
+            </td>
+            <td>  
+                {{vm.item.email}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
+  </div>
+  <br />
+
+  <div class="row">      
+    <h3 class="row text-center">Datos del dispositivo</h3>
+    <div class="col-md-12">     
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th># serie</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Color</th>
+            <th>Fecha de Ingreso</th>
+            <th>Garantía</th>
+            <th>Fecha vencimiento garantía</th>
+            <th>Costo revisión</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>  
+                {{vm.item.serialNumber}}
+            </td>
+            <td>  
+                {{vm.item.model.brand.name}}
+            </td>
+            <td>  
+                {{vm.item.model.name}}
+            </td>
+            <td>  
+                {{vm.item.color.name}}
+            </td>
+            <td>  
+                {{vm.item.registrationDate | date:'dd-MMM-yyyy'}}
+            </td>
+            <td>  
+                {{vm.item.waranty.enabled ? 'Si' : 'No'}}
+            </td>
+            <td>  
+                {{vm.item.waranty.expirationDate ? (vm.item.waranty.expirationDate | date:'dd-MMM-yyyy') : 'N/A'}}
+            </td>
+            <td>  
+                {{vm.item.revisionCost | currency: '₡'}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
+  </div>
+
+  <br />
+  <div class="row">      
+    <h3 class="row text-center">Resoluciones</h3>
+    <div class="col-md-12">     
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha Ingreso</th>
+            <th>Técnico</th>
+            <th>Condición </th>
+            <th>Fecha Resolución</th>
+            <th>Costo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="resolution in vm.item.resolutions track by $index">
+            <td>  
+                {{$index+1}}
+            </td>
+            <td>  
+                {{resolution.creationDate | date:'dd-MMM-yyyy'}}
+            </td>
+            <td>  
+                {{resolution.technician.name}}
+            </td>
+            <td>  
+                {{resolution.condition}}
+            </td>
+            <td>  
+                {{resolution.date | date:'dd-MMM-yyyy'}}
+            </td>
+            <td>  
+                {{resolution.cost | currency: '₡'}}
+            </td>
+          </tr>   
+        </tbody> 
+        <tfoot>
+          <tr>  
+            <th colspan="5"><span class="pull-right">Total resoluciones:</span></th>    
+            <td  >
+                {{vm.getItemResolutionsTotal() | currency: '₡'}}  
+            </td>        
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+<div class="row text-center">
+  <h3>TOTAL:  {{vm.getTotalCost()  | currency: '₡'}}</h3>
+</div>
+<hr />
 </section>

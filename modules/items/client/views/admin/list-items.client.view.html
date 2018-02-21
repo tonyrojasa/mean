@@ -19,7 +19,7 @@
           <tbody>
             <tr ng-repeat="item in $data"ng-class="vm.getStatusClass(item)" ng-form="rowForm" demo-tracked-table-row="item">
               <td class="col-md-1" title="'#'" filter="{ 'itemNumber': 'number'}" sortable="'itemNumber'" ng-if="true">
-                <a data-ui-sref="admin.items.edit({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
+                <a data-ui-sref="items.view({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
               </td>              
               <td  class="col-md-1" title="'Tienda'" filter="{ 'store.name': 'select'}" sortable="'store.name'" filter-data="vm.storesFilterArray" ng-if="true">
                   {{item.store.name}}
