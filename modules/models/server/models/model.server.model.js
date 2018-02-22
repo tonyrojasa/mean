@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
   path = require('path'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
+var mongoose_delete = require('mongoose-delete');
 
 /**
  * Model Schema
@@ -28,6 +29,11 @@ var ModelSchema = new Schema({
     ref: 'Brand',
     required: 'brand cannot be blank'
   },
+  modelType: {
+    type: Schema.ObjectId,
+    ref: 'ModelType',
+    required: 'modelType cannot be blank'
+  },
   description: {
     type: String,
     default: '',
@@ -38,6 +44,14 @@ var ModelSchema = new Schema({
     ref: 'User'
   }
 });
+
+ModelSchema.plugin(mongoose_delete, {
+  deletedAt: true,
+  deletedBy: true
+});
+ModelSchema.plugin(mongoose_delete, { indexFields: 'all' });
+// Override all methods 
+ModelSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 ModelSchema.statics.seed = seed;
 

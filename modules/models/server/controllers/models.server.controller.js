@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Model = mongoose.model('Model'),
+  Item = mongoose.model('Item'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -48,6 +49,7 @@ exports.update = function (req, res) {
 
   model.name = req.body.name;
   model.brand = req.body.brand;
+  model.modelType = req.body.modelType;
   model.description = req.body.description;
 
   model.save(function (err) {
@@ -66,14 +68,29 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var model = req.model;
+  var idUser = req.user;
 
-  model.remove(function (err) {
+  Item.aggregate([
+    { '$match': { 'model': model._id } }
+  ], function (err, items) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
+    } else if (items.length > 0) {
+      return res.status(422).send({
+        message: 'document is used'
+      });
     } else {
-      res.json(model);
+      model.delete(idUser, function (err) {
+        if (err) {
+          return res.status(422).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(model);
+        }
+      });
     }
   });
 };
@@ -82,18 +99,19 @@ exports.delete = function (req, res) {
  * List of Models
  */
 exports.list = function (req, res) {
-  Model.find().sort('-created')
-  .populate('user', 'displayName')
-  .populate('brand', 'name')
-  .exec(function (err, models) {
-    if (err) {
-      return res.status(422).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    } else {
-      res.json(models);
-    }
-  });
+  Model.find().sort('-name')
+    .populate('user', 'displayName')
+    .populate('brand', 'name')
+    .populate('modelType', 'name')
+    .exec(function (err, models) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(models);
+      }
+    });
 };
 
 /**
@@ -108,16 +126,16 @@ exports.modelByID = function (req, res, next, id) {
   }
 
   Model.findById(id).populate('user', 'displayName')
-  .populate('brand', 'name')
-  .exec(function (err, model) {
-    if (err) {
-      return next(err);
-    } else if (!model) {
-      return res.status(404).send({
-        message: 'No model with that identifier has been found'
-      });
-    }
-    req.model = model;
-    next();
-  });
+    .populate('brand', 'name')
+    .exec(function (err, model) {
+      if (err) {
+        return next(err);
+      } else if (!model) {
+        return res.status(404).send({
+          message: 'No model with that identifier has been found'
+        });
+      }
+      req.model = model;
+      next();
+    });
 };

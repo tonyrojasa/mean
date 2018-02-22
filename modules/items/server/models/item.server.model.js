@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
 var autoIncrement = require('mongoose-sequence')(mongoose);
+var mongoose_delete = require('mongoose-delete');
 
 /**
  * Item Schema
@@ -126,6 +127,15 @@ var ItemSchema = new Schema({
 });
 
 ItemSchema.plugin(autoIncrement, { inc_field: 'itemNumber' });
+
+ItemSchema.plugin(mongoose_delete, {
+  deletedAt: true,
+  deletedBy: true
+});
+ItemSchema.plugin(mongoose_delete, { indexFields: 'all' });
+// Override all methods 
+ItemSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
+
 
 ItemSchema.statics.seed = seed;
 

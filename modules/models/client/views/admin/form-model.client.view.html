@@ -1,4 +1,4 @@
-<section>
+<section class="container">
   <div class="page-header">
     <h1>{{vm.model._id ? 'Editar Modelos' : 'Nuevo Modelo'}}</h1>
   </div>
@@ -14,7 +14,7 @@
     </a>
   </div>
   <br /><br />
-  <div class="col-md-12">
+  <div>
     <form name="vm.form.modelForm" class="form-horizontal" ng-submit="vm.save(vm.form.modelForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
@@ -24,28 +24,10 @@
             <p class="help-block error-text" ng-message="required">Nombre es requerido.</p>
           </div>
         </div>
-        <div class="form-group" show-errors>        
-          <label class="control-label" for="brands">Marca *</label>  
-          <input name="brands" type="hidden" ng-model="vm.model.brand" id="brands" class="form-control" required>
-          <div class="input-group select2-bootstrap-append">
-            <ui-select ng-model="vm.model.brand" >
-              <ui-select-match  placeholder="Seleccione la marca...">
-                    <span>{{$select.selected.name}}</span>
-                </ui-select-match>
-                <ui-select-choices repeat="item in (vm.brands | filter: $select.search) track by item._id">
-                    <div ng-bind-html="item.name | highlight: $select.search"></div>
-                </ui-select-choices>
-            </ui-select> 
-            <span class="input-group-btn">
-              <button type="button" ng-click="vm.model.brand = undefined" class="btn btn-default">
-                <span class="glyphicon glyphicon-trash"></span>
-              </button>
-            </span>  
-          </div> 
-          <div ng-messages="vm.form.itemForm.brand.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Marca es requerido.</p>
-          </div>
-        </div>
+        <dropdowncontrol model="vm.model.brand" collection="vm.brands" required="true" labelvalue="Marca" fieldname="brand" show-labels="true" form="vm.form.modelForm" simple="false"></dropdowncontrol>     
+        
+        <dropdowncontrol model="vm.model.modelType" collection="vm.modelTypes" required="true" labelvalue="Tipo de artíiculo" fieldname="modelType" show-labels="true" form="vm.form.modelForm" simple="false"></dropdowncontrol>    
+
         <div class="form-group">
           <label class="control-label" for="modelDescription">Descripción</label>
           <textarea name="modelDescription" data-ng-model="vm.model.description" id="modelDescription" class="form-control" cols="30" rows="10" placeholder="Descripción"></textarea>

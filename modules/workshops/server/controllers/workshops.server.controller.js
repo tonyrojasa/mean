@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Workshop = mongoose.model('Workshop'),
+  Technician = mongoose.model('Technician'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -66,14 +67,29 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var workshop = req.workshop;
+  var idUser = req.user;
 
-  workshop.remove(function (err) {
+  Technician.aggregate([
+    { '$match': { 'workshop': workshop._id } }
+  ], function (err, items) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
+    } else if (items.length > 0) {
+      return res.status(422).send({
+        message: 'document is used'
+      });
     } else {
-      res.json(workshop);
+      workshop.delete(idUser, function (err) {
+        if (err) {
+          return res.status(422).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(workshop);
+        }
+      });
     }
   });
 };

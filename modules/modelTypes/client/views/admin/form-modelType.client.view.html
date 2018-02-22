@@ -1,0 +1,37 @@
+<section>
+  <div class="page-header">
+    <h1>{{vm.modelType._id ? 'Editar Tipo de Artículo' : 'Nueva Tipo de Artículo'}}</h1>
+  </div>
+  <div class="pull-right">
+    <a ng-show="vm.modelType._id" class="btn btn-primary" ng-click="vm.remove()">
+      <i class="glyphicon glyphicon-trash"></i> Eliminar
+    </a>
+  </div>
+  <div class="row pull-left">
+     <a class="btn btn-secondary" data-ui-sref="admin.modelTypes.list">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar
+    </a>
+  </div>
+  <br /><br />
+  <div class="col-md-12">
+    <form name="vm.form.modelTypeForm" class="form-horizontal" ng-submit="vm.save(vm.form.modelTypeForm.$valid)" novalidate>
+      <fieldset>
+        <div class="form-group" show-errors>
+          <label class="control-label" for="modelTypeName">Nombre del Tipo de Artículo *</label>
+          <input name="modelTypeName" type="text" ng-model="vm.modelType.name" id="modelTypeName" class="form-control" placeholder="Nombre" required autofocus>
+          <div ng-messages="vm.form.modelTypeForm.name.$error" role="alert">
+            <p class="help-block error-text" ng-message="required">Nombre es requerido.</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="modelTypeDescription">Descripción</label>
+          <textarea name="modelTypeDescription" data-ng-model="vm.modelType.description" id="modelTypeDescription" class="form-control" cols="30" rows="10" placeholder="Descripción"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{vm.modelType._id ? 'Actualizar' : 'Crear'}}</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>

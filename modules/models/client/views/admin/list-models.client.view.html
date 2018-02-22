@@ -1,4 +1,4 @@
-﻿<section>
+﻿<section class="container">
   <div class="page-header">
     <h1>
       Modelos
@@ -7,18 +7,37 @@
       </a>
     </h1>
   </div>
-  <div class="list-group">
-    <a data-ng-repeat="model in vm.models" data-ui-sref="admin.models.edit({modelId: model._id})" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span data-ng-bind="model.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="model.user" ng-bind="model.user.displayName"></span>
-        <span ng-if="!model.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" data-ng-bind="model.name"></h4>
-      <p class="list-group-item-text" data-ng-bind="model.brand.name"></p>
-    </a>
+  <div class="form-group">
+    <label class="control-label" for="modelName">Buscar por nombre *</label>
+    <input name="searchName" type="text" ng-model="vm.search.name" id="searchName" class="form-control" placeholder="Nombre" autofocus>
+  </div>
+
+  <div class="row">      
+    <div class="col-md-12">     
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Tipo de artículo </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="model in vm.models | filter: vm.search track by $index ">
+            <td>  
+                <a data-ui-sref="admin.models.edit({modelId: model._id})" class="btn btn-link">
+                {{model.name}}</a>
+            </td>
+            <td>  
+                {{model.brand.name}}
+            </td>
+            <td>  
+                {{model.modelType.name}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
   </div>
   <div class="alert alert-warning text-center" data-ng-if="vm.models.$resolved && !vm.models.length">
     No hay modelos, Porqué no <a data-ui-sref="admin.models.create">creas uno</a>?

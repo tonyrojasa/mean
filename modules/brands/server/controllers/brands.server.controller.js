@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   Brand = mongoose.model('Brand'),
+  Model = mongoose.model('Model'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -65,14 +66,29 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var brand = req.brand;
+  var idUser = req.user;
 
-  brand.remove(function (err) {
+  Model.aggregate([
+    { '$match': { 'brand': brand._id } }
+  ], function (err, items) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
+    } else if (items.length > 0) {
+      return res.status(422).send({
+        message: 'document is used'
+      });
     } else {
-      res.json(brand);
+      brand.delete(idUser, function (err) {
+        if (err) {
+          return res.status(422).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          res.json(brand);
+        }
+      });
     }
   });
 };

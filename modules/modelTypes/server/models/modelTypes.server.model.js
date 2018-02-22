@@ -9,11 +9,10 @@ var mongoose = require('mongoose'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
 var mongoose_delete = require('mongoose-delete');
-
 /**
- * Brand Schema
+ * ModelType Schema
  */
-var BrandSchema = new Schema({
+var ModelTypeSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
@@ -35,24 +34,24 @@ var BrandSchema = new Schema({
   }
 });
 
-BrandSchema.plugin(mongoose_delete, {
+ModelTypeSchema.plugin(mongoose_delete, {
   deletedAt: true,
   deletedBy: true
 });
-BrandSchema.plugin(mongoose_delete, { indexFields: 'all' });
+ModelTypeSchema.plugin(mongoose_delete, { indexFields: 'all' });
 // Override all methods 
-BrandSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
+ModelTypeSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
-BrandSchema.statics.seed = seed;
+ModelTypeSchema.statics.seed = seed;
 
-mongoose.model('Brand', BrandSchema);
+mongoose.model('ModelType', ModelTypeSchema);
 
 /**
-* Seeds the User collection with document (Brand)
+* Seeds the User collection with document (ModelType)
 * and provided options.
 */
 function seed(doc, options) {
-  var Brand = mongoose.model('Brand');
+  var ModelType = mongoose.model('ModelType');
 
   return new Promise(function (resolve, reject) {
 
@@ -92,7 +91,7 @@ function seed(doc, options) {
 
     function skipDocument() {
       return new Promise(function (resolve, reject) {
-        Brand
+        ModelType
           .findOne({
             title: doc.title
           })
@@ -109,7 +108,7 @@ function seed(doc, options) {
               return resolve(true);
             }
 
-            // Remove Brand (overwrite)
+            // Remove ModelType (overwrite)
 
             existing.remove(function (err) {
               if (err) {
@@ -126,19 +125,19 @@ function seed(doc, options) {
       return new Promise(function (resolve, reject) {
         if (skip) {
           return resolve({
-            message: chalk.yellow('Database Seeding: Brand\t' + doc.title + ' skipped')
+            message: chalk.yellow('Database Seeding: ModelType\t' + doc.title + ' skipped')
           });
         }
 
-        var brand = new Brand(doc);
+        var modelType = new ModelType(doc);
 
-        brand.save(function (err) {
+        modelType.save(function (err) {
           if (err) {
             return reject(err);
           }
 
           return resolve({
-            message: 'Database Seeding: Brand\t' + brand.title + ' added'
+            message: 'Database Seeding: ModelType\t' + modelType.title + ' added'
           });
         });
       });

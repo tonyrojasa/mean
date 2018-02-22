@@ -1,0 +1,18 @@
+<section>
+  <div class="page-header">
+    <h1>Tipos de Artículos</h1>
+  </div>
+  <div class="list-group">
+    <a ng-repeat="modelType in vm.modelTypes" ui-sref="modelTypes.view({ modelTypeId: modelType._id })" class="list-group-item">
+      <small class="list-group-item-text">
+        Posted on
+        <span ng-bind="modelType.created | date:'mediumDate'"></span>
+        by
+        <span ng-if="modelType.user" ng-bind="modelType.user.displayName"></span>
+        <span ng-if="!modelType.user">Deleted User</span>
+      </small>
+      <h4 class="list-group-item-heading" ng-bind="modelType.name"></h4>
+      <p class="list-group-item-text" ng-bind="modelType.description"></p>
+    </a>
+  </div>
+</section>

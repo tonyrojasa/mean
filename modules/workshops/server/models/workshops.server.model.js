@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
   path = require('path'),
   config = require(path.resolve('./config/config')),
   chalk = require('chalk');
+var mongoose_delete = require('mongoose-delete');
 
 /**
  * Workshop Schema
@@ -37,6 +38,14 @@ var WorkshopSchema = new Schema({
     ref: 'User'
   }
 });
+
+WorkshopSchema.plugin(mongoose_delete, {
+  deletedAt: true,
+  deletedBy: true
+});
+WorkshopSchema.plugin(mongoose_delete, { indexFields: 'all' });
+// Override all methods 
+WorkshopSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 WorkshopSchema.statics.seed = seed;
 

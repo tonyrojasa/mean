@@ -6,10 +6,10 @@
     .controller('ModelsAdminController', ModelsAdminController);
 
   ModelsAdminController.$inject = ['$scope', '$state', '$window', 'modelResolve', 'Authentication', 'Notification',
-    'BrandsService'];
+    'BrandsService', 'ModelTypesService'];
 
   function ModelsAdminController($scope, $state, $window, model, Authentication, Notification,
-    BrandsService) {
+    BrandsService, ModelTypesService) {
     var vm = this;
 
     vm.model = model;
@@ -18,8 +18,8 @@
     vm.remove = remove;
     vm.save = save;
 
-
     vm.brands = BrandsService.query();
+    vm.modelTypes = ModelTypesService.query();
 
     // Remove existing Model
     function remove() {

@@ -5,72 +5,71 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
-  Store = mongoose.model('Store'),
-  Item = mongoose.model('Item'),
+  ModelType = mongoose.model('ModelType'),
+  Model = mongoose.model('Model'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
- * Create an store
+ * Create an modelType
  */
 exports.create = function (req, res) {
-  var store = new Store(req.body);
-  store.user = req.user;
+  var modelType = new ModelType(req.body);
+  modelType.user = req.user;
 
-  store.save(function (err) {
+  modelType.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(store);
+      res.json(modelType);
     }
   });
 };
 
 /**
- * Show the current store
+ * Show the current modelType
  */
 exports.read = function (req, res) {
   // convert mongoose document to JSON
-  var store = req.store ? req.store.toJSON() : {};
+  var modelType = req.modelType ? req.modelType.toJSON() : {};
 
-  // Add a custom field to the Store, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Store model.
-  store.isCurrentUserOwner = !!(req.user && store.user && store.user._id.toString() === req.user._id.toString());
+  // Add a custom field to the ModelType, for determining if the current User is the "owner".
+  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the ModelType model.
+  modelType.isCurrentUserOwner = !!(req.user && modelType.user && modelType.user._id.toString() === req.user._id.toString());
 
-  res.json(store);
+  res.json(modelType);
 };
 
 /**
- * Update an store
+ * Update an modelType
  */
 exports.update = function (req, res) {
-  var store = req.store;
+  var modelType = req.modelType;
 
-  store.name = req.body.name;
-  store.location = req.body.location;
-  store.content = req.body.content;
+  modelType.name = req.body.name;
+  modelType.description = req.body.description;
 
-  store.save(function (err) {
+  modelType.save(function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(store);
+      res.json(modelType);
     }
   });
 };
 
 /**
- * Delete an store
+ * Delete an modelType
  */
 exports.delete = function (req, res) {
-  var store = req.store;
+  var modelType = req.modelType;
   var idUser = req.user;
 
-  Item.aggregate([
-    { '$match': { 'store': store._id } }
+  Model.aggregate([
+    { '$match': { 'modelType': modelType._id } }
   ], function (err, items) {
     if (err) {
       return res.status(422).send({
@@ -81,56 +80,54 @@ exports.delete = function (req, res) {
         message: 'document is used'
       });
     } else {
-      store.delete(idUser, function (err) {
+      modelType.delete(idUser, function (err) {
         if (err) {
           return res.status(422).send({
             message: errorHandler.getErrorMessage(err)
           });
         } else {
-          res.json(store);
+          res.json(modelType);
         }
       });
     }
   });
-
-
 };
 
 /**
- * List of Stores
+ * List of ModelTypes
  */
 exports.list = function (req, res) {
-  Store.find().sort('-created').populate('user', 'displayName').exec(function (err, stores) {
+  ModelType.find().sort('-created').populate('user', 'displayName').exec(function (err, modelTypes) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(stores);
+      res.json(modelTypes);
     }
   });
 };
 
 /**
- * Store middleware
+ * ModelType middleware
  */
-exports.storeByID = function (req, res, next, id) {
+exports.modelTypeByID = function (req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
-      message: 'Store is invalid'
+      message: 'ModelType is invalid'
     });
   }
 
-  Store.findById(id).populate('user', 'displayName').exec(function (err, store) {
+  ModelType.findById(id).populate('user', 'displayName').exec(function (err, modelType) {
     if (err) {
       return next(err);
-    } else if (!store) {
+    } else if (!modelType) {
       return res.status(404).send({
-        message: 'No store with that identifier has been found'
+        message: 'No modelType with that identifier has been found'
       });
     }
-    req.store = store;
+    req.modelType = modelType;
     next();
   });
 };

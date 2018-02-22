@@ -76,8 +76,9 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var item = req.item;
+  var idUser = req.user;
 
-  item.remove(function (err) {
+  item.delete(idUser, function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
@@ -111,6 +112,12 @@ exports.list = function (req, res) {
       path: 'model',
       populate: {
         path: 'brand'
+      }
+    })
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'modelType'
       }
     })
     .populate('store', 'name')
@@ -152,6 +159,12 @@ exports.listAllOpen = function (req, res) {
       path: 'model',
       populate: {
         path: 'brand'
+      }
+    })
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'modelType'
       }
     })
     .populate('store', 'name')
