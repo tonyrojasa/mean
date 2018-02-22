@@ -45,13 +45,13 @@
         case 'Pendiente de repuestos':
           return 'bg-warning';
           break;
-        case 'Notificado':
+        case 'Cliente - Notificado':
           return 'bg-info';
           break;
-        case 'Entregado a dueño':
+        case 'Cerrado - Entregado':
           return 'bg-info';
           break;
-        case 'Desechado':
+        case 'Cerrado - Desechado':
           return 'bg-danger';
           break;
       }

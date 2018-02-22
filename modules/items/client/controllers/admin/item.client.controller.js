@@ -24,16 +24,14 @@
 
     vm.item.registrationDate = vm.item.registrationDate ? new Date(vm.item.registrationDate) : new Date();
 
-    vm.statuses = [
-      'Ingresado',
-      'Taller - Enviado',
-      'Taller - En reparación',
-      'Taller - Reparado',
-      'Taller - No se puede reparar',
-      'Taller - Pendiente de repuestos',
-      'Taller - No hay repuestos',
-      'Entregado a dueño',
-      'Desechado'];
+    if (!vm.item.resolutions || vm.item.resolutions.length === 0) {
+      vm.statuses = ['Ingresado'];
+    } else {
+      vm.statuses = [
+        'Cliente - Notificado',
+        'Cerrado - Entregado',
+        'Cerrado - Desechado'];
+    }
 
     vm.setStatus = function (status) {
       vm.item.status = status;

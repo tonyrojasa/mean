@@ -5,9 +5,9 @@
     .module('items.admin')
     .directive('repairs', repairs);
 
-  repairs.$inject = ['TechniciansService'];
+  repairs.$inject = ['TechniciansService', 'Notification'];
 
-  function repairs(TechniciansService) {
+  function repairs(TechniciansService, Notification) {
     return {
       templateUrl: '/modules/items/client/views/admin/repairs.client.view.html',
       restrict: 'E',
@@ -29,7 +29,12 @@
           });
         }
 
-        scope.addResolution = function () {
+        scope.addResolution = function (form) {
+          if (!scope.form.$valid) {
+            scope.$broadcast('show-errors-check-validity', 'vm.form.itemForm');
+            Notification.error({ message: 'Complete todos los campos requeridos', title: '<i class="glyphicon glyphicon-remove"> Error en el formulario</i>' });
+            return false;
+          }
           if (!scope.resolutions) {
             scope.resolutions = [];
           }
@@ -40,7 +45,7 @@
 
           scope.resolutions.push({
             resolutionDate: '',
-            condition: '',
+            condition: scope.status,
             observations: '',
             cost: '',
             technician: '',
@@ -58,7 +63,7 @@
         ];
 
         scope.onSelectCondition = function (condition, index) {
-          if (index === scope.resolutions.length - 1 && condition)
+          if (condition)
             scope.status = condition;
         };
 

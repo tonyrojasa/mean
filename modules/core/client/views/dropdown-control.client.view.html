@@ -3,7 +3,7 @@
   <input name="dropdown_{{fieldname}}" type="hidden" ng-model="model" id="dropdown_{{fieldname}}" class="form-control" placeholder="{{labelvalue}}" ng-required="required">
   <div ng-if="simple">
     <div class="dropdown" id="storeLocationDropdown" uib-dropdown>
-        <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button">
+        <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button" ng-disabled="readonly">
           <span ng-if="!model">-- Seleccione una opción --</span>
           {{model}}
           <span class="caret"></span>
@@ -17,7 +17,7 @@
   </div>
   <div ng-if="!simple">
     <div class="select2-bootstrap-append">
-        <ui-select ng-model="model" on-select="this.selectItem($select.selected)">
+        <ui-select ng-model="model" on-select="this.selectItem($select.selected)" ng-disabled="readonly">
           <ui-select-match  allow-clear="true" placeholder="Seleccione una opción...">
                 <span>{{$select.selected.name}}</span>
             </ui-select-match>

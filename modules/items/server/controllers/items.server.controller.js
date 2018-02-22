@@ -144,7 +144,10 @@ exports.listAllOpen = function (req, res) {
       $and: _.toArray(query)
     };
   }
-  Item.find(query).where({ 'status': { $ne: 'Cerrado' } }).sort('-registrationDate').populate('user', 'displayName')
+  Item.find(query)
+    .where({ 'status': { $ne: 'Cerrado - Entregado' } })
+    .where({ 'status': { $ne: 'Cerrado - Desechado' } })
+    .sort('-registrationDate').populate('user', 'displayName')
     .populate({
       path: 'model',
       populate: {

@@ -85,13 +85,13 @@
         case 'Pendiente de repuestos':
           return 'warning';
           break;
-        case 'Notificado':
+        case 'Cliente - Notificado':
           return 'info';
           break;
-        case 'Entregado a dueño':
+        case 'Cerrado - Entregado':
           return 'info';
           break;
-        case 'Desechado':
+        case 'Cerrado - Desechado':
           return 'danger';
           break;
       }
