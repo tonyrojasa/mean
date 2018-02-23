@@ -37,7 +37,10 @@
         controllerAs: 'vm',
         data: {
           pageTitle: 'Settings password'
-        }
+        },
+        resolve: {
+          userResolve: function () { return null; }
+        },
       })
       .state('settings.accounts', {
         url: '/accounts',

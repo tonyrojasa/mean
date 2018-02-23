@@ -45,9 +45,9 @@
         $state.go('admin.user', {
           userId: user._id
         });
-        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> User saved successfully!' });
+        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Datos de usuario: ' + vm.user.username + ' actualizados!' });
       }, function (errorResponse) {
-        Notification.error({ message: errorResponse.data.message, title: '<i class="glyphicon glyphicon-remove"></i> User update error!' });
+        Notification.error({ message: errorResponse.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Error al actualizar datos del usuario!' });
       });
     }
 

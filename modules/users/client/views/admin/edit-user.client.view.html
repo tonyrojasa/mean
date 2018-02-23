@@ -1,6 +1,13 @@
 <section>
   <div class="page-header">
-    <h1>User <span ng-bind="vm.user.username"></span></h1>
+    <h1>User <span ng-bind="vm.user.username"></span></h1>    
+    <div class="pull-left">
+        <a class="btn btn-secondary" data-ui-sref="admin.user({userId: vm.user._id})">
+          <i class="glyphicon glyphicon-arrow-left"></i>
+          Regresar
+        </a>
+      </div>
+      <br /><br />
   </div>
   <div class="col-md-12">
     <form name="vm.userForm" ng-submit="vm.update(vm.userForm.$valid)" novalidate>
