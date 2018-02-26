@@ -37,6 +37,21 @@
       vm.item.status = status;
     };
 
+    vm.onStatusChange = function (status) {
+      if (status) {
+        vm.item.status = status;
+      } else {
+        if (vm.item.notifications && vm.item.notifications.length > 0) {
+          vm.item.status = vm.item.notifications[vm.item.notifications.length - 1].status;
+        } else if (vm.item.resolutions && vm.item.resolutions.length > 0) {
+          vm.item.status = vm.item.resolutions[vm.item.resolutions.length - 1].condition;
+
+        } else {
+          vm.item.status = 'Ingresado';
+        }
+      }
+    };
+
     vm.getTotalCost = function () {
       vm.item.revisionCost = vm.item.revisionCost ? vm.item.revisionCost : '';
       var resolutionsCost = 0;

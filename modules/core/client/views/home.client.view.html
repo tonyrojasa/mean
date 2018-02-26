@@ -14,52 +14,58 @@
         BETA v1.0
       </h6> 
     </div>
+    <div ng-if="!vm.authentication.isGuestUser()">
+      <!-- User Admin menu -->
+      <div class="row" ng-if="vm.authentication.isAdminUser() && !vm.authentication.isGuestUser()">
+          <h5 class="text-muted">Artículos (dispositivos):</h5>
+          <p>
+            <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list">Casos Abiertos</a> 
+            <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list.close({status: 'cerrado'})">Casos Cerrados</a> 
+          </p>
+          <p>
+              <a class="btn btn-default btn-md" data-ui-sref="technician.items.list">Resoluciones</a>       
+              <a class="btn btn-default btn-md" data-ui-sref="admin.notifications.list">Notificaciones</a> 
+            </p>
+        </div>
+        <div class="row" ng-if="vm.authentication.isAdminUser()">
+          <p> 
+            <a class="btn btn-secondary" data-ui-sref="admin.brands.list">Marcas</a>
+            <a class="btn btn-secondary" data-ui-sref="admin.models.list">Modelos</a>
+            <a class="btn btn-secondary" data-ui-sref="admin.colors.list">Colores</a>
+            <a class="btn btn-secondary" data-ui-sref="admin.workshops.list">Talleres</a>
+            <a class="btn btn-secondary" data-ui-sref="admin.technicians.list">Técnicos</a>
+          </p>
+        </div>
+        
+        <!-- Technician menu -->
+        <div class="row" ng-if="vm.authentication.isTechnicianUser()">
+          <p>
+            <a class="btn btn-primary btn-md" data-ui-sref="technician.items.list">Resoluciones</a>      
+          </p>
+        </div>
     
-    <!-- User Admin menu -->
-    <div class="row" ng-if="vm.authentication.isAdminUser()">
-      <h5 class="text-muted">Artículos (dispositivos):</h5>
-      <p>
-        <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list">Casos Abiertos</a> 
-        <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list.close({status: 'cerrado'})">Casos Cerrados</a> 
-      </p>
-      <p>
-          <a class="btn btn-default btn-md" data-ui-sref="technician.items.list">Resoluciones</a>       
-          <a class="btn btn-default btn-md" data-ui-sref="admin.notifications.list">Notificaciones</a> 
-        </p>
+        <!-- No admin menu -->
+        <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
+          <p>
+            <a class="btn btn-primary btn-md" data-ui-sref="items.list">Dispositivos</a>      
+            <a class="btn btn-primary btn-md" data-ui-sref="notifications.list">Notificaciones</a> 
+          </p>
+        </div>   
+        <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
+          <p> 
+              <a class="btn btn-secondary" data-ui-sref="brands.list">Marcas</a>
+              <a class="btn btn-secondary" data-ui-sref="models.list">Modelos</a>
+              <a class="btn btn-secondary" data-ui-sref="colors.list">Colores</a>
+              <a class="btn btn-secondary" data-ui-sref="workshops.list">Talleres</a>
+              <a class="btn btn-secondary" data-ui-sref="technicians.list">Técnicos</a>
+            </p>
+        </div>  
     </div>
-    <div class="row" ng-if="vm.authentication.isAdminUser()">
-      <p> 
-        <a class="btn btn-secondary" data-ui-sref="admin.brands.list">Marcas</a>
-        <a class="btn btn-secondary" data-ui-sref="admin.models.list">Modelos</a>
-        <a class="btn btn-secondary" data-ui-sref="admin.colors.list">Colores</a>
-        <a class="btn btn-secondary" data-ui-sref="admin.workshops.list">Talleres</a>
-        <a class="btn btn-secondary" data-ui-sref="admin.technicians.list">Técnicos</a>
-      </p>
-    </div>
-    
-    <!-- Technician menu -->
-    <div class="row" ng-if="vm.authentication.isTechnicianUser()">
-      <p>
-        <a class="btn btn-primary btn-md" data-ui-sref="technician.items.list">Resoluciones</a>      
-      </p>
-    </div>
-
-    <!-- No admin menu -->
-    <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
-      <p>
-        <a class="btn btn-primary btn-md" data-ui-sref="items.list">Dispositivos</a>      
-        <a class="btn btn-primary btn-md" data-ui-sref="notifications.list">Notificaciones</a> 
-      </p>
-    </div>   
-    <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
-      <p> 
-          <a class="btn btn-secondary" data-ui-sref="brands.list">Marcas</a>
-          <a class="btn btn-secondary" data-ui-sref="models.list">Modelos</a>
-          <a class="btn btn-secondary" data-ui-sref="colors.list">Colores</a>
-          <a class="btn btn-secondary" data-ui-sref="workshops.list">Talleres</a>
-          <a class="btn btn-secondary" data-ui-sref="technicians.list">Técnicos</a>
-        </p>
-    </div>
+      
+    <div class="row" ng-show="vm.authentication.user && vm.authentication.isGuestUser()">    
+        <h3 class="text-danger">Contacte algún Administrador del sistema</h1>
+        <h4 class="text-danger">Debe solicitar permisos para acceder a las diferentes secciones.</h2>
+      </div>  
   </div>
   <div>
   <p class="text-center text-muted">

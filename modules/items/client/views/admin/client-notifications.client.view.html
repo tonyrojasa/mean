@@ -1,0 +1,69 @@
+<div>        
+    <fieldset class="form-group fieldset">
+        <div>
+            <legend ng-if="!report" class="text-info"><b>Notificaiones al dueño (cliente)</b></legend>       
+            
+            <uib-accordion close-others="oneAtATime">
+            <div ng-repeat="notification in notifications track by $index">    
+                <div uib-accordion-group class="panel-default" is-open="notification.open">  
+                    <uib-accordion-heading>
+                        <b># {{$index+1}} {{notification.type}}</b> / {{notification.status}} / {{notification.date | date: 'dd-MMM-yyyy'}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': notification.open, 'glyphicon-chevron-right': !notification.open}"></i>
+                    </uib-accordion-heading>    
+                      
+                    <div class="form-group" ng-if="!readonly">
+                        <div class="pull-left"><h4># {{$index+1}}</h4></div>                    
+                    </div>
+                    <br /><br />
+                    <div class="form-group" show-errors ng-if="!readonly">
+                        <label class="control-label" ng-if="showLabels" for="date">Fecha de notificación *</label>
+                        <input name="notificationDate_{{$index}}" type="hidden" ng-model="notification.date" id="notificationDate_{{$index}}" class="form-control" required>
+                        <datetimepicker 
+                            ng-model="notification.date" 
+                            hidden-time="true" 
+                            date-format="dd-MMM-yyyy" 
+                            current-text="Hoy"
+                            clear-text="Limpiar"
+                            close-text="Cerrar"></datetimepicker>          
+                        <div ng-if="showLabels" ng-messages="form.$error" role="alert">
+                            <p class="help-block error-text" ng-message="required">Fecha de notificación es requerido.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="!readonly">
+                        <dropdowncontrol model="notification.type" readonly="readonly" collection="types" required="true" labelvalue="Tipo de notificación" fieldname="notificationType_{{$index}}" form="form" simple="true" show-labels="showLabels"></dropdowncontrol>     
+                    </div>
+                    <div ng-if="readonly">
+                            {{notification.type}}
+                    </div>
+
+                    <div class="form-group" ng-if="!readonly">
+                        <dropdowncontrol model="notification.status" readonly="readonly" select="onSelectType" collection="statuses" required="true" labelvalue="Estado" fieldname="notificationStatus_{{$index}}" form="form" simple="true" show-labels="showLabels"></dropdowncontrol>     
+                    </div>
+                    <div ng-if="readonly">
+                            {{notification.status}}
+                    </div>
+
+                    <div class="form-group" ng-if="!readonly">
+                        <label class="control-label" ng-if="showLabels" for="notificationObservations_{{$index}}">Observaciones (detalles de la notificación) <span ng-show="isTechnician"></span></label>
+                        <textarea name="notificationObservations_{{$index}}" ng-model="notification.observations" id="notificationObservations_{{$index}}" autocomplete="off" class="form-control" placeholder="Observaciones" ng-disabled="readonly" /> 
+                    </div>
+                    <div ng-if="readonly">
+                            {{notification.observations}}
+                    </div>
+                    
+                    <div class="pull-right">
+                        <a class="form-group btn btn-xs btn-danger" ng-click="removeNotification($index)" ng-if="!readonly">
+                            <i class="glyphicon glyphicon-trash"></i> 
+                            Eliminar Notificación         
+                        </a> 
+                    </div><br />
+                    <hr /> 
+                </div>                        
+            </uib-accordion>  
+        </div>        
+        <a class="form-group btn btn-secondary" ng-click="addNotification()" ng-if="!readonly">
+            <i class="glyphicon glyphicon-plus"></i>
+            Agregar Notificacion a dueño (cliente)
+        </a>  
+    </fieldset>   
+</div>

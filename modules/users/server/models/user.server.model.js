@@ -12,6 +12,7 @@ var mongoose = require('mongoose'),
   generatePassword = require('generate-password'),
   owasp = require('owasp-password-strength-test'),
   chalk = require('chalk');
+var mongoose_delete = require('mongoose-delete');
 
 owasp.config(config.shared.owasp);
 
@@ -230,6 +231,14 @@ UserSchema.statics.generateRandomPassphrase = function () {
     }
   });
 };
+
+UserSchema.plugin(mongoose_delete, {
+  deletedAt: true,
+  deletedBy: true
+});
+UserSchema.plugin(mongoose_delete, { indexFields: 'all' });
+// Override all methods 
+UserSchema.plugin(mongoose_delete, { overrideMethods: 'all' });
 
 UserSchema.statics.seed = seed;
 

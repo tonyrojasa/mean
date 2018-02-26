@@ -7,7 +7,7 @@
             <div ng-repeat="resolution in resolutions track by $index">    
                 <div uib-accordion-group class="panel-default" is-open="resolution.open">  
                     <uib-accordion-heading>
-                        <b># {{$index+1}} {{resolution.technician.name}}</b> / {{resolution.condition}} / {{resolution.date | date: 'dd-MMM-yyyy'}} / <b>Costo: {{resolution.cost | currency: '₡'}}</b><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': item.open, 'glyphicon-chevron-right': !item.open}"></i>
+                        <b># {{$index+1}} {{resolution.technician.name}}</b> / {{resolution.condition}} / {{resolution.date | date: 'dd-MMM-yyyy'}} / <b>Costo: {{resolution.cost | currency: '₡'}}</b><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': resolution.open, 'glyphicon-chevron-right': !resolution.open}"></i>
                     </uib-accordion-heading>    
                       
                     <div class="form-group" ng-if="!readonly">

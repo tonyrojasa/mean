@@ -152,8 +152,7 @@ exports.listAllOpen = function (req, res) {
     };
   }
   Item.find(query)
-    .where({ 'status': { $ne: 'Cerrado - Entregado' } })
-    .where({ 'status': { $ne: 'Cerrado - Desechado' } })
+    .where({ 'status': { $not: new RegExp('^Cerrado$', "i") } })
     .sort('-registrationDate').populate('user', 'displayName')
     .populate({
       path: 'model',

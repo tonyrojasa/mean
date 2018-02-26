@@ -17,6 +17,7 @@
         status: '=',
         form: '=',
         readonly: '@',
+        onStatusChange: '=',
         showLabels: '=',
         isTechnician: '='
       },
@@ -64,12 +65,13 @@
 
         scope.onSelectCondition = function (condition, index) {
           if (condition)
-            scope.status = condition;
+            scope.onStatusChange(condition);
         };
 
         scope.removeResolution = function (index) {
           if (confirm('Seguro que desea eliminar la resolución #' + (index + 1) + '? Perdera todos los cambios')) {
             scope.resolutions.splice(index, 1);
+            scope.onStatusChange();
           }
         };
 

@@ -113,7 +113,7 @@
   </div>
 
   <br />
-  <div class="row">      
+  <div class="row" ng-show="vm.item.resolutions && vm.item.resolutions.length">      
     <h3 class="row text-center">Resoluciones</h3>
     <div class="col-md-12">     
       <table class="table table-striped">
@@ -160,6 +160,40 @@
       </table>
     </div>
   </div>
+
+  <br />
+  <div class="row" ng-show="vm.item.notifications && vm.item.notifications.length">      
+    <h3 class="row text-center">Notificaciones al dueño (cliente)</h3>
+    <div class="col-md-12">     
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Fecha</th>
+            <th>Tipo de notificación</th>
+            <th>Estado</th>
+            <th>Observaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="notification in vm.item.notifications track by $index">
+            <td>  
+                {{$index+1}}
+            </td>
+            <td>  
+                {{notification.date | date:'dd-MMM-yyyy'}}
+            </td>
+            <td>  
+                {{notification.type}}
+            </td>
+            <td>  
+                {{resolution.status}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
+  </di>
 
 <div class="row text-center">
   <h3>TOTAL:  {{vm.getTotalCost()  | currency: '₡'}}</h3>

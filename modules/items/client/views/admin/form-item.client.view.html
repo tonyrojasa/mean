@@ -130,13 +130,14 @@
           <textarea name="itemObservations" data-ng-model="vm.item.observations" id="itemObservations" class="form-control" cols="30" rows="10" placeholder="Observaciones"></textarea>
       </div>
     </fieldset>  
-    <br />  
-    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" show-labels="true" status="vm.item.status"></repairs>
+    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" on-status-change="vm.onStatusChange" show-labels="true" status="vm.item.status"></repairs>
+    <client-notifications ng-if="!vm.authentication.isTechnicianUser()" on-status-change="vm.onStatusChange" notifications="vm.item.notifications" form="vm.form.itemForm" show-labels="true" status="vm.item.status"></client-notifications>
     <br />
     <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
   </form>    
   <div class="row pull-right">
     <button ng-click="vm.save(vm.form.itemForm.$valid, false)" class="btn btn-primary"> <i class="glyphicon glyphicon-floppy-disk"></i> {{'Guardar'}}</button>
     <button ng-click="vm.save(vm.form.itemForm.$valid, true)" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-saved"></i> {{vm.item._id ? 'Guardar y Cerrar' : 'Crear y Cerrar'}}</button>
-  </div>   
+  </div> 
+  <di class="row"></di>  
 </section>

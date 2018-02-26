@@ -97,6 +97,24 @@ var ItemSchema = new Schema({
       ref: 'Technician'
     }
   }],
+  notifications: [{
+    date: {
+      type: Date
+    },
+    type: {
+      type: String
+    },
+    observations: {
+      type: String
+    },
+    status: {
+      type: String
+    },
+    notifier: {
+      type: Schema.ObjectId,
+      ref: 'User'
+    }
+  }],
   status: {
     type: String,
     default: 'Ingresado',

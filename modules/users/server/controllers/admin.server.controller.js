@@ -43,8 +43,9 @@ exports.update = function (req, res) {
  */
 exports.delete = function (req, res) {
   var user = req.model;
+  var idUser = req.user;
 
-  user.remove(function (err) {
+  user.delete(idUser, function (err) {
     if (err) {
       return res.status(422).send({
         message: errorHandler.getErrorMessage(err)

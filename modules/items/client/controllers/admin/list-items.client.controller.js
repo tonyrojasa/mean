@@ -88,6 +88,9 @@
         case 'Cliente - Notificado':
           return 'info';
           break;
+        case 'Cliente - No se puede contactar':
+          return 'danger';
+          break;
         case 'Cerrado - Entregado':
           return 'info';
           break;

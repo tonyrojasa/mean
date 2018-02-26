@@ -15,15 +15,33 @@
     };
 
     auth.isAdminUser = function () {
-      return (auth.user && auth.user.roles && auth.user.roles.indexOf('admin') > -1);
+      auth = {
+        user: $window.user
+      };
+      if (!auth.user) {
+        return false;
+      }
+      return (auth.user.roles && auth.user.roles.indexOf('admin') > -1);
     };
 
     auth.isGuestUser = function () {
-      return (auth.user && auth.user.roles && auth.user.roles.indexOf('guest') > -1);
+      auth = {
+        user: $window.user
+      };
+      if (!auth.user) {
+        return true;
+      }
+      return (auth.user.roles && auth.user.roles.indexOf('guest') > -1);
     };
 
     auth.isTechnicianUser = function () {
-      return (auth.user && auth.user.roles && auth.user.roles.indexOf('technician') > -1);
+      auth = {
+        user: $window.user
+      };
+      if (!auth.user) {
+        return false;
+      }
+      return (auth.user.roles && auth.user.roles.indexOf('technician') > -1);
     };
 
     return auth;

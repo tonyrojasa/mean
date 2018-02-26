@@ -13,6 +13,28 @@
     vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
     vm.pageChanged = pageChanged;
 
+    vm.parseRoles = function (roleArray) {
+      _.forEach(roleArray,
+        function (value, key) {
+          switch (value) {
+            case "admin":
+              roleArray[key] = "Administrador";
+              break;
+            case "user":
+              roleArray[key] = "Estándar";
+              break;
+            case "guest":
+              roleArray[key] = "Invitado";
+              break;
+            case "technician":
+              roleArray[key] = "Técnico";
+              break;
+          }
+        });
+      var roleValue = roleArray.join(', ');
+      return roleValue;
+    };
+
     AdminService.query(function (data) {
       vm.users = data;
       vm.buildPager();
