@@ -54,6 +54,7 @@ exports.update = function (req, res) {
   item.color = req.body.color;
   item.registrationDate = req.body.registrationDate;
   item.resolutions = req.body.resolutions;
+  item.notifications = req.body.notifications;
   item.status = req.body.status;
   item.observations = req.body.observations;
   item.waranty = req.body.waranty;
@@ -152,7 +153,7 @@ exports.listAllOpen = function (req, res) {
     };
   }
   Item.find(query)
-    .where({ 'status': { $not: new RegExp('^Cerrado$', "i") } })
+    .where({ 'status': { $not: new RegExp('^Cerrado$', 'i') } })
     .sort('-registrationDate').populate('user', 'displayName')
     .populate({
       path: 'model',
