@@ -34,12 +34,15 @@
 
     vm.statusesFilterArray = [
       { id: 'Ingresado', title: 'Ingresado' },
-      { id: 'Taller - Enviado', title: 'Taller - Enviado' },
       { id: 'Taller - En reparación', title: 'Taller - En reparación' },
       { id: 'Taller - Reparado', title: 'Taller - Reparado' },
-      { id: 'Taller - No reparado', title: 'Taller - No reparado' },
-      { id: 'Entregado a dueño', title: 'Entregado a dueño' },
-      { id: 'Desechado', title: 'Desechado' }];
+      { id: 'Taller - No se puede reparar', title: 'Taller - No se puede reparar' },
+      { id: 'Taller - No hay repuestos', title: 'Taller - No hay repuestos' },
+      { id: 'Taller - Pendiente de repuestos', title: 'Taller - No hay repuestos' },
+      { id: 'Cliente - Notificado', title: 'Cliente - Notificado' },
+      { id: 'Cliente - No se puede contactar', title: 'Cliente - No se puede contactar' },
+      { id: 'Cerrado - Entregado', title: 'Cerrado - Entregado' },
+      { id: 'Cerrado - Desechado', title: 'Cerrado - Desechado' }];
 
     vm.isStatusClosable = function (status) {
       return (status === 'Taller - Reparado'
@@ -89,6 +92,9 @@
         case 'Ingresado':
           return 'active';
           break;
+        case 'Taller - En reparación':
+          return 'active';
+          break;
         case 'Taller - Reparado':
           return 'success';
           break;
@@ -98,14 +104,14 @@
         case 'Taller - No hay repuestos':
           return 'danger';
           break;
-        case 'Pendiente de repuestos':
+        case 'Taller - Pendiente de repuestos':
           return 'warning';
           break;
         case 'Cliente - Notificado':
           return 'info';
           break;
         case 'Cliente - No se puede contactar':
-          return 'danger';
+          return 'warning';
           break;
         case 'Cerrado - Entregado':
           return 'info';
@@ -126,6 +132,10 @@
     };
 
     vm.updateItem = function (item, successMessage) {
+      _.remove(vm.items, {
+        _id: item._id
+      });
+      vm.tableParams.reload();
       function successCallback(res) {
         Notification.info({
           title: 'Artículo actualizado exitosamente!',
