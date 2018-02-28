@@ -26,6 +26,12 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/items/open/:itemId',
       permissions: '*'
+    }, {
+      resources: '/api/items/close',
+      permissions: '*'
+    }, {
+      resources: '/api/items/close/:itemId',
+      permissions: '*'
     }]
   }, {
     roles: ['technician'],
@@ -40,6 +46,12 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/items/open/:itemId',
+      permissions: ['get, put']
+    }, {
+      resources: '/api/items/close',
+      permissions: ['get']
+    }, {
+      resources: '/api/items/close/:itemId',
       permissions: ['get, put']
     }]
   }, {
@@ -56,20 +68,11 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/items/open/:itemId',
       permissions: ['get']
-    }]
-  }, {
-    roles: ['guest'],
-    allows: [{
-      resources: '/api/items',
+    }, {
+      resources: '/api/items/close',
       permissions: ['get']
     }, {
-      resources: '/api/items/:itemId',
-      permissions: ['get']
-    }, {
-      resources: '/api/items/open',
-      permissions: ['get']
-    }, {
-      resources: '/api/items/open/:itemId',
+      resources: '/api/items/close/:itemId',
       permissions: ['get']
     }]
   }]);

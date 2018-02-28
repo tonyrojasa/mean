@@ -16,12 +16,20 @@ module.exports = function (app) {
     .get(items.listAllOpen)
     .post(items.create);
 
+  app.route('/api/items/close').all(itemsPolicy.isAllowed)
+    .get(items.listAllClose)
+    .post(items.create);
+
   // Single item routes
   app.route('/api/items/:itemId').all(itemsPolicy.isAllowed)
     .get(items.read)
     .put(items.update)
     .delete(items.delete);
   app.route('/api/items/open/:itemId').all(itemsPolicy.isAllowed)
+    .get(items.read)
+    .put(items.update)
+    .delete(items.delete);
+  app.route('/api/items/close/:itemId').all(itemsPolicy.isAllowed)
     .get(items.read)
     .put(items.update)
     .delete(items.delete);

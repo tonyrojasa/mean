@@ -1,14 +1,14 @@
 ﻿<section>
   <div class="page-header">
     <h1>
-      Artículos <span ng-if="!vm.searchItemStatus">- Casos Abiertos</span><span ng-if="vm.searchItemStatus">- Casos Cerrados</span>     
+      Artículos <span ng-if="!vm.isCloseItemsList">- Casos Abiertos</span><span ng-if="vm.isCloseItemsList">- Casos Cerrados</span>     
     </h1>
     <a class="btn btn-secondary" data-ui-sref="home">
       <i class="glyphicon glyphicon-arrow-left"></i>
       Regresar a Inicio
     </a>
   </div>
-  <a class="btn btn-primary" data-ui-sref="admin.items.create" ng-if="!vm.searchItemStatus">
+  <a class="btn btn-primary" data-ui-sref="admin.items.create" ng-if="!vm.isCloseItemsList">
     <i class="glyphicon glyphicon-plus"></i> Agregar
   </a>
   <br />
@@ -44,14 +44,15 @@
                   {{item.serialNumber}}
               </td>
               <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
-                <ui-select ng-model="item.status">
+                <ui-select ng-model="item.status" ng-if="vm.isStatusClosable(item.status)">
                   <ui-select-match  placeholder="Seleccione el estado...">
                         <span>{{item.status}}</span>
                     </ui-select-match>
-                    <ui-select-choices repeat="itemStatus in (vm.itemStatuses | filter: $select.search)">
+                    <ui-select-choices repeat="itemStatus in (vm.getItemStatuses(item) | filter: $select.search)">
                         <div ng-bind-html="itemStatus | highlight: $select.search" data-ng-click="vm.updateStatus(item, itemStatus)"></div>
                     </ui-select-choices>
                 </ui-select> 
+                <span ng-if="!vm.isStatusClosable(item.status)">{{item.status}}</span>
               </td> 
               <td  class="col-md-1" title="'Garantía / Vencimeinto'" sortable="'waranty.enabled'" ng-if="true">
                   {{item.waranty.enabled ? 'Si' : 'No' }} <p ng-if="item.waranty.expirationDate">{{item.waranty.expirationDate | date:'dd-MMM-yyyy'}}</p>
@@ -89,7 +90,7 @@
         </table>
       </div>   
   </div>
-  <div class="alert alert-warning text-center" data-ng-if="vm.items.$resolved && !vm.items.length && vm.searchItemStatus !== 'cerrado'">
+  <div class="alert alert-warning text-center" data-ng-if="vm.items.$resolved && !vm.items.length && !vm.isCloseItemsList">
     No hay artículos, Porque no <a data-ui-sref="admin.items.create">creas uno</a>?
   </div>
 </section>

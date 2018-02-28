@@ -21,15 +21,21 @@
         controllerAs: 'vm',
         data: {
           roles: ['admin']
+        },
+        resolve: {
+          itemsServiceResolve: openItemsService
         }
       })
-      .state('admin.items.list.close', {
-        url: '/?status',
+      .state('admin.items.close', {
+        url: '/close',
         templateUrl: '/modules/items/client/views/admin/list-items.client.view.html',
         controller: 'ItemsAdminListController',
         controllerAs: 'vm',
         data: {
           roles: ['admin']
+        },
+        resolve: {
+          itemsServiceResolve: closeItemsService
         }
       })
       .state('admin.items.create', {
@@ -71,5 +77,17 @@
 
   function newItem(ItemsService) {
     return new ItemsService();
+  }
+
+  openItemsService.$inject = ['OpenItemsService'];
+
+  function openItemsService(OpenItemsService) {
+    return OpenItemsService;
+  }
+
+  closeItemsService.$inject = ['CloseItemsService'];
+
+  function closeItemsService(CloseItemsService) {
+    return CloseItemsService;
   }
 }());

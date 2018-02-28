@@ -153,7 +153,53 @@ exports.listAllOpen = function (req, res) {
     };
   }
   Item.find(query)
-    .where({ 'status': { $not: new RegExp('^Cerrado$', 'i') } })
+    .where({ 'status': { $not: new RegExp('Cerrado', 'i') } })
+    .sort('-registrationDate').populate('user', 'displayName')
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'brand'
+      }
+    })
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'modelType'
+      }
+    })
+    .populate('store', 'name')
+    .populate('resolutions.technician')
+    .populate('color')
+    .exec(function (err, items) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(items);
+      }
+    });
+};
+
+/**
+ * List of Open Items
+ */
+exports.listAllClose = function (req, res) {
+  var query = _.forEach(req.query, function (value, key) {
+    var queryParam = {
+      $regex: new RegExp('^' + value + '$', 'i'),
+      $options: 'i'
+    };
+    req.query[key] = _.zipObject([key], [queryParam]);
+  });
+
+  if (!_.isEmpty(query)) {
+    query = {
+      $and: _.toArray(query)
+    };
+  }
+  Item.find(query)
+    .where({ 'status': new RegExp('Cerrado', 'i') })
     .sort('-registrationDate').populate('user', 'displayName')
     .populate({
       path: 'model',

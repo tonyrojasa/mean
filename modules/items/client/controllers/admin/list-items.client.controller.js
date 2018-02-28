@@ -5,21 +5,15 @@
     .module('items.admin')
     .controller('ItemsAdminListController', ItemsAdminListController);
 
-  ItemsAdminListController.$inject = ['OpenItemsService', 'ItemsService', 'Authentication', 'NgTableParams', '$location',
-    'StoresService', 'ColorsService', 'Notification'];
+  ItemsAdminListController.$inject = ['itemsServiceResolve', 'Authentication', 'NgTableParams',
+    'StoresService', 'ColorsService', 'Notification', '$state'];
 
-  function ItemsAdminListController(OpenItemsService, ItemsService, Authentication, NgTableParams, $location,
-    StoresService, ColorsService, Notification) {
+  function ItemsAdminListController(itemsService, Authentication, NgTableParams,
+    StoresService, ColorsService, Notification, $state) {
     var vm = this;
-    vm.searchItemStatus = $location.search() && $location.search().status;
-    var query;
-    if (vm.searchItemStatus) {
-      query = {
-        status: vm.searchItemStatus
-      };
-    }
-
-    vm.items = vm.searchItemStatus ? ItemsService.query(query) : OpenItemsService.query(query);
+    vm.itemsService = itemsService;
+    vm.items = vm.itemsService.query();
+    vm.isCloseItemsList = $state.current.name === 'admin.items.close';
 
     vm.queryAndBuildFilterArray = function (service, array) {
       var collection = service.query(function (data) {
@@ -47,6 +41,13 @@
       { id: 'Entregado a dueño', title: 'Entregado a dueño' },
       { id: 'Desechado', title: 'Desechado' }];
 
+    vm.isStatusClosable = function (status) {
+      return (status === 'Taller - Reparado'
+          || status === 'Taller - No se puede reparar'
+          || status === 'Taller - No hay repuestos'
+          || status.indexOf('Cliente') > 0) || vm.isCloseItemsList;
+    };
+
     vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { dataset: vm.items });
 
     vm.getItemTotalCost = function (item) {
@@ -68,7 +69,20 @@
       return itemLatResolutionDate;
     };
 
-    vm.itemStatuses = ["Cerrado - Entregado", "Cerrado - Desechado"]
+
+    vm.getItemStatuses = function (item) {
+      if (!vm.isCloseItemsList) {
+        return ['Cerrado - Entregado', 'Cerrado - Desechado'];
+      } else {
+        if (item.notifications && item.notifications.length > 0) {
+          return [item.notifications[item.notifications.length - 1].status];
+        } else if (item.resolutions && item.resolutions.length > 0) {
+          return [item.resolutions[item.resolutions.length - 1].condition];
+        } else {
+          return ['Ingresado'];
+        }
+      }
+    };
 
     vm.getStatusClass = function (item) {
       switch (item.status) {
@@ -109,7 +123,7 @@
           ' es: ' + item.status;
         vm.updateItem(item, successMessage);
       }
-    }
+    };
 
     vm.updateItem = function (item, successMessage) {
       function successCallback(res) {
