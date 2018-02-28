@@ -33,6 +33,10 @@
         'Cerrado - Desechado'];
     }
 
+    vm.isNotificationPanelAvailable = function (status) {
+      return !vm.authentication.isTechnicianUser() && vm.item.resolutions && vm.item.resolutions.length > 0;
+    };
+
     vm.setStatus = function (status) {
       vm.item.status = status;
     };

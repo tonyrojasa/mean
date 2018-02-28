@@ -131,7 +131,7 @@
       </div>
     </fieldset>  
     <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" on-status-change="vm.onStatusChange" show-labels="true" status="vm.item.status"></repairs>
-    <client-notifications ng-if="!vm.authentication.isTechnicianUser()" on-status-change="vm.onStatusChange" notifications="vm.item.notifications" form="vm.form.itemForm" show-labels="true" status="vm.item.status"></client-notifications>
+    <client-notifications ng-if="vm.isNotificationPanelAvailable()" on-status-change="vm.onStatusChange" notifications="vm.item.notifications" form="vm.form.itemForm" show-labels="true" status="vm.item.status"></client-notifications>
     <br />
     <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
   </form>    

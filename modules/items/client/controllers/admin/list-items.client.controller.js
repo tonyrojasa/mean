@@ -6,10 +6,10 @@
     .controller('ItemsAdminListController', ItemsAdminListController);
 
   ItemsAdminListController.$inject = ['OpenItemsService', 'ItemsService', 'Authentication', 'NgTableParams', '$location',
-    'StoresService', 'ColorsService'];
+    'StoresService', 'ColorsService', 'Notification'];
 
   function ItemsAdminListController(OpenItemsService, ItemsService, Authentication, NgTableParams, $location,
-    StoresService, ColorsService) {
+    StoresService, ColorsService, Notification) {
     var vm = this;
     vm.searchItemStatus = $location.search() && $location.search().status;
     var query;
@@ -68,6 +68,8 @@
       return itemLatResolutionDate;
     };
 
+    vm.itemStatuses = ["Cerrado - Entregado", "Cerrado - Desechado"]
+
     vm.getStatusClass = function (item) {
       switch (item.status) {
         case 'Ingresado':
@@ -98,6 +100,36 @@
           return 'danger';
           break;
       }
+    };
+
+    vm.updateStatus = function (item, status) {
+      if (item.status !== status) {
+        item.status = status;
+        var successMessage = 'El nuevo estado del artículo # ' + item.itemNumber +
+          ' es: ' + item.status;
+        vm.updateItem(item, successMessage);
+      }
+    }
+
+    vm.updateItem = function (item, successMessage) {
+      function successCallback(res) {
+        Notification.info({
+          title: 'Artículo actualizado exitosamente!',
+          message: successMessage,
+          delay: 1000
+        });
+      }
+
+      function errorCallback(res) {
+        vm.tableParams.reload();
+        Notification.error({
+          title: 'Error al actualizar el artículo!',
+          message: 'No se pudo actualizar la artículo # ' + item.itemNumber,
+          delay: 15000
+        });
+      }
+
+      return item.$update(successCallback, errorCallback);
     };
   }
 }());
