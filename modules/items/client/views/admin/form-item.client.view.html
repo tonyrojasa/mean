@@ -124,7 +124,7 @@
         </div> 
       </fieldset>
 
-      <dropdowncontrol model="vm.item.status" collection="vm.statuses" required="true" labelvalue="Estado de revisión" fieldname="itemStatus" show-labels="true" select="vm.setStatus" form="vm.form.itemForm" simple="true"></dropdowncontrol>
+      <dropdowncontrol model="vm.item.status" collection="vm.statuses" readonly="vm.isStatusReadOnly(vm.item.status)" required="true" labelvalue="Estado de revisión" fieldname="itemStatus" show-labels="true" select="vm.setStatus" form="vm.form.itemForm" simple="true"></dropdowncontrol>
       <div class="form-group" show-errors>
         <label class="control-label" for="itemObservations">Observaciones (incluir daños o marcas físicas)</label>
           <textarea name="itemObservations" data-ng-model="vm.item.observations" id="itemObservations" class="form-control" cols="30" rows="10" placeholder="Observaciones"></textarea>

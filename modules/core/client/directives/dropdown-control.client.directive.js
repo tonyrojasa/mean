@@ -26,7 +26,8 @@
           if (!scope.modelFieldOptions) {
             return item.name;
           } else {
-            var modelFieldOptions;
+            debugger;
+            var modelFieldOptions = '';
             for (var i = 0; i < scope.modelFieldOptions.length; i++) {
               var subOptions = scope.modelFieldOptions[i].split('.');
               if (subOptions.length > 1) {

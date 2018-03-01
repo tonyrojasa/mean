@@ -49,7 +49,7 @@
                         <span>{{item.status}}</span>
                     </ui-select-match>
                     <ui-select-choices repeat="itemStatus in (vm.getItemStatuses(item) | filter: $select.search)">
-                        <div ng-bind-html="itemStatus | highlight: $select.search" data-ng-click="vm.updateStatus(item, itemStatus)"></div>
+                        <div ng-bind-html="itemStatus | highlight: $select.search" data-ng-click="vm.updateStatus(item, itemStatus, $select.selected)"></div>
                     </ui-select-choices>
                 </ui-select> 
                 <span ng-if="!vm.isStatusClosable(item.status)">{{item.status}}</span>

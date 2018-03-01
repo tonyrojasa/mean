@@ -45,10 +45,11 @@
       { id: 'Cerrado - Desechado', title: 'Cerrado - Desechado' }];
 
     vm.isStatusClosable = function (status) {
+      debugger
       return (status === 'Taller - Reparado'
-          || status === 'Taller - No se puede reparar'
-          || status === 'Taller - No hay repuestos'
-          || status.indexOf('Cliente') > 0) || vm.isCloseItemsList;
+        || status === 'Taller - No se puede reparar'
+        || status === 'Taller - No hay repuestos'
+        || status.indexOf('Cliente') > -1) || vm.isCloseItemsList;
     };
 
     vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { dataset: vm.items });
@@ -122,12 +123,17 @@
       }
     };
 
-    vm.updateStatus = function (item, status) {
+    vm.updateStatus = function (item, status, prevStatus) {
       if (item.status !== status) {
-        item.status = status;
-        var successMessage = 'El nuevo estado del artículo # ' + item.itemNumber +
-          ' es: ' + item.status;
-        vm.updateItem(item, successMessage);
+        if (confirm('Seguro que desea cambiar el estado al articulo #' + item.itemNumber + '?')) {
+          item.status = status;
+          var successMessage = 'El nuevo estado del artículo # ' + item.itemNumber +
+            ' es: ' + item.status;
+          vm.updateItem(item, successMessage);
+        } else {
+          item.status = prevStatus;
+          vm.tableParams.reload();
+        }
       }
     };
 

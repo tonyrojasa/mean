@@ -5,9 +5,9 @@
     .module('items.admin')
     .directive('clientNotifications', clientNotifications);
 
-  clientNotifications.$inject = ['Notification'];
+  clientNotifications.$inject = ['Notification', 'UsersService'];
 
-  function clientNotifications(Notification) {
+  function clientNotifications(Notification, UsersService) {
     return {
       templateUrl: '/modules/items/client/views/admin/client-notifications.client.view.html',
       restrict: 'E',
@@ -29,6 +29,16 @@
         }
 
         scope.addNotification = function (form) {
+
+          UsersService.query(function (users) {
+            scope.notifierUsers = _.filter(users, function (o) {
+              o.boardRole = '';
+              o.boardRole = _.indexOf(o.roles, 'user') > -1 ? 'Usuario Estándar' : o.boardRole;
+              o.boardRole = _.indexOf(o.roles, 'admin') > -1 ? 'Administrador' : o.boardRole;
+              return _.indexOf(o.roles, 'user') > -1 || _.indexOf(o.roles, 'admin') > -1;
+            });
+          });
+
           if (!scope.form.$valid) {
             debugger;
             scope.$broadcast('show-errors-check-validity', 'vm.form.itemForm');

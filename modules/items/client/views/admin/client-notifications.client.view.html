@@ -50,6 +50,13 @@
                     <div ng-if="readonly">
                             {{notification.observations}}
                     </div>
+
+                    <div class="form-group" ng-if="!readonly">
+                        <dropdowncontrol model="notification.notifier" readonly="readonly" collection="notifierUsers" required="true" labelvalue="Persona que Notifica" fieldname="notificationNotifier_{{$index}}" form="form" simple="false" model-field-options="['displayName','boardRole']" show-labels="showLabels"></dropdowncontrol>     
+                    </div>
+                    <div ng-if="readonly">
+                            {{notification.notifier}}
+                    </div>
                     
                     <div class="pull-right">
                         <a class="form-group btn btn-xs btn-danger" ng-click="removeNotification($index)" ng-if="!readonly">

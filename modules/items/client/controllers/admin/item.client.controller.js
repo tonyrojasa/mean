@@ -41,6 +41,14 @@
       vm.item.status = status;
     };
 
+    vm.isStatusReadOnly = function (status) {
+      return !(status === 'Taller - Reparado'
+        || status === 'Taller - No se puede reparar'
+        || status === 'Taller - No hay repuestos'
+        || status.indexOf('Cerrado') === -1
+        || status.indexOf('Cliente') === -1);
+    };
+
     vm.onStatusChange = function (status) {
       if (status) {
         vm.item.status = status;

@@ -1,28 +1,29 @@
 <section class="container">
   <div class="page-header text-center">
-    <h1># {{vm.item.itemNumber}} - {{vm.item.model.brand.name}} / {{vm.item.model.name}}</h1>
-    <h3>{{vm.item.store.name}}</h3>
-    <h4 ng-class="vm.getStatusClass(vm.item.status)">{{vm.item.status}}</h4>
-    <h4>TOTAL:  {{vm.getTotalCost()  | currency: '₡'}}</h4>
-    <div class="pull-right" ng-if="vm.authentication.isAdminUser()">
+    <div ng-class="vm.getStatusClass(vm.item.status)">
+      <h1># {{vm.item.itemNumber}} - {{vm.item.model.brand.name}} / {{vm.item.model.name}}</h1>
+      <h3>{{vm.item.store.name}}</h3>
+      <h4>{{vm.item.status}}</h4>
+      <h4>TOTAL:  {{vm.getTotalCost()  | currency: '₡'}}</h4>
+    </div>
+    <div class="pull-right  col-md-2" ng-if="vm.authentication.isAdminUser()">
       <a class="btn btn-primary" data-ui-sref="admin.items.edit({ itemId: vm.item._id})">
         <i class="glyphicon glyphicon-edit"></i> Editar
       </a>
     </div>
-    <br /><br />
-    <div class="pull-left" ng-if="vm.authentication.isAdminUser()">
+    <div class="pull-left col-md-2" ng-if="vm.authentication.isAdminUser()">
       <a class="btn btn-secondary" data-ui-sref="admin.items.list">
         <i class="glyphicon glyphicon-arrow-left"></i>
         Regresar
       </a>
     </div>
-    <div class="pull-left" ng-if="!vm.authentication.isAdminUser()">
+    <div class="pull-left col-md-2" ng-if="!vm.authentication.isAdminUser()">
       <a class="btn btn-secondary" data-ui-sref="items.list">
         <i class="glyphicon glyphicon-arrow-left"></i>
         Regresar
       </a>
     </div>
-    <br />
+    <br /><br />
   </div>
   
   <div class="row">      
@@ -187,7 +188,10 @@
                 {{notification.type}}
             </td>
             <td>  
-                {{resolution.status}}
+                {{notification.status}}
+            </td>
+            <td>  
+                {{notification.observations}}
             </td>
           </tr>   
         </tbody> 
