@@ -11,6 +11,7 @@
   function ItemsAdminListController(itemsService, Authentication, NgTableParams,
     StoresService, ColorsService, Notification, $state) {
     var vm = this;
+    vm.authentication = Authentication;
     vm.itemsService = itemsService;
     vm.items = vm.itemsService.query();
     vm.isCloseItemsList = $state.current.name === 'admin.items.close';
@@ -45,11 +46,11 @@
       { id: 'Cerrado - Desechado', title: 'Cerrado - Desechado' }];
 
     vm.isStatusClosable = function (status) {
-      debugger
       return (status === 'Taller - Reparado'
         || status === 'Taller - No se puede reparar'
         || status === 'Taller - No hay repuestos'
-        || status.indexOf('Cliente') > -1) || vm.isCloseItemsList;
+        || status.indexOf('Cliente') > -1)
+        || (vm.isCloseItemsList && vm.authentication.isAdminUser())
     };
 
     vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { dataset: vm.items });
@@ -123,16 +124,14 @@
       }
     };
 
-    vm.updateStatus = function (item, status, prevStatus) {
+    vm.updateStatus = function (item) {
       if (item.status !== status) {
-        if (confirm('Seguro que desea cambiar el estado al articulo #' + item.itemNumber + '?')) {
-          item.status = status;
+        if (confirm('Seguro que desea cambiar el estado al articulo #' + item.itemNumber + ' a ' + item.status + '?')) {
           var successMessage = 'El nuevo estado del artículo # ' + item.itemNumber +
             ' es: ' + item.status;
           vm.updateItem(item, successMessage);
         } else {
-          item.status = prevStatus;
-          vm.tableParams.reload();
+          item.status = item.oldStatus;
         }
       }
     };

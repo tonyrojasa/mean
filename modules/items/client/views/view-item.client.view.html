@@ -6,18 +6,18 @@
       <h4>{{vm.item.status}}</h4>
       <h4>TOTAL:  {{vm.getTotalCost()  | currency: '₡'}}</h4>
     </div>
-    <div class="pull-right  col-md-2" ng-if="vm.authentication.isAdminUser()">
+    <div class="pull-right  col-md-2" ng-if="vm.authentication.isAdminUser() || vm.authentication.isStandardUser()">
       <a class="btn btn-primary" data-ui-sref="admin.items.edit({ itemId: vm.item._id})">
         <i class="glyphicon glyphicon-edit"></i> Editar
       </a>
     </div>
-    <div class="pull-left col-md-2" ng-if="vm.authentication.isAdminUser()">
+    <div class="pull-left col-md-2" ng-if="vm.authentication.isAdminUser() || vm.authentication.isStandardUser()">
       <a class="btn btn-secondary" data-ui-sref="admin.items.list">
         <i class="glyphicon glyphicon-arrow-left"></i>
         Regresar
       </a>
     </div>
-    <div class="pull-left col-md-2" ng-if="!vm.authentication.isAdminUser()">
+    <div class="pull-left col-md-2" ng-if="vm.authentication.isTechnicianUser()">
       <a class="btn btn-secondary" data-ui-sref="items.list">
         <i class="glyphicon glyphicon-arrow-left"></i>
         Regresar

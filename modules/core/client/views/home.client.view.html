@@ -16,7 +16,7 @@
     </div>
     <div ng-if="!vm.authentication.isGuestUser()">
       <!-- User Admin menu -->
-      <div class="row" ng-if="vm.authentication.isAdminUser() && !vm.authentication.isGuestUser()">
+      <div class="row" ng-if="vm.authentication.isAdminUser()  && !vm.authentication.isGuestUser()">
         <h6 class="text-muted">Artículos (dispositivos):</h6>
         <div class="col-md-12">                
           <a class="btn btn-primary btn-md" data-ui-sref="admin.items.create">Nuevo Caso</a> 
@@ -46,14 +46,21 @@
         </p>
       </div>
   
-      <!-- No admin menu -->
-      <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
-        <p>
-          <a class="btn btn-primary btn-md" data-ui-sref="items.list">Dispositivos</a>      
-          <a class="btn btn-primary btn-md" data-ui-sref="notifications.list">Notificaciones</a> 
-        </p>
+      <!-- Standard user menu -->
+      <div class="row" ng-if="vm.authentication.isStandardUser() && !vm.authentication.isTechnicianUser()">
+        <h6 class="text-muted">Artículos (dispositivos):</h6>
+        <div class="col-md-12">                
+          <a class="btn btn-primary btn-md" data-ui-sref="admin.items.create">Nuevo Caso</a> 
+        </div>
+        <div class="col-md-12"></div>
+        <div class="col-md-12">  
+          <p>
+            <a class="btn btn-primary btn-md" data-ui-sref="admin.items.list">Casos Abiertos</a> 
+            <a class="btn btn-primary btn-md" data-ui-sref="admin.items.close">Casos Cerrados</a> 
+          </p>
+        </div>
       </div>   
-      <div class="row" ng-if="!vm.authentication.isAdminUser() && !vm.authentication.isTechnicianUser()">
+      <div class="row" ng-if="vm.authentication.isStandardUser() && !vm.authentication.isTechnicianUser()">
         <p> 
             <a class="btn btn-secondary" data-ui-sref="brands.list">Marcas</a>
             <a class="btn btn-secondary" data-ui-sref="models.list">Modelos</a>

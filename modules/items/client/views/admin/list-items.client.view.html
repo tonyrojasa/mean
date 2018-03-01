@@ -44,12 +44,12 @@
                   {{item.serialNumber}}
               </td>
               <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
-                <ui-select ng-model="item.status" ng-if="vm.isStatusClosable(item.status)">
+                <ui-select ng-model="item.status" on-select="vm.updateStatus(item)"  ng-if="vm.isStatusClosable(item.status)">
                   <ui-select-match  placeholder="Seleccione el estado...">
                         <span>{{item.status}}</span>
                     </ui-select-match>
                     <ui-select-choices repeat="itemStatus in (vm.getItemStatuses(item) | filter: $select.search)">
-                        <div ng-bind-html="itemStatus | highlight: $select.search" data-ng-click="vm.updateStatus(item, itemStatus, $select.selected)"></div>
+                        <div ng-bind-html="itemStatus | highlight: $select.search" data-ng-click="item.oldStatus = $select.selected"></div>
                     </ui-select-choices>
                 </ui-select> 
                 <span ng-if="!vm.isStatusClosable(item.status)">{{item.status}}</span>

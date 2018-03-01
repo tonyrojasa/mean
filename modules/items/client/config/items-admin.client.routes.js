@@ -20,7 +20,7 @@
         controller: 'ItemsAdminListController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin']
+          roles: ['admin', 'user']
         },
         resolve: {
           itemsServiceResolve: openItemsService
@@ -32,7 +32,7 @@
         controller: 'ItemsAdminListController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin']
+          roles: ['admin', 'user']
         },
         resolve: {
           itemsServiceResolve: closeItemsService
@@ -44,7 +44,7 @@
         controller: 'ItemsAdminController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin']
+          roles: ['admin', 'user']
         },
         resolve: {
           itemResolve: newItem
@@ -56,7 +56,7 @@
         controller: 'ItemsAdminController',
         controllerAs: 'vm',
         data: {
-          roles: ['admin'],
+          roles: ['admin', 'user'],
           pageTitle: '{{ itemResolve.title }}'
         },
         resolve: {

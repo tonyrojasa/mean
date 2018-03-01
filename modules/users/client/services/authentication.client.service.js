@@ -34,6 +34,16 @@
       return (auth.user.roles && auth.user.roles.indexOf('guest') > -1);
     };
 
+    auth.isStandardUser = function () {
+      auth = {
+        user: $window.user
+      };
+      if (!auth.user) {
+        return false;
+      }
+      return (auth.user.roles && auth.user.roles.indexOf('user') > -1);
+    };
+
     auth.isTechnicianUser = function () {
       auth = {
         user: $window.user
