@@ -16,11 +16,15 @@
     </a>
   </div>    
   <div class="pull-left" ng-if="!vm.item._id">
+    <a class="btn btn-secondary" data-ui-sref="home">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Inicio
+    </a>
     <a class="btn btn-secondary"
       data-ui-sref="admin.items.list()">
     <i class="glyphicon glyphicon-arrow-left"></i>
       Regresar
-    </a>
+    </a> 
   </div>
   <br />
   <div class="row pull-right">

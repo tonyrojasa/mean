@@ -1,18 +1,22 @@
-<section>
+<section class="container">
   <div class="page-header">
     <h1>Marcas</h1>
+    <a class="btn btn-secondary" data-ui-sref="home">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar a Inicio
+    </a>
   </div>
-  <div class="list-group">
-    <a ng-repeat="brand in vm.brands" ui-sref="brands.view({ brandId: brand._id })" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="brand.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="brand.user" ng-bind="brand.user.displayName"></span>
-        <span ng-if="!brand.user">Deleted User</span>
-      </small>
+  
+  <div class="form-group">
+    <label class="control-label" for="modelName">Filtro de búsqueda</label>
+    <input name="search" type="text" ng-model="vm.search" id="search" class="form-control" autocomplete="off" placeholder="Buscar.."  ng-change="vm.figureOutItemsToDisplay()" autofocus>
+  </div>
+
+  <div class="list-group text-center">
+    <a ng-repeat="brand in vm.pagedItems" ui-sref="brands.view({ brandId: brand._id })" class="list-group-item">
       <h4 class="list-group-item-heading" ng-bind="brand.name"></h4>
       <p class="list-group-item-text" ng-bind="brand.description"></p>
     </a>
   </div>
+  <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
 </section>

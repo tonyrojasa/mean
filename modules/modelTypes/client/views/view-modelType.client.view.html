@@ -1,22 +1,19 @@
-<section>
+<section class="container">
   <div class="page-header">
-    <h1 ng-bind="vm.modelType.name"></h1>
+      <h1>Tipos de Artículo: {{vm.modelType.name}}</h1>
   </div>  
-  <div class="row pull-left">
-     <a class="btn btn-secondary" data-ui-sref="modelTypes.list">
-      <i class="glyphicon glyphicon-arrow-left"></i>
-      Regresar
-    </a>
-  </div>
-  <br /><br />
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.modelType.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.modelType.user" ng-bind="vm.modelType.user.displayName"></span>
-      <span ng-if="!vm.modelType.user">Deleted User</span>
-    </em>
-  </small>
+  <div class="row pull-left" ng-if="!vm.authentication.isAdminUser()">
+      <a class="btn btn-secondary" data-ui-sref="modelTypes.list">
+       <i class="glyphicon glyphicon-arrow-left"></i>
+       Regresar
+     </a>
+   </div>
+   <div class="row pull-left" ng-if="vm.authentication.isAdminUser()">
+     <a class="btn btn-secondary" data-ui-sref="admin.modelTypes.list">
+       <i class="glyphicon glyphicon-arrow-left"></i>
+       Regresar
+     </a>
+   </div>
+   <br/><br/>
   <p class="lead" ng-bind="vm.modelType.description"></p>
 </section>

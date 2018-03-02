@@ -1,18 +1,48 @@
-<section>
+<section class="container">
   <div class="page-header">
-    <h1>Modelos</h1>
-  </div>
-  <div class="list-group">
-    <a ng-repeat="model in vm.models" ui-sref="models.view({ modelId: model._id })" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="model.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="model.user" ng-bind="model.user.displayName"></span>
-        <span ng-if="!model.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" ng-bind="model.name"></h4>
-      <p class="list-group-item-text" ng-bind="model.brand.name"></p>
+    <h1>
+      Modelos
+    </h1>
+    <a class="btn btn-secondary" data-ui-sref="home">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar a Inicio
     </a>
+  </div>
+  <div class="form-group">
+    <label class="control-label" for="modelName">Filtro de búsqueda</label>
+    <input name="search" type="text" ng-model="vm.search" id="search" class="form-control" autocomplete="off" placeholder="Buscar.."  ng-change="vm.figureOutItemsToDisplay()" autofocus>
+  </div>
+
+  <div class="row">      
+    <div class="col-md-12">     
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Tipo de artículo </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="model in vm.pagedItems">
+            <td>  
+                <a data-ui-sref="models.view({modelId: model._id})" class="btn btn-link">
+                {{model.name}}</a>
+            </td>
+            <td>  
+                {{model.brand.name}}
+            </td>
+            <td>  
+                {{model.modelType.name}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
+  </div>  
+  <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
+
+  <div class="alert alert-warning text-center" data-ng-if="vm.models.$resolved && !vm.models.length">
+    No hay modelos, Porqué no <a data-ui-sref="admin.models.create">creas uno</a>?
   </div>
 </section>

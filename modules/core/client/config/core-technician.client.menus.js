@@ -9,10 +9,10 @@
 
   function menuConfig(menuService) {
     menuService.addMenuItem('topbar', {
-      title: 'Resolusiones',
+      title: 'Resoluciones',
       state: 'technician',
       type: 'dropdown',
-      roles: ['admin', 'technician']
+      roles: ['technician']
     });
   }
 }());

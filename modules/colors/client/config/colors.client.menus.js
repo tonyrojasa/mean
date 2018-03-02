@@ -9,7 +9,7 @@
 
   function menuConfig(menuService) {
     menuService.addMenuItem('topbar', {
-      title: 'Colors',
+      title: 'Colores',
       state: 'colors',
       type: 'dropdown',
       roles: ['user']

@@ -127,6 +127,7 @@ exports.modelByID = function (req, res, next, id) {
 
   Model.findById(id).populate('user', 'displayName')
     .populate('brand', 'name')
+    .populate('modelType', 'name')
     .exec(function (err, model) {
       if (err) {
         return next(err);

@@ -1,9 +1,9 @@
-<section>
+<section class="container">
   <div class="page-header">
-    <h1>{{vm.modelType._id ? 'Editar Tipo de Artículo' : 'Nueva Tipo de Artículo'}}</h1>
+    <h1>{{vm.modelType._id ? 'Editar Tipo de Artículo' : 'Nuevo Tipo de Artículo'}}</h1>
   </div>
   <div class="pull-right">
-    <a ng-show="vm.modelType._id" class="btn btn-primary" ng-click="vm.remove()">
+    <a ng-show="vm.modelType._id" class="btn btn-danger" ng-click="vm.remove()">
       <i class="glyphicon glyphicon-trash"></i> Eliminar
     </a>
   </div>
@@ -29,7 +29,7 @@
           <textarea name="modelTypeDescription" data-ng-model="vm.modelType.description" id="modelTypeDescription" class="form-control" cols="30" rows="10" placeholder="Descripción"></textarea>
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-default">{{vm.modelType._id ? 'Actualizar' : 'Crear'}}</button>
+          <button type="submit" class="btn btn-primary">{{vm.modelType._id ? 'Actualizar' : 'Crear'}}</button>
         </div>
       </fieldset>
     </form>

@@ -11,7 +11,8 @@
   function menuConfig(Menus) {
     Menus.addSubMenuItem('topbar', 'technician', {
       title: 'Admimnistrar Resoluciones',
-      state: 'technician.items.list'
+      state: 'technician.items.list',
+      roles: ['technician']
     });
   }
 }());

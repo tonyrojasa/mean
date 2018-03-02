@@ -1,22 +1,19 @@
-<section>
+<section class="container">
   <div class="page-header">
     <h1 ng-bind="vm.color.name"></h1>
   </div>  
-  <div class="row pull-left">
+  <div class="row pull-left" ng-if="!vm.authentication.isAdminUser()">
      <a class="btn btn-secondary" data-ui-sref="colors.list">
       <i class="glyphicon glyphicon-arrow-left"></i>
       Regresar
     </a>
   </div>
-  <br /><br />
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.color.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.color.user" ng-bind="vm.color.user.displayName"></span>
-      <span ng-if="!vm.color.user">Deleted User</span>
-    </em>
-  </small>
+  <div class="row pull-left" ng-if="vm.authentication.isAdminUser()">
+    <a class="btn btn-secondary" data-ui-sref="admin.colors.list">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar
+    </a>
+  </div>
+  <br/><br/>
   <p class="lead" style="background-color: {{vm.color.code}};color: {{vm.color.code}};" data-ng-bind="vm.color.code"></p>
 </section>

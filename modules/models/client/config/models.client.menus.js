@@ -17,7 +17,7 @@
 
     // Add the dropdown list item
     menuService.addSubMenuItem('topbar', 'models', {
-      title: 'List de Modelos',
+      title: 'Lista de Modelos',
       state: 'models.list',
       roles: ['user']
     });

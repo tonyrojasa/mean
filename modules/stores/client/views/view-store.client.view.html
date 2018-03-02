@@ -1,16 +1,44 @@
-<section>
+<section class="container">
   <div class="page-header">
-    <h1 ng-bind="vm.store.name"></h1>
+      <h1>Tienda: {{vm.store.name}}</h1>
   </div>
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.store.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.store.user" ng-bind="vm.store.user.displayName"></span>
-      <span ng-if="!vm.store.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.store.location"></p>
-  <p class="lead" ng-bind="vm.store.content"></p>
+  <div class="row pull-left" ng-if="!vm.authentication.isAdminUser()">
+     <a class="btn btn-secondary" data-ui-sref="stores.list">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar
+    </a>
+  </div>
+  <div class="row pull-left" ng-if="vm.authentication.isAdminUser()">
+    <a class="btn btn-secondary" data-ui-sref="admin.stores.list">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar
+    </a>
+  </div>
+  <br/><br/>
+  <div class="row">      
+    <div class="col-md-12">     
+      <table class="table table-striped">
+        <tbody>
+          <tr >
+            <th>Nombre</th>
+            <td>  
+                {{vm.store.name}}</a>
+            </td>
+          </tr>   
+          <tr >
+            <th>Provincia</th>
+            <td>  
+                {{vm.store.location}}
+            </td>
+          </tr>   
+          <tr >
+            <th>Descripción</th>
+            <td>  
+                {{vm.store.content}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
+  </div>  
 </section>

@@ -1,22 +1,44 @@
-<section>
+<section class="container">
   <div class="page-header">
-    <h1 ng-bind="vm.model.name"></h1>
+    <h1>Modelo: {{vm.model.name}}</h1>
   </div>  
-  <div class="row pull-left">
-     <a class="btn btn-secondary" data-ui-sref="models.list">
-      <i class="glyphicon glyphicon-arrow-left"></i>
-      Regresar
-    </a>
-  </div>
-  <br /><br />
-  <small>
-    <em class="text-muted">
-      Posted on
-      <span ng-bind="vm.model.created | date:'mediumDate'"></span>
-      by
-      <span ng-if="vm.model.user" ng-bind="vm.model.user.displayName"></span>
-      <span ng-if="!vm.model.user">Deleted User</span>
-    </em>
-  </small>
-  <p class="lead" ng-bind="vm.model.brand.name"></p>
+  <div class="row pull-left" ng-if="!vm.authentication.isAdminUser()">
+      <a class="btn btn-secondary" data-ui-sref="models.list">
+       <i class="glyphicon glyphicon-arrow-left"></i>
+       Regresar
+     </a>
+   </div>
+   <div class="row pull-left" ng-if="vm.authentication.isAdminUser()">
+     <a class="btn btn-secondary" data-ui-sref="admin.models.list">
+       <i class="glyphicon glyphicon-arrow-left"></i>
+       Regresar
+     </a>
+   </div>
+   <br/><br/>
+  <div class="row">      
+    <div class="col-md-6">     
+      <table class="table table-striped">
+        <tbody>
+          <tr >
+            <th>Nombre</th>
+            <td>  
+                {{vm.model.name}}</a>
+            </td>
+          </tr>   
+          <tr >
+            <th>Marca</th>
+            <td>  
+                {{vm.model.brand.name}}
+            </td>
+          </tr>   
+          <tr >
+            <th>Tipo</th>
+            <td>  
+                {{vm.model.modelType.name}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
+  </div>  
 </section>

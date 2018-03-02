@@ -1,18 +1,22 @@
-<section>
+<section class="container">
   <div class="page-header">
     <h1>Tipos de Artículos</h1>
+    <a class="btn btn-secondary" data-ui-sref="home">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar a Inicio
+    </a>
   </div>
-  <div class="list-group">
-    <a ng-repeat="modelType in vm.modelTypes" ui-sref="modelTypes.view({ modelTypeId: modelType._id })" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="modelType.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="modelType.user" ng-bind="modelType.user.displayName"></span>
-        <span ng-if="!modelType.user">Deleted User</span>
-      </small>
+
+  <div class="form-group">
+    <label class="control-label" for="modelName">Filtro de búsqueda</label>
+    <input name="search" type="text" ng-model="vm.search" id="search" class="form-control" placeholder="Buscar.." autocomplete="off"  ng-change="vm.figureOutItemsToDisplay()" autofocus>
+  </div>
+  <div class="list-group text-center">
+    <a ng-repeat="modelType in vm.pagedItems" ui-sref="modelTypes.view({ modelTypeId: modelType._id })" class="list-group-item">
       <h4 class="list-group-item-heading" ng-bind="modelType.name"></h4>
       <p class="list-group-item-text" ng-bind="modelType.description"></p>
     </a>
   </div>
+  <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
+
 </section>
