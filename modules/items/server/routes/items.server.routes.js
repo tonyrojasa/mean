@@ -29,6 +29,10 @@ module.exports = function (app) {
     .get(items.read)
     .put(items.update)
     .delete(items.delete);
+  app.route('/api/items/workshop/:workshopId').all(itemsPolicy.isAllowed)
+    .get(items.listAllWorkshop)
+    .put(items.update)
+    .delete(items.delete);
   app.route('/api/items/close/:itemId').all(itemsPolicy.isAllowed)
     .get(items.read)
     .put(items.update)

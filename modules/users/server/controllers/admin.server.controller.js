@@ -6,7 +6,8 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  _ = require('lodash');
 
 /**
  * Show the current user
@@ -61,7 +62,23 @@ exports.delete = function (req, res) {
  * List of Users
  */
 exports.list = function (req, res) {
-  User.find({}, '-salt -password -providerData').sort('-created')
+  var query = _.forEach(req.query, function (value, key) {
+    var queryParam = {
+      $regex: new RegExp('^' + value + '$', 'i'),
+      $options: 'i'
+    };
+    req.query[key] = _.zipObject([key], [queryParam]);
+  });
+
+  if (!_.isEmpty(query)) {
+    query = {
+      $and: _.toArray(query)
+    };
+  } else {
+    query = {};
+  }
+
+  User.find(query, '-salt -password -providerData').sort('-created')
     .populate('user', 'displayName')
     .populate('technician')
     .populate({

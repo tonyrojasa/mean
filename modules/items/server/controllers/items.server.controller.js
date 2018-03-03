@@ -60,6 +60,7 @@ exports.update = function (req, res) {
   item.waranty = req.body.waranty;
   item.revisionCost = req.body.revisionCost;
   item.store = req.body.store;
+  item.workshop = req.body.workshop;
 
   item.save(function (err) {
     if (err) {
@@ -124,6 +125,55 @@ exports.list = function (req, res) {
     .populate('store', 'name')
     .populate('resolutions.technician')
     .populate('color')
+    .populate('workshop')
+    .exec(function (err, items) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(items);
+      }
+    });
+};
+
+/**
+ * List of Open Items
+ */
+exports.listAllWorkshop = function (req, res) {
+  var id = req.params.workshopId;
+  var query = _.forEach(req.query, function (value, key) {
+    var queryParam = {
+      $regex: new RegExp('^' + value + '$', 'i'),
+      $options: 'i'
+    };
+    req.query[key] = _.zipObject([key], [queryParam]);
+  });
+
+  if (!_.isEmpty(query)) {
+    query = {
+      $and: _.toArray(query)
+    };
+  }
+  Item.find(query).find({ 'workshop': id })
+    .where({ 'status': { $not: new RegExp('Cerrado', 'i') } })
+    .sort('-registrationDate').populate('user', 'displayName')
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'brand'
+      }
+    })
+    .populate({
+      path: 'model',
+      populate: {
+        path: 'modelType'
+      }
+    })
+    .populate('store', 'name')
+    .populate('resolutions.technician')
+    .populate('color')
+    .populate('workshop')
     .exec(function (err, items) {
       if (err) {
         return res.status(422).send({
@@ -170,6 +220,7 @@ exports.listAllOpen = function (req, res) {
     .populate('store', 'name')
     .populate('resolutions.technician')
     .populate('color')
+    .populate('workshop')
     .exec(function (err, items) {
       if (err) {
         return res.status(422).send({
@@ -216,6 +267,7 @@ exports.listAllClose = function (req, res) {
     .populate('store', 'name')
     .populate('resolutions.technician')
     .populate('color')
+    .populate('workshop')
     .exec(function (err, items) {
       if (err) {
         return res.status(422).send({
@@ -248,6 +300,7 @@ exports.itemByID = function (req, res, next, id) {
     .populate('store', 'name')
     .populate('resolutions.technician')
     .populate('color')
+    .populate('workshop')
     .exec(function (err, item) {
       if (err) {
         return next(err);

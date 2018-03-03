@@ -138,6 +138,10 @@ var ItemSchema = new Schema({
   revisionCost: {
     type: Number
   },
+  workshop: {
+    type: Schema.ObjectId,
+    ref: 'Workshop'
+  },
   user: {
     type: Schema.ObjectId,
     ref: 'User'

@@ -3,21 +3,33 @@
 
   angular
     .module('items.admin')
-    .controller('ItemsAdminListController', ItemsAdminListController);
+    .controller('ItemsTechnicianListController', ItemsTechnicianListController);
 
-  ItemsAdminListController.$inject = ['itemsServiceResolve', 'Authentication', 'NgTableParams',
-    'StoresService', 'ColorsService', 'Notification', '$state', 'WorkshopsService', 'ModelTypesService'];
+  ItemsTechnicianListController.$inject = ['WorkshopItemsService', 'Authentication', 'NgTableParams',
+    'StoresService', 'ColorsService', 'Notification', '$state', 'WorkshopsService', 'ModelTypesService', 'UsersService'];
 
-  function ItemsAdminListController(itemsService, Authentication, NgTableParams,
-    StoresService, ColorsService, Notification, $state, WorkshopsService, ModelTypesService) {
+  function ItemsTechnicianListController(WorkshopItemsService, Authentication, NgTableParams,
+    StoresService, ColorsService, Notification, $state, WorkshopsService, ModelTypesService, UsersService) {
     var vm = this;
     vm.authentication = Authentication;
-    vm.itemsService = itemsService;
-    vm.items = vm.itemsService.query(function (data) {
-      _.each(data, function (item) {
-        item.totalCost = vm.getItemTotalCost(item);
+    vm.workshopItemsService = WorkshopItemsService;
+    if (vm.authentication.isTechnicianUser()) {
+
+      UsersService.query({ 'username': vm.authentication.user.username }, function (user) {
+        if (user && user.length > 0) {
+          vm.technicianWorkshop = user[0].technician.workshop;
+
+          var params = { 'workshopId': vm.technicianWorkshop._id };
+          vm.items = vm.workshopItemsService.query(params, function (data) {
+            _.each(data, function (item) {
+              item.totalCost = vm.getItemTotalCost(item);
+            });
+            vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { dataset: vm.items });
+          });
+        }
       });
-    });
+    }
+
     vm.isCloseItemsList = $state.current.name === 'admin.items.close';
 
     vm.queryAndBuildFilterArray = function (service, array) {
@@ -62,17 +74,15 @@
         || (vm.isCloseItemsList && vm.authentication.isAdminUser())
     };
 
-    vm.tableParams = new NgTableParams({ page: 1, count: 10 }, { dataset: vm.items });
 
     vm.getItemTotalCost = function (item) {
-      item.revisionCost = item.revisionCost ? item.revisionCost : '';
       var resolutionsCost = 0;
       if (item.resolutions) {
         for (var i = 0; i < item.resolutions.length; i++) {
           resolutionsCost += item.resolutions[i].cost ? +item.resolutions[i].cost : 0;
         }
       }
-      return +item.revisionCost + resolutionsCost;
+      return resolutionsCost;
     };
 
     vm.getItemLatResolutionDate = function (item) {

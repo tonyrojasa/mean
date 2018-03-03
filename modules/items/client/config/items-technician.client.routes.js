@@ -17,7 +17,7 @@
       .state('technician.items.list', {
         url: '',
         templateUrl: '/modules/items/client/views/technician/list-items.client.view.html',
-        controller: 'ItemsAdminListController',
+        controller: 'ItemsTechnicianListController',
         controllerAs: 'vm',
         data: {
           roles: ['admin', 'technician']

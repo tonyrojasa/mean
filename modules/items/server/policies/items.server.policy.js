@@ -40,19 +40,22 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/items/:itemId',
-      permissions: ['get, put']
+      permissions: ['get', 'put']
     }, {
       resources: '/api/items/open',
       permissions: ['get']
     }, {
       resources: '/api/items/open/:itemId',
-      permissions: ['get, put']
+      permissions: ['get', 'put']
     }, {
       resources: '/api/items/close',
       permissions: ['get']
     }, {
       resources: '/api/items/close/:itemId',
-      permissions: ['get, put']
+      permissions: ['get']
+    }, {
+      resources: '/api/items/workshop/:workshopId',
+      permissions: ['*']
     }]
   }]);
 };

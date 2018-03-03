@@ -1,18 +1,81 @@
-<section>
+<section class="container">
   <div class="page-header">
-    <h1>Artículos</h1>
-  </div>
-  <div class="list-group">
-    <a ng-repeat="item in vm.items" ui-sref="items.view({ itemId: item._id })" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span ng-bind="item.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="item.user" ng-bind="item.user.displayName"></span>
-        <span ng-if="!item.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" ng-bind="item.title"></h4>
-      <p class="list-group-item-text" ng-bind="item.content"></p>
+    <h1>
+      {{vm.technicianWorkshop.name}}
+    </h1>
+    <h2>
+      Artículos (dispositivos) <span ng-if="!vm.isCloseItemsList">- Casos Abiertos</span><span ng-if="vm.isCloseItemsList">- Casos Cerrados</span>     
+    </h2>
+    <a class="btn btn-secondary" data-ui-sref="home">
+      <i class="glyphicon glyphicon-arrow-left"></i>
+      Regresar a Inicio
     </a>
+  </div>
+  <br />
+  <div data-ng-if="vm.items.length">
+    <button class="btn btn-warning pull-right" ng-disabled="!vm.tableParams.hasFilter()" ng-click="vm.tableParams.filter({})">Borrar Filtros de Búsqueda</button>
+      <div id="exportable">        
+        <table ng-table="vm.tableParams" class="table table-hover table-condensed editable-table" show-filter="true" ng-table-columns-binding="vm.cols" export-csv='csv' ng-form="vm.tableForm" disable-filter="vm.isAdding" demo-tracked-table="vm.tableTracker" >
+          <tbody>
+            <tr ng-repeat="item in $data"ng-class="vm.getStatusClass(item)" ng-form="rowForm" demo-tracked-table-row="item">
+              <td class="col-md-1" title="'#'" filter="{ 'itemNumber': 'number'}" sortable="'itemNumber'" ng-if="true">
+                <a data-ui-sref="technician.items.edit({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
+              </td>              
+              <td  class="col-md-1" title="'Tienda'" filter="{ 'store.name': 'select'}" sortable="'store.name'" filter-data="vm.storesFilterArray" ng-if="true">
+                  {{item.store.name}}
+              </td>
+              <td  class="col-md-1" title="'Fecha registro'" filter="{ 'registrationDate': 'date'}" sortable="'registrationDate'" ng-if="true">
+                  {{item.registrationDate | date:'dd-MMM-yyyy'}}
+              </td>
+              <td  class="col-md-1" title="'Marca - Modelo'" filter="{ 'model.brand.name': 'text', 'model.name': 'text'}" sortable="'model.name'" ng-if="true">
+                {{item.model.brand.name}} - {{item.model.name}}
+              </td>
+              
+              <td  class="col-md-1" title="'Tipo de artículo'" filter="{ 'model.modelType.name': 'text'}" sortable="'model.modelType.name'" ng-if="true">
+                {{item.model.modelType.name}}
+              </td>
+              <td  class="col-md-1" title="'Color'" filter="{ 'color.name': 'select'}" filter-data="vm.colorsFilterArray"  sortable="'color.name'" ng-if="true">
+                  {{item.color.name}} <span style="background-color: {{item.color.code}};color: {{item.color.code}};">{{item.color.name}}</span>
+              </td>
+              <td  class="col-md-1" title="'# serie'" filter="{ 'serialNumber': 'text'}" sortable="'serialNumber'" ng-if="true">
+                  {{item.serialNumber}}
+              </td>
+              <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
+                <span ng-if="!vm.isStatusClosable(item.status)">{{item.status}}</span>
+              </td> 
+              <td  class="col-md-1" title="'Costo ₡'" sortable="'vm.getItemTotalCost(item)'" ng-if="true">
+                  {{vm.getItemTotalCost(item) | currency : ''}}
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>          
+              <td ng-if="vm.cols[0].show()"></td>  
+              <td ng-if="vm.cols[1].show()"></td>     
+              <td ng-if="vm.cols[2].show()"></td>     
+              <td ng-if="vm.cols[3].show()"></td>     
+              <td ng-if="vm.cols[4].show()"></td>     
+              <td ng-if="vm.cols[5].show()"></td>     
+              <td ng-if="vm.cols[6].show()"></td>      
+              <td ng-if="vm.cols[8].show()"></td>             
+              <td ng-if="true" class="text-center">            
+                <span><b>Total Artículos:</b> {{($data).length}}</span>
+              </td>
+              <td>
+                <div class="text-right">
+                <a class="btn" title="Export Table" ng-click='csv.generate()' ng-href="{{ csv.link() }}"
+                  download="Artículos.csv">
+                  <i class="glyphicon glyphicon-new-window"></i> &#160;Exportar
+                </a>  
+                </div>
+              </td>
+            </tr>
+          </tfoot> 
+        </table>
+      </div>   
+  </div>
+  <div class="alert alert-warning text-center" data-ng-if="vm.items.$resolved && !vm.items.length && !vm.isCloseItemsList">
+    No hay casos abiertos para su taller en este momento
   </div>
 </section>

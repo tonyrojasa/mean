@@ -42,7 +42,7 @@
           resolutionsCost += vm.item.resolutions[i].cost ? +vm.item.resolutions[i].cost : 0;
         }
       }
-      return +vm.item.cost + resolutionsCost;
+      return +resolutionsCost;
     };
 
     if (!vm.item._id) {
@@ -76,7 +76,7 @@
         .catch(errorCallback);
 
       function successCallback(res) {
-        $state.go('admin.items.list'); // should we send the User to the list or the updated Item's view?
+        $state.go('technician.items.list'); // should we send the User to the list or the updated Item's view?
         Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Artículo guardado correctamente!' });
       }
 

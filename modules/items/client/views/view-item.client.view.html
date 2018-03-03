@@ -3,8 +3,9 @@
     <div ng-class="vm.getStatusClass(vm.item.status)">
       <h1># {{vm.item.itemNumber}} - {{vm.item.model.brand.name}} / {{vm.item.model.name}}</h1>
       <h3>{{vm.item.store.name}}</h3>
-      <h4>{{vm.item.status}}</h4>
-      <h4>TOTAL:  {{vm.getTotalCost()  | currency: '₡'}}</h4>
+      <h4><b>Taller:</b> {{vm.item.workshop ? vm.item.workshop.name : '*NO ASIGNADO*'}}</h4>
+      <h4><b>Estado:</b> {{vm.item.status}}</h4>
+      <h4><b>TOTAL:</b>  {{vm.getTotalCost()  | currency: '₡'}}</h4>
     </div>
     <div class="pull-right  col-md-2" ng-if="vm.authentication.isAdminUser() || vm.authentication.isStandardUser()">
       <a class="btn btn-primary" data-ui-sref="admin.items.edit({ itemId: vm.item._id})">

@@ -12,7 +12,7 @@
     <i class="glyphicon glyphicon-plus"></i> Agregar
   </a>
   <br />
-  <div data-ng-if="vm.items.length">
+  <div data-ng-if="vm.items && vm.items.length">
     <button class="btn btn-warning pull-right" ng-disabled="!vm.tableParams.hasFilter()" ng-click="vm.tableParams.filter({})">Borrar Filtros de Búsqueda</button>
       <div id="exportable">        
         <table ng-table="vm.tableParams" class="table table-hover table-condensed editable-table" show-filter="true" ng-table-columns-binding="vm.cols" export-csv='csv' ng-form="vm.tableForm" disable-filter="vm.isAdding" demo-tracked-table="vm.tableTracker" >
@@ -34,7 +34,7 @@
                 {{item.model.brand.name}} - {{item.model.name}}
               </td>
               
-              <td  class="col-md-1" title="'Tipo de artículo'" filter="{ 'model.modelType.name': 'text'}" sortable="'model.modelType.name'" ng-if="true">
+              <td  class="col-md-1" title="'Tipo de artículo'" filter="{ 'model.modelType.name': 'select'}" filter-data="vm.modelTypesFilterArray"  sortable="'model.modelType.name'" ng-if="true">
                 {{item.model.modelType.name}}
               </td>
               <td  class="col-md-1" title="'Color'" filter="{ 'color.name': 'select'}" filter-data="vm.colorsFilterArray"  sortable="'color.name'" ng-if="true">
@@ -43,7 +43,7 @@
               <td  class="col-md-1" title="'# serie'" filter="{ 'serialNumber': 'text'}" sortable="'serialNumber'" ng-if="true">
                   {{item.serialNumber}}
               </td>
-              <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
+              <td  class="col-md-2" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
                 <ui-select ng-model="item.status" on-select="vm.updateStatus(item)"  ng-if="vm.isStatusClosable(item.status)">
                   <ui-select-match  placeholder="Seleccione el estado...">
                         <span>{{item.status}}</span>
@@ -54,11 +54,22 @@
                 </ui-select> 
                 <span ng-if="!vm.isStatusClosable(item.status)">{{item.status}}</span>
               </td> 
+              <td  class="col-md-2" title="'Taller'" filter="{ 'workshop': 'select'}" filter-data="vm.workshopsFilterArray" sortable="'workshop'" ng-if="true">
+                <ui-select ng-model="item.workshop" on-select="vm.updateWorkshop(item)" ng-if="!vm.isCloseItemsList">
+                  <ui-select-match  placeholder="Seleccione el taller...">
+                        <span>{{item.workshop.name}}</span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="itemWorkshop in (vm.workshops | filter: $select.search)">
+                        <div ng-bind-html="itemWorkshop.name | highlight: $select.search" data-ng-click="item.oldWorkshop = $select.selected"></div>
+                    </ui-select-choices>
+                </ui-select> 
+                <span ng-if="vm.isCloseItemsList">{{item.workshop.name}}</span>
+              </td> 
               <td  class="col-md-1" title="'Garantía / Vencimeinto'" sortable="'waranty.enabled'" ng-if="true">
                   {{item.waranty.enabled ? 'Si' : 'No' }} <p ng-if="item.waranty.expirationDate">{{item.waranty.expirationDate | date:'dd-MMM-yyyy'}}</p>
               </td>
-              <td  class="col-md-1" title="'Costo ₡'" sortable="'vm.getItemTotalCost(item)'" ng-if="true">
-                  {{vm.getItemTotalCost(item) | currency : ''}}
+              <td  class="col-md-1" title="'Costo ₡'" sortable="'totalCost'" ng-if="true">
+                  {{item.totalCost | currency : ''}}
               </td>
               <td></td>
             </tr>

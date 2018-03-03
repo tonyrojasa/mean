@@ -6,10 +6,10 @@
     .controller('ItemsAdminController', ItemsAdminController);
 
   ItemsAdminController.$inject = ['$scope', '$state', '$window', 'itemResolve', 'Authentication', 'Notification',
-    'ModelsService', 'ColorsService', 'StoresService'];
+    'ModelsService', 'ColorsService', 'StoresService', 'WorkshopsService'];
 
   function ItemsAdminController($scope, $state, $window, item, Authentication, Notification,
-    ModelsService, ColorsService, StoresService) {
+    ModelsService, ColorsService, StoresService, WorkshopsService) {
     var vm = this;
 
     vm.item = item;
@@ -21,6 +21,7 @@
     vm.models = ModelsService.query();
     vm.colors = ColorsService.query();
     vm.stores = StoresService.query();
+    vm.workshops = WorkshopsService.query();
 
     vm.item.registrationDate = vm.item.registrationDate ? new Date(vm.item.registrationDate) : new Date();
 
@@ -47,6 +48,10 @@
         || status === 'Taller - No hay repuestos'
         || status.indexOf('Cerrado') === -1
         || status.indexOf('Cliente') === -1);
+    };
+
+    vm.isResolutionPanelVisible = function () {
+      return (vm.item.resolutions && vm.item.resolutions.length > 0) || vm.item.workshop;
     };
 
     vm.onStatusChange = function (status) {

@@ -6,94 +6,55 @@
     <a ng-show="vm.item._id" class="btn btn-md btn-primary" ng-click="vm.save(vm.form.itemForm.$valid)">
       <i class="glyphicon glyphicon-save"></i> Actualizar
     </a>
-    <a ng-show="vm.item._id" class="btn btn-xs btn-danger" ng-click="vm.remove()">
-      <i class="glyphicon glyphicon-trash btn-xs"></i> Eliminar
-    </a>
   </div>
   <div class="row pull-left">
-     <a class="btn btn-secondary" data-ui-sref="admin.items.list">
+     <a class="btn btn-secondary" data-ui-sref="technician.items.list">
       <i class="glyphicon glyphicon-arrow-left"></i>
       Regresar
     </a>
   </div>
   <br />
   <h2>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h2>
-  <br /><br />  
+  <br />
+  <div class="row">      
+    <h3 class="text-center"><b>Datos del dispositivo</b></h3>     
+    <div class="col-md-12">     
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th># serie</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Color</th>
+            <th>Fecha de Ingreso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>  
+                {{vm.item.serialNumber}}
+            </td>
+            <td>  
+                {{vm.item.model.brand.name}}
+            </td>
+            <td>  
+                {{vm.item.model.name}}
+            </td>
+            <td >  
+                {{vm.item.color.name}}
+                <span style="background-color: {{vm.item.color.code}};color: {{vm.item.color.code}};" value="{{vm.item.color.code}}">{{vm.item.color.code}}</span> 
+
+            </td>
+            <td>  
+                {{vm.item.registrationDate | date:'dd-MMM-yyyy'}}
+            </td>
+          </tr>   
+        </tbody> 
+      </table>
+    </div>
+  </div>  
+  <br />
   <form name="vm.form.itemForm" ng-submit="vm.save(vm.form.itemForm.$valid)" novalidate>
-    <fieldset>
-      <legend>Datos del dueño</legend>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="ownerName">Nombre *</label>
-        <input name="ownerName" type="text" ng-model="vm.item.owner.name" id="ownerName" class="form-control" placeholder="Nombre" required autofocus>
-        <div ng-messages="vm.form.itemForm.ownerName.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Nombre es requerido.</p>
-        </div>
-      </div>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="ownerId">Cédula *</label>
-        <input name="ownerId" type="text" ng-model="vm.item.owner.id" id="ownerId" class="form-control" placeholder="Cédula" required>
-        <div ng-messages="vm.form.itemForm.ownerId.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Cédula es requerido.</p>
-        </div>
-      </div>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="ownerMobilePhone">Celular *</label>
-        <input name="ownerMobilePhone" mask="9999-9999" mask-restrict="reject" placeholder="Celular" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.mobilePhone" id="ownerMobilePhone" class="form-control" required />
-        <div ng-messages="vm.form.itemForm.ownerMobilePhone.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Celular es requerido.</p>
-        </div>
-      </div>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="ownerOtherPhone">Otro Teléfono</label>
-        <input name="ownerOtherPhone" mask="9999-9999" mask-restrict="reject" placeholder="Otro Teléfono" autocomplete="off" model-view-value="true" ng-model="vm.item.owner.otherPhone" id="ownerOtherPhone" class="form-control" />
-      </div>
-      <div class="form-group" show-errors>
-          <label class="control-label" for="ownerEmail">Email</label>
-          <input name="ownerEmail" type="email" ng-model="vm.item.owner.email" id="ownerEmail" autocomplete="off" class="form-control" placeholder="Email">
-        <div ng-messages="vm.form.itemForm.ownerEmail.$error" role="alert">
-          <p class="help-block error-text" ng-message="email">Email es incorrecto.</p>
-        </div>
-        </div>
-    </fieldset>
-    <br />
-    <fieldset>
-      <legend>Datos del dispositivo</legend>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="registrationDate">Fecha de ingreso *</label>
-        <br />
-        <input name="registrationDate" type="hidden" ng-model="vm.item.registrationDate" id="registrationDate" class="form-control" required>
-        <datetimepicker 
-          ng-model="vm.item.registrationDate" 
-          hidden-time="true" 
-          date-format="dd-MMM-yyyy" 
-          current-text="Hoy"
-          clear-text="Limpiar"
-          close-text="Cerrar"></datetimepicker>          
-        <div ng-messages="vm.form.itemForm.registrationDate.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Fecha de ingreso es requerido.</p>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label" for="revisionCost">Costo de revisión ₡</label>
-        <input name="revisionCost" type="text" ng-model="vm.item.cost" id="revisionCost" class="form-control" placeholder="Costo de revisión">
-      </div>
-      <dropdowncontrol model="vm.item.model" collection="vm.models" required="true" labelvalue="Modelo" fieldname="models" show-labels="true" form="vm.form.itemForm" simple="false" model-field-options="['brand.name','name']"></dropdowncontrol>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="serialNumber">Número de serie *</label>
-        <input name="serialNumber" type="text" ng-model="vm.item.serialNumber" id="serialNumber" class="form-control" placeholder="Número de serie" required>
-        <div ng-messages="vm.form.itemForm.serialNumber.$error" role="alert">
-          <p class="help-block error-text" ng-message="required">Número de serie es requerido.</p>
-        </div>
-      </div>    
-      <dropdowncontrol model="vm.item.color" collection="vm.colors" required="true" labelvalue="Color" fieldname="colors" show-labels="true" form="vm.form.itemForm" simple="false"></dropdowncontrol>     
-      <span style="background-color: {{vm.item.color.code}};color: {{vm.item.color.code}};" value="{{vm.item.color.code}}">{{vm.item.color.code}}</span> 
-      <dropdowncontrol model="vm.item.status" collection="vm.statuses" required="true" labelvalue="Estado de revisión" fieldname="itemStatus" show-labels="true" select="vm.setStatus" form="vm.form.itemForm" simple="true"></dropdowncontrol>
-      <div class="form-group" show-errors>
-        <label class="control-label" for="itemObservations">Observaciones (incluir daños o marcas físicas)</label>
-          <textarea name="itemObservations" data-ng-model="vm.item.observations" id="itemObservations" class="form-control" cols="30" rows="10" placeholder="Observaciones"></textarea>
-      </div>
-    </fieldset>  
-    <br />  
     <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" show-labels="true"></repairs>
     <br />
     <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
