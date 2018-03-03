@@ -40,7 +40,6 @@
           });
 
           if (!scope.form.$valid) {
-            debugger;
             scope.$broadcast('show-errors-check-validity', 'vm.form.itemForm');
             Notification.error({ message: 'Complete todos los campos requeridos', title: '<i class="glyphicon glyphicon-remove"> Error en el formulario</i>' });
             return false;

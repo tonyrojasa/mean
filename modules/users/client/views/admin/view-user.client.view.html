@@ -29,12 +29,12 @@
   <div class="row">
     <div class="col-md-8">
       <div class="row">
-        <div class="col-md-3"><strong>First Name</strong></div>
+        <div class="col-md-3"><strong>Nombre</strong></div>
         <div class="col-md-6" ng-bind="vm.user.firstName"></div>
       </div>
       <hr/>
       <div class="row">
-        <div class="col-md-3"><strong>Last Name</strong></div>
+        <div class="col-md-3"><strong>Apellidos</strong></div>
         <div class="col-md-6" ng-bind="vm.user.lastName"></div>
       </div>
       <hr/>
@@ -44,18 +44,23 @@
       </div>
       <hr/>
       <div class="row">
-        <div class="col-md-3"><strong>Provider</strong></div>
+        <div class="col-md-3"><strong>Tipo de Autenticación</strong></div>
         <div class="col-md-6" ng-bind="vm.user.provider"></div>
       </div>
       <hr/>
       <div class="row">
-        <div class="col-md-3"><strong>Created</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.created"></div>
+        <div class="col-md-3"><strong>Creado</strong></div>
+        <div class="col-md-6">{{vm.user.created | date: 'dd-MMM-yyyy'}}</div>
       </div>
       <hr/>
       <div class="row">
-        <div class="col-md-3"><strong>Roles</strong></div>
-        <div class="col-md-6" ng-bind="vm.user.roles"></div>
+        <div class="col-md-3"><strong>Rol de Usuario</strong></div>
+        <div class="col-md-6" ng-bind="vm.selectedRole"></div>
+      </div>
+      <hr/>
+      <div class="row"  ng-if="vm.user.technician">
+        <div class="col-md-3"><strong>Técnico</strong></div>
+        <div class="col-md-6">{{vm.user.technician.name}} - {{vm.user.technician.workshop.name}}</div>
       </div>
     </div>
   </div>

@@ -26,6 +26,7 @@ exports.update = function (req, res) {
   user.lastName = req.body.lastName;
   user.displayName = user.firstName + ' ' + user.lastName;
   user.roles = req.body.roles;
+  user.technician = req.body.technician;
 
   user.save(function (err) {
     if (err) {
@@ -60,15 +61,24 @@ exports.delete = function (req, res) {
  * List of Users
  */
 exports.list = function (req, res) {
-  User.find({}, '-salt -password -providerData').sort('-created').populate('user', 'displayName').exec(function (err, users) {
-    if (err) {
-      return res.status(422).send({
-        message: errorHandler.getErrorMessage(err)
-      });
-    }
+  User.find({}, '-salt -password -providerData').sort('-created')
+    .populate('user', 'displayName')
+    .populate('technician')
+    .populate({
+      path: 'technician',
+      populate: {
+        path: 'workshop'
+      }
+    })
+    .exec(function (err, users) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      }
 
-    res.json(users);
-  });
+      res.json(users);
+    });
 };
 
 /**
@@ -81,14 +91,21 @@ exports.userByID = function (req, res, next, id) {
     });
   }
 
-  User.findById(id, '-salt -password -providerData').exec(function (err, user) {
-    if (err) {
-      return next(err);
-    } else if (!user) {
-      return next(new Error('Failed to load user ' + id));
-    }
+  User.findById(id, '-salt -password -providerData')
+    .populate('technician')
+    .populate({
+      path: 'technician',
+      populate: {
+        path: 'workshop'
+      }
+    }).exec(function (err, user) {
+      if (err) {
+        return next(err);
+      } else if (!user) {
+        return next(new Error('Failed to load user ' + id));
+      }
 
-    req.model = user;
-    next();
-  });
+      req.model = user;
+      next();
+    });
 };

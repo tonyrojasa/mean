@@ -1,6 +1,6 @@
-<section>
+<section class="container">
   <div class="page-header">
-    <h1>User <span ng-bind="vm.user.username"></span></h1>    
+    <h1>Usuario: <span ng-bind="vm.user.username"></span></h1>    
     <div class="pull-left">
         <a class="btn btn-secondary" data-ui-sref="admin.user({userId: vm.user._id})">
           <i class="glyphicon glyphicon-arrow-left"></i>
@@ -13,30 +13,33 @@
     <form name="vm.userForm" ng-submit="vm.update(vm.userForm.$valid)" novalidate>
       <fieldset>
         <div class="form-group" show-errors>
-          <label for="firstName">First Name</label>
+          <label for="firstName">Nombre</label>
           <input type="text" id="firstName" name="firstName" class="form-control" ng-model="vm.user.firstName" placeholder="First Name" required autofocus />
           <div ng-messages="vm.userForm.firstName.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">First name is required.</p>
+            <p class="help-block error-text" ng-message="required">Nombre es requerido.</p>
           </div>
         </div>
         <div class="form-group" show-errors>
-          <label for="lastName">Last Name</label>
+          <label for="lastName">Apellidos</label>
           <input type="text" id="lastName" name="lastName" class="form-control" ng-model="vm.user.lastName" placeholder="Last Name" required />
           <div ng-messages="vm.userForm.lastName.$error" role="alert">
-            <p class="help-block error-text" ng-message="required">Last name is required.</p>
+            <p class="help-block error-text" ng-message="required">Apellidos es requerido.</p>
           </div>
         </div>
-        <div class="form-group" show-errors>
-          <label class="control-label" for="roles">Roles</label>
-          <div class="controls">
-            <input class="form-control" type="text" name="roles" ng-model="vm.user.roles" id="roles" ng-list required />
-            <div ng-messages="vm.userForm.roles.$error" role="alert">
-              <p class="help-block error-text" ng-message="required">At least one role is required.</p>
-            </div>
-          </div>
-        </div>
+        
         <div class="form-group">
-          <input type="submit" value="Update" class="btn btn-default">
+          <label class="control-label" for="roles">Rol de Usuario</label>
+          <div class="form-group" ng-if="!readonly">
+              <dropdowncontrol model="vm.selectedRole" select="vm.onSelectRole" collection="vm.roles" required="true" labelvalue="Roles" fieldname="roles" form="vm.userForm" simple="true"  show-labels="showLabels"></dropdowncontrol>     
+          </div>
+        </div>
+
+        <div class="form-group"  ng-if="vm.isTechnicianRole()">
+          <dropdowncontrol model="vm.user.technician" collection="vm.technicians" required="true" labelvalue="Técnico" fieldname="technicianName" form="vm.userForm" simple="false" model-field-options="['workshop.name','name']" show-labels="showLabels"></dropdowncontrol>     
+        </div>
+
+        <div class="form-group">
+          <input type="submit" value="Update" class="btn btn-primary">
         </div>
       </fieldset>
     </form>
