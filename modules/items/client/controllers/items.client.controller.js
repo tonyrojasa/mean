@@ -25,7 +25,8 @@
 
     vm.getTotalCost = function () {
       vm.item.revisionCost = vm.item.revisionCost ? vm.item.revisionCost : '';
-      return +vm.item.revisionCost + vm.getItemResolutionsTotal();
+      vm.item.utilityCost = vm.item.utilityCost ? vm.item.utilityCost : '';
+      return +vm.item.revisionCost + +vm.item.utilityCost + vm.getItemResolutionsTotal();
     };
 
     vm.getStatusClass = function (status) {

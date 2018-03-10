@@ -19,7 +19,7 @@
           <tbody>
             <tr ng-repeat="item in $data"ng-class="vm.getStatusClass(item)" ng-form="rowForm" demo-tracked-table-row="item">
               <td class="col-md-1" title="'#'" filter="{ 'itemNumber': 'number'}" sortable="'itemNumber'" ng-if="true">
-                <a data-ui-sref="items.view({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
+                <a class="glyphicon glyphicon-edit" data-ui-sref="items.view({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}"> {{item.itemNumber}}</a>
               </td>              
               <td  class="col-md-1" title="'Tienda'" filter="{ 'store.name': 'select'}" sortable="'store.name'" filter-data="vm.storesFilterArray" ng-if="true">
                   {{item.store.name}}
@@ -68,7 +68,7 @@
               <td  class="col-md-1" title="'Garantía / Vencimeinto'" sortable="'waranty.enabled'" ng-if="true">
                   {{item.waranty.enabled ? 'Si' : 'No' }} <p ng-if="item.waranty.expirationDate">{{item.waranty.expirationDate | date:'dd-MMM-yyyy'}}</p>
               </td>
-              <td  class="col-md-1" title="'Costo ₡'" sortable="'totalCost'" ng-if="true">
+              <td  class="col-md-1" title="'Costo Total ₡'" sortable="'totalCost'" ng-if="true">
                   {{item.totalCost | currency : ''}}
               </td>
               <td></td>

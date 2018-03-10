@@ -71,13 +71,14 @@
 
     vm.getTotalCost = function () {
       vm.item.revisionCost = vm.item.revisionCost ? vm.item.revisionCost : '';
+      vm.item.utilityCost = vm.item.utilityCost ? vm.item.utilityCost : '';
       var resolutionsCost = 0;
       if (vm.item.resolutions) {
         for (var i = 0; i < vm.item.resolutions.length; i++) {
           resolutionsCost += vm.item.resolutions[i].cost ? +vm.item.resolutions[i].cost : 0;
         }
       }
-      return +vm.item.revisionCost + resolutionsCost;
+      return +vm.item.revisionCost + +vm.item.utilityCost + resolutionsCost;
     };
 
     if (!vm.item._id) {

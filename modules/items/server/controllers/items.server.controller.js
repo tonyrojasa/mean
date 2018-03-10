@@ -59,6 +59,7 @@ exports.update = function (req, res) {
   item.observations = req.body.observations;
   item.waranty = req.body.waranty;
   item.revisionCost = req.body.revisionCost;
+  item.utilityCost = req.body.utilityCost;
   item.store = req.body.store;
   item.workshop = req.body.workshop;
 
