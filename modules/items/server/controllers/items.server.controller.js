@@ -125,6 +125,7 @@ exports.list = function (req, res) {
     })
     .populate('store', 'name')
     .populate('resolutions.technician')
+    .populate('notifications.notifier')
     .populate('color')
     .populate('workshop')
     .exec(function (err, items) {
@@ -300,6 +301,7 @@ exports.itemByID = function (req, res, next, id) {
     })
     .populate('store', 'name')
     .populate('resolutions.technician')
+    .populate('notifications.notifier')
     .populate('color')
     .populate('workshop')
     .exec(function (err, item) {

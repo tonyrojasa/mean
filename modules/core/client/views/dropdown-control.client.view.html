@@ -5,7 +5,7 @@
     <div class="dropdown" id="storeLocationDropdown" uib-dropdown>
         <button class="btn btn-default dropdown-toggle" uib-dropdown-toggle role="button" ng-disabled="readonly">
           <span ng-if="!model">-- Seleccione una opción --</span>
-          {{model}}
+          {{model}}    
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
@@ -19,7 +19,7 @@
     <div class="select2-bootstrap-append">
         <ui-select ng-model="model" on-select="this.selectItem($select.selected)" ng-disabled="readonly">
           <ui-select-match  allow-clear="true" placeholder="Seleccione una opción...">
-                <span>{{$select.selected.name}}</span>
+                <span>{{getDisplayOption(model)}}</span>
             </ui-select-match>
             <ui-select-choices repeat="item in (collection | filter: $select.search) track by item._id">
                 <div ng-bind-html="getBindHtmlOption(item) | highlight: $select.search"></div>

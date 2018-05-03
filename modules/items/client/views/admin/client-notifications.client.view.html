@@ -52,10 +52,10 @@
                     </div>
 
                     <div class="form-group" ng-if="!readonly">
-                        <dropdowncontrol model="notification.notifier" readonly="readonly" collection="notifierUsers" required="true" labelvalue="Persona que Notifica" fieldname="notificationNotifier_{{$index}}" form="form" simple="false" model-field-options="['displayName','boardRole']" show-labels="showLabels"></dropdowncontrol>     
+                        <dropdowncontrol model="notification.notifier" readonly="readonly" collection="notifierUsers" required="true" labelvalue="Persona que Notifica" fieldname="notificationNotifier_{{$index}}" form="form" simple="false" model-field-options="['displayName','boardRole']" display-option-field-name="displayName" show-labels="showLabels"></dropdowncontrol>     
                     </div>
                     <div ng-if="readonly">
-                            {{notification.notifier}}
+                            {{notification.notifier.displayName}}
                     </div>
                     
                     <div class="pull-right">

@@ -19,6 +19,7 @@
         collection: '=',
         select: '=',
         model: '=',
+        displayOptionFieldName: '@',
         modelFieldOptions: '='
       },
       link: function postLink(scope, element, attrs) {
@@ -49,6 +50,13 @@
             }
             return modelFieldOptions;
           }
+        };
+
+        scope.getDisplayOption = function (model) {
+          if (scope.displayOptionFieldName) {
+            return model[scope.displayOptionFieldName];
+          }
+          else return model.name;
         };
 
         scope.selectItem = function (item) {
