@@ -55,7 +55,8 @@
   </div>  
   <br />
   <form name="vm.form.itemForm" ng-submit="vm.save(vm.form.itemForm.$valid)" novalidate>
-    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" show-labels="true"></repairs>
+    <repairs resolutions="vm.item.resolutions" form="vm.form.itemForm" on-status-change="vm.onStatusChange" show-labels="true" status="vm.item.status"></repairs>
+    
     <br />
     <h3>Costo Total: {{vm.getTotalCost() | currency : '₡'}}</h3> 
     <br /><br />

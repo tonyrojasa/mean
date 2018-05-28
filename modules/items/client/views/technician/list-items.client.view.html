@@ -19,7 +19,7 @@
           <tbody>
             <tr ng-repeat="item in $data"ng-class="vm.getStatusClass(item)" ng-form="rowForm" demo-tracked-table-row="item">
               <td class="col-md-1" title="'#'" filter="{ 'itemNumber': 'number'}" sortable="'itemNumber'" ng-if="true">
-                <a data-ui-sref="technician.items.edit({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}">{{item.itemNumber}}</a>
+                <a class="glyphicon glyphicon-edit" data-ui-sref="technician.items.edit({itemId: item._id})" data-toggle="tooltip" title="Editar artículo #{{item.itemNumber}}"> {{item.itemNumber}}</a>
               </td>              
               <td  class="col-md-1" title="'Tienda'" filter="{ 'store.name': 'select'}" sortable="'store.name'" filter-data="vm.storesFilterArray" ng-if="true">
                   {{item.store.name}}
@@ -41,7 +41,7 @@
                   {{item.serialNumber}}
               </td>
               <td  class="col-md-1" title="'Estado'" filter="{ 'status': 'select'}" filter-data="vm.statusesFilterArray" sortable="'status'" ng-if="true">
-                <span ng-if="!vm.isStatusClosable(item.status)">{{item.status}}</span>
+                <span>{{item.status}}</span>
               </td> 
               <td  class="col-md-1" title="'Costo ₡'" sortable="'vm.getItemTotalCost(item)'" ng-if="true">
                   {{vm.getItemTotalCost(item) | currency : ''}}
